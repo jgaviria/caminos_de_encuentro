@@ -1,0 +1,53 @@
+<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <div>
+      <img
+        class="mx-auto h-12 w-auto"
+        src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+        alt="Workflow"
+      />
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        Crear Cuenta
+      </h2>
+    </div>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="mt-8 space-y-6">
+        <!-- Email Field -->
+        <div class="rounded-md shadow-sm -space-y-px">
+          <div>
+            <%= f.label :email, "Email address", class: "sr-only" %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Correo", class: "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" %>
+          </div>
+
+          <!-- Password Field -->
+          <div>
+            <%= f.label :password, "Password", class: "sr-only" %>
+            <%= f.password_field :password, autocomplete: "new-password", placeholder: "Contraseña", class: "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" %>
+            <% if @minimum_password_length %>
+              <small class="text-gray-600">(<%= @minimum_password_length %> characters minimum)</small>
+            <% end %>
+          </div>
+
+          <!-- Password Confirmation Field -->
+          <div>
+            <%= f.label :password_confirmation, "Confirm password", class: "sr-only" %>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirma contraseña", class: "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" %>
+          </div>
+        </div>
+
+        <!-- Sign Up Button -->
+        <div class="actions">
+          <%= f.submit "Crear", class: "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Links (e.g. already have an account) -->
+    <div class="mt-6 text-center">
+      <%= link_to "Entrar", new_session_path(resource_name), class: "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+    </div>
+  </div>
+</div>
