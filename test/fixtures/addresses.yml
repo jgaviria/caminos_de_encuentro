@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  profile: one
+  address_line: MyString
+  city: MyString
+  country: MyString
+  date_from: 2024-11-23
+  date_to: 2024-11-23
+
+two:
+  profile: two
+  address_line: MyString
+  city: MyString
+  country: MyString
+  date_from: 2024-11-23
+  date_to: 2024-11-23

@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  first_name: MyString
+  last_name: MyString
+  dob: 2024-11-23
+  city_of_birth: MyString
+  country_of_birth: MyString
+  mother_name: MyString
+  father_name: MyString
+  last_known_city: MyString
+  last_known_neighborhood: MyString
+  status: 1
+
+two:
+  user: two
+  first_name: MyString
+  last_name: MyString
+  dob: 2024-11-23
+  city_of_birth: MyString
+  country_of_birth: MyString
+  mother_name: MyString
+  father_name: MyString
+  last_known_city: MyString
+  last_known_neighborhood: MyString
+  status: 1

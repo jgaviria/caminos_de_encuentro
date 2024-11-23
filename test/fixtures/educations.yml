@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  profile: one
+  school_name: MyString
+  level: 1
+  date_from: 2024-11-23
+  date_to: 2024-11-23
+
+two:
+  profile: two
+  school_name: MyString
+  level: 1
+  date_from: 2024-11-23
+  date_to: 2024-11-23
