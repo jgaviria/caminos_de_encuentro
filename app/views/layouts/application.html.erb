@@ -5,11 +5,31 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
-  <body>
-    <main><%= yield %></main>
+  <body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-white shadow">
+      <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+        <div class="relative flex items-center justify-between h-16">
+          <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+            <div class="flex-shrink-0">
+              <!-- Logo or Brand Name -->
+            </div>
+          </div>
+          <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+            <% if user_signed_in? %>
+              <%= button_to "Log Out", destroy_user_session_path, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="py-10">
+      <%= yield %>
+    </main>
   </body>
 </html>
