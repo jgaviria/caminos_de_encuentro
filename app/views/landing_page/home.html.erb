@@ -23,17 +23,9 @@
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
         
-        <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <% if user_signed_in? %>
-            <%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete, class: "text-sm font-semibold leading-6 text-gray-900 rounded-md bg-red-600 px-3.5 py-2.5 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" %>
-
-        <% else %>
-            <a href="<%= new_user_session_path %>" class="text-sm font-semibold leading-6 text-gray-900">
-            Entrar <span aria-hidden="true">&rarr;</span>
-            </a>
-        <% end %>
-        </div>
-
+<a href="<%= new_user_session_path %>" class="text-sm font-semibold leading-6 text-gray-900">
+  Entrar <span aria-hidden="true">&rarr;</span>
+</a>
       </div>
     </nav>
     <!-- Mobile menu, show/hide based on menu open state. -->
@@ -83,7 +75,7 @@
             <p class="mt-6 text-lg leading-8 text-gray-600">Aunque los años se desvanezcan como arena entre los dedos, la esperanza de un reencuentro sigue siendo el fuego que ilumina nuestros pasos en la oscuridad.</p>
             <p class="mt-2 text-sm text-gray-400 font-light">— Pablo Neruda</p>
             <div class="mt-10 flex items-center justify-center gap-x-6">
-              <a href="<%= new_user_registration_path %>" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Empecemos</a>
+              <a href="#" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Empecemos</a>
               <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Mas informacion <span aria-hidden="true">→</span></a>
             </div>
           </div>
