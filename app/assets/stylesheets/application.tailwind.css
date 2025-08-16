@@ -2,6 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  /* Action button (Pill style with icons) */
+  .action-button {
+    @apply inline-flex items-center justify-center gap-2 font-semibold rounded-full text-sm py-2 px-5 transition-all duration-200 ease-in-out border-2 bg-transparent;
+  }
+
+  /* Primary gray style - default for most actions */
+  .action-button-primary {
+    @apply text-gray-700 border-gray-700 hover:bg-gray-700 hover:text-white focus:ring-4 focus:ring-gray-300;
+  }
+
+  /* Blue variant */
+  .action-button-blue {
+    @apply text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white focus:ring-4 focus:ring-blue-300;
+  }
+
+  /* Green variant */
+  .action-button-green {
+    @apply text-green-600 border-green-600 hover:bg-green-600 hover:text-white focus:ring-4 focus:ring-green-300;
+  }
+
+  /* Orange variant for destructive actions */
+  .action-button-orange {
+    @apply text-orange-500 border-orange-500 hover:bg-orange-500 hover:text-white focus:ring-4 focus:ring-orange-300;
+  }
+
+  /* Disabled state */
+  .action-button-disabled {
+    @apply opacity-50 cursor-not-allowed pointer-events-none;
+  }
+}
+
 /* Import component styles */
 @import 'components/buttons.css';
 @import 'components/cards.css';
