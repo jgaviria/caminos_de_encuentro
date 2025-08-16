@@ -1,18 +1,17 @@
 Rails.application.routes.draw do
-  # Devise routes for user authentication
-  devise_for :users
+  # Locale scope for internationalization
+  scope "/:locale", locale: /#{I18n.available_locales.join("|")}/ do
+    # Devise routes for user authentication
+    devise_for :users
 
-  # Root path for authenticated and unauthenticated users
-  authenticated :user do
-    root to: "dashboards#show", as: :authenticated_root
-  end
+    # Root path for authenticated and unauthenticated users
+    authenticated :user do
+      root to: "dashboards#show", as: :authenticated_root
+    end
 
-  unauthenticated do
-    root to: "landing_page#home", as: :unauthenticated_root
-  end
-
-  # General root route fallback
-  root to: "dashboards#show"
+    unauthenticated do
+      root to: "landing_page#home", as: :unauthenticated_root
+    end
 
   get "dashboard", to: "dashboards#show", as: :dashboard
 
@@ -54,8 +53,12 @@ Rails.application.routes.draw do
   get "service-worker", to: "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest", to: "rails/pwa#manifest", as: :pwa_manifest
 
-  # Custom route for user sign-out
-  devise_scope :user do
-    delete "users/sign_out", to: "devise/sessions#destroy"
+    # Custom route for user sign-out
+    devise_scope :user do
+      delete "users/sign_out", to: "devise/sessions#destroy"
+    end
   end
+
+  # Root redirect to default locale
+  root to: redirect("/#{I18n.default_locale}")
 end

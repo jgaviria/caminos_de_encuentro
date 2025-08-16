@@ -1,48 +1,48 @@
 <div class="min-h-screen bg-gray-100 py-8">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="bg-white shadow rounded-lg p-6">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6">Match Details</h2>
+      <h2 class="text-2xl font-bold text-gray-800 mb-6"><%= t('admin.match_details') %></h2>
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="border rounded-lg p-4">
-          <h3 class="text-lg font-semibold text-gray-700 mb-3">Search Profile</h3>
-          <p><strong>Name:</strong> <%= @match.search_profile.first_name %> <%= @match.search_profile.last_name %></p>
-          <p><strong>Created by:</strong> <%= @match.search_profile.user.email %></p>
+          <h3 class="text-lg font-semibold text-gray-700 mb-3"><%= t('forms.search_profile') %></h3>
+          <p><strong><%= t('forms.first_name') %>:</strong> <%= @match.search_profile.first_name %> <%= @match.search_profile.last_name %></p>
+          <p><strong><%= t('user.created_by') %>:</strong> <%= @match.search_profile.user.email %></p>
         </div>
         
         <div class="border rounded-lg p-4">
-          <h3 class="text-lg font-semibold text-gray-700 mb-3">Matched Profile</h3>
+          <h3 class="text-lg font-semibold text-gray-700 mb-3"><%= t('user.matched_profile') %></h3>
           <% if @match.user && @match.user.personal_info %>
-            <p><strong>Name:</strong> <%= @match.user.personal_info.first_name %> <%= @match.user.personal_info.last_name %></p>
-            <p><strong>Email:</strong> <%= @match.user.email %></p>
+            <p><strong><%= t('forms.first_name') %>:</strong> <%= @match.user.personal_info.first_name %> <%= @match.user.personal_info.last_name %></p>
+            <p><strong><%= t('auth.email') %>:</strong> <%= @match.user.email %></p>
           <% else %>
-            <p>No personal information available</p>
+            <p><%= t('user.no_personal_info') %></p>
           <% end %>
         </div>
       </div>
       
       <div class="mt-6 border rounded-lg p-4">
-        <h3 class="text-lg font-semibold text-gray-700 mb-3">Match Information</h3>
-        <p><strong>Similarity Score:</strong> <%= (@match.similarity_score * 100).round(1) %>%</p>
-        <p><strong>Verified:</strong> 
+        <h3 class="text-lg font-semibold text-gray-700 mb-3"><%= t('user.match_information') %></h3>
+        <p><strong><%= t('user.similarity_score') %>:</strong> <%= (@match.similarity_score * 100).round(1) %>%</p>
+        <p><strong><%= t('admin.verified') %>:</strong> 
           <span class="<%= @match.is_verified? ? 'text-green-600' : 'text-yellow-600' %>">
-            <%= @match.is_verified? ? 'Yes' : 'Pending' %>
+            <%= @match.is_verified? ? t('general.yes') : t('admin.pending') %>
           </span>
         </p>
-        <p><strong>Created:</strong> <%= @match.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+        <p><strong><%= t('user.created') %>:</strong> <%= @match.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
       </div>
       
       <div class="mt-6 flex space-x-4">
         <% unless @match.is_verified? %>
-          <%= link_to "Verify Match", verify_match_path(@match), method: :patch, 
+          <%= link_to t('admin.verify_match'), verify_match_path(@match), method: :patch, 
               class: "bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
         <% end %>
         
-        <%= link_to "Remove Match", @match, method: :delete, 
-            confirm: "Are you sure you want to remove this match?",
+        <%= link_to t('user.remove_match'), @match, method: :delete, 
+            confirm: "<%= t('user.confirm_remove_match') %>?",
             class: "bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
         
-        <%= link_to "Back to Matches", matches_path, 
+        <%= link_to t('user.back_to_matches'), matches_path, 
             class: "bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded" %>
       </div>
     </div>

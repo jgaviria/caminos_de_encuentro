@@ -29,3 +29,408 @@
 
 en:
   hello: "Hello world"
+  
+  # Navigation
+  nav:
+    title: "Paths of Encounter"
+    subtitle: "Reuniting Families"
+    services: "Services"
+    testimonials: "Testimonials"
+    help: "Help"
+    login: "Sign In"
+    start_search: "Start Search"
+
+  # Landing Page
+  landing:
+    features:
+      title: "Find your loved ones"
+      heading: "Advanced technology to help you in your search"
+      description: "We use matching algorithms, advanced filtering and data protection to help you reconnect with your missing loved ones."
+      
+      algorithm:
+        title: "Advanced matching algorithm"
+        description: "Our system analyzes physical attributes, dates and locations to identify high-precision matches, streamlining the search intelligently."
+      
+      filter:
+        title: "Detailed attribute filtering"
+        description: "Define specific criteria such as eye color, height or place of disappearance to get more accurate results."
+      
+      community:
+        title: "Connection with search communities"
+        description: "Access support networks and support groups working in the search for missing persons, strengthening your efforts with community backing."
+      
+      security:
+        title: "Advanced data security"
+        description: "We protect your data with state-of-the-art encryption, ensuring that shared information is secure and well protected."
+
+    testimonial:
+      quote: "Although years fade like sand between fingers, the hope of reunion remains the fire that illuminates our steps in the darkness."
+      author: "Pablo Neruda"
+      title: "Poet and Nobel Prize for Literature"
+
+    pricing:
+      title: "Pricing plans"
+      heading: "Options for every type of search"
+      description: "Explore the plans that best fit your needs to help find your loved ones."
+      
+      individual:
+        title: "Individual"
+        description: "Ideal for people looking for a loved one with basic access."
+        price: "$15"
+        period: "/month"
+        feature1: "5 searches per month"
+        feature2: "Basic attribute filters"
+        feature3: "Standard support (48 hour response)"
+        cta: "Buy plan"
+      
+      family:
+        title: "Family"
+        badge: "Most popular"
+        description: "Designed for families seeking support in multiple searches."
+        price: "$30"
+        period: "/month"
+        feature1: "20 searches per month"
+        feature2: "Advanced attribute filters"
+        feature3: "Priority support (24 hour response)"
+        feature4: "Search history"
+        cta: "Buy plan"
+      
+      corporate:
+        title: "Corporate"
+        description: "For organizations dedicated to searching and supporting multiple people."
+        price: "$50"
+        period: "/month"
+        feature1: "Unlimited searches"
+        feature2: "Custom filters and matching algorithms"
+        feature3: "Dedicated support (1 hour response)"
+        feature4: "Access to advanced statistics"
+        feature5: "Usage training and technical support"
+        cta: "Buy plan"
+
+    faq:
+      title: "Frequently Asked Questions"
+      
+      how_it_works:
+        question: "How does Paths of Encounter work?"
+        answer: "Our platform uses advanced matching algorithms to help you find your loved ones. Simply create a profile with the data of the person you are looking for, and our system will compare this information with our database to find possible matches."
+      
+      security:
+        question: "Is my personal information secure?"
+        answer: "Absolutely. We use state-of-the-art encryption and follow the highest security standards to protect all data. Your information is only used to facilitate the search and is never shared with third parties without your explicit consent."
+      
+      time:
+        question: "How long does it take to find someone?"
+        answer: "Time varies by case. Some searches may show results immediately if the person is already in our database, while others may take days, weeks or longer. Our system works continuously to increase the chances of success."
+      
+      information:
+        question: "What information do I need to create a search?"
+        answer: "You need as much information as possible: full name, approximate date of birth, physical characteristics, last known location and any other relevant details. The more information you provide, the more accurate the results will be."
+      
+      cancellation:
+        question: "Can I cancel my plan at any time?"
+        answer: "Yes, you can cancel your subscription at any time from your user panel. There are no permanence contracts or early cancellation penalties. Your access will continue until the end of the current billing period."
+      
+      international:
+        question: "Do you offer support for international cases?"
+        answer: "Yes, we work with a global network of organizations and databases. Our reach extends beyond national borders to help search for people who may have migrated or be in other countries."
+
+  # Footer
+  footer:
+    description: "We use advanced technology to help reunite families separated by migration, conflict or tragedy. Every search is a step towards reunion."
+    
+    services:
+      title: "Services"
+      search: "People search"
+      algorithms: "Matching algorithms"
+      security: "Data security"
+      network: "Global network"
+    
+    support:
+      title: "Support"
+      help_center: "Help center"
+      guides: "User guides"
+      contact: "Contact"
+      emergency: "Emergencies"
+    
+    resources:
+      title: "Resources"
+      blog: "Blog"
+      success_stories: "Success stories"
+      partners: "Partner organizations"
+      legal_resources: "Legal resources"
+    
+    legal:
+      title: "Legal"
+      privacy: "Privacy policy"
+      terms: "Terms of service"
+      cookies: "Cookies"
+      transparency: "Transparency"
+    
+    help_line: "Help line: +57 (1) 800-FAMILIAS"
+    copyright: "© 2024 Paths of Encounter. All rights reserved. An initiative to reunite families."
+
+  # Admin Portal
+  admin:
+    title: "Admin Panel"
+    dashboard: "Dashboard"
+    matches: "Matches"
+    users: "Users"
+    settings: "Settings"
+    logout: "Sign Out"
+    profile: "Profile"
+    
+    # Dashboard
+    dashboard_title: "Administrator Dashboard"
+    total_users: "Total Users"
+    active_searches: "Active Searches"
+    total_matches: "Total Matches"
+    verified_matches: "Verified Matches"
+    recent_activity: "Recent Activity"
+    view_all: "View All"
+    
+    # Matches
+    matches_title: "Match Management"
+    match_details: "Match Details"
+    verify_match: "Verify Match"
+    reject_match: "Reject Match"
+    bulk_actions: "Bulk Actions"
+    bulk_verify: "Verify Selected"
+    bulk_reject: "Reject Selected"
+    export_data: "Export Data"
+    
+    # Match Table
+    searcher: "Searcher"
+    target: "Target"
+    similarity: "Similarity"
+    status: "Status"
+    date_created: "Date Created"
+    actions: "Actions"
+    
+    # Status
+    verified: "Verified"
+    pending: "Pending"
+    rejected: "Rejected"
+    
+    # Admin Matches
+    review_manage_matches: "Review and manage all matches in the system"
+    pending_review: "Pending Review"
+    system_overview: "System Overview"
+    key_metrics: "Key metrics and performance indicators"
+    last_updated: "Last updated"
+    needs_review: "Needs Review"
+    high_confidence: "High Confidence"
+    recent_7_days: "Recent (7 days)"
+    matches_displayed: "matches displayed"
+    search_matches: "Search matches"
+    status: "Status"
+    min_score: "Min Score"
+    matches_selected: "matches selected"
+    verify_selected: "Verify Selected"
+    confirm_reject_selected: "Are you sure you want to reject the selected matches?"
+    reject_selected: "Reject Selected"
+    select_all: "Select All"
+    loading_matches: "Loading matches"
+    date: "Date"
+    seeker: "Seeker"
+    found_person: "Found Person"
+    no_personal_info: "No personal info"
+    showing_matches_page: "Showing matches for this page"
+    no_matches_found: "No Matches Found"
+    no_matches_description: "No matches have been generated yet. Create search profiles and run the matching algorithm to find potential connections."
+    view_search_profiles: "View Search Profiles"
+    
+    # Admin Match Show
+    back_to_matches: "Back to Admin Matches"
+    match_analysis: "Match Analysis"
+    comprehensive_evaluation: "Comprehensive matching criteria evaluation"
+    review_quality: "Review match quality and make verification decisions"
+    similarity_score: "Similarity Score"
+    verified_match: "Verified Match"
+    created: "Created"
+    confirm_reject_match: "Are you sure you want to reject this match?"
+    reject_match: "Reject Match"
+    overall_match_confidence: "Overall Match Confidence"
+    high: "High"
+    medium: "Medium"
+    low: "Low"
+    confidence: "Confidence"
+    strong_match: "Strong match - likely the same person"
+    moderate_match: "Moderate match - needs review"
+    low_match: "Low match - may be different person"
+    matching_criteria_breakdown: "Matching Criteria Breakdown"
+    name_comparison: "Name Comparison"
+    location_comparison: "Location Comparison"
+    additional_factors: "Additional Factors"
+    exact_match: "Exact Match"
+    no_match: "No Match"
+    found: "Found"
+    search_profile_seeker: "Search Profile (Seeker)"
+    person_searched_for: "Person being searched for"
+    found_person: "Found Person"
+    potential_match: "Potential match from database"
+    no_personal_information: "No Personal Information"
+    profile_not_completed: "This user hasn't completed their personal profile yet"
+    review_guidelines: "Admin Review Guidelines"
+
+  # User Portal
+  user:
+    dashboard: "Dashboard"
+    search_profiles: "Search Profiles"
+    matches: "My Matches"
+    profile: "My Profile"
+    
+    # Dashboard
+    dashboard_title: "My Dashboard"
+    welcome: "Welcome"
+    my_searches: "My Searches"
+    recent_matches: "Recent Matches"
+    create_search: "Create New Search"
+    view_matches: "View Matches"
+    new_search_profile: "New Search Profile"
+    complete_profile: "Complete Profile"
+    add_address: "Add Address"
+    track_progress: "Track your progress and activity"
+    profile_status: "Profile Status"
+    address_info: "Address Information"
+    my_matches: "My Matches"
+    complete_your_profile: "Complete Your Profile"
+    setup_account: "Set up your account information to get started"
+    required_for_search: "Required for search profiles"
+    location_matching: "Helps with location-based matching"
+    create_manage_profiles: "Create and manage profiles for people you're looking for"
+    created: "Created"
+    no_search_profiles: "No search profiles yet"
+    create_first_profile: "Create your first search profile to get started."
+    create_new_profile: "Create New Profile"
+    view_all: "View All"
+    
+    # Search Profiles
+    search_profiles_title: "My Search Profiles"
+    create_profile: "Create Profile"
+    edit_profile: "Edit Profile"
+    delete_profile: "Delete Profile"
+    search_for: "Searching for"
+    created_on: "Created on"
+    last_updated: "Last updated"
+    
+    # Matches
+    matches_title: "My Matches"
+    match_score: "Match Score"
+    contact_info: "Contact Information"
+    view_details: "View Details"
+    matched_profile: "Matched Profile"
+    created_by: "Created by"
+    no_personal_info: "No personal information available"
+    match_information: "Match Information"
+    similarity_score: "Similarity Score"
+    remove_match: "Remove Match"
+    confirm_remove_match: "Are you sure you want to remove this match"
+    back_to_matches: "Back to Matches"
+
+  # Forms
+  forms:
+    # Personal Info
+    personal_info: "Personal Information"
+    first_name: "First Name"
+    middle_name: "Middle Name"
+    last_name: "Last Name"
+    phone_number: "Phone Number"
+    profession: "Profession"
+    occupation: "Occupation"
+    personal_story: "Personal Story"
+    
+    # Address
+    address: "Address"
+    country: "Country"
+    state: "State/Province"
+    city: "City"
+    neighborhood: "Neighborhood"
+    
+    # Search Profile
+    search_profile: "Search Profile"
+    person_searching_for: "Person I'm searching for"
+    additional_info: "Additional Information"
+    
+    # Actions
+    save: "Save"
+    cancel: "Cancel"
+    submit: "Submit"
+    update: "Update"
+    delete: "Delete"
+    edit: "Edit"
+    create: "Create"
+    back: "Back"
+    
+    # Validation
+    required: "Required"
+    optional: "Optional"
+    
+    # Form Steps
+    next: "Next"
+    step_1_of_3: "Step 1 of 3"
+    step_2_of_3: "Step 2 of 3"
+    step_3_of_3: "Step 3 of 3"
+    street_address: "Street Address"
+    postal_code: "Postal Code"
+    
+  # Authentication
+  auth:
+    sign_in: "Sign In"
+    sign_up: "Sign Up"
+    sign_out: "Sign Out"
+    email: "Email"
+    password: "Password"
+    password_confirmation: "Confirm Password"
+    remember_me: "Remember me"
+    forgot_password: "Forgot your password?"
+    create_account: "Create Account"
+    have_account: "Already have an account?"
+    no_account: "Don't have an account?"
+    start_journey: "Start your journey to reconnect with family"
+    minimum_characters: "Minimum %{count} characters"
+    agree_terms: "By creating an account, you agree to our"
+    terms_service: "Terms of Service"
+    privacy_policy: "Privacy Policy"
+    connecting_families: "Connecting families across borders through technology"
+    access_account: "Access your account to continue"
+    create_new_account: "Create new account"
+    
+  # Messages
+  messages:
+    created_successfully: "Created successfully"
+    updated_successfully: "Updated successfully"
+    deleted_successfully: "Deleted successfully"
+    error_occurred: "An error occurred"
+    access_denied: "Access denied"
+    not_found: "Not found"
+    please_sign_in: "Please sign in"
+    
+  # General
+  general:
+    loading: "Loading..."
+    search: "Search"
+    filter: "Filter"
+    sort: "Sort"
+    show: "Show"
+    hide: "Hide"
+    yes: "Yes"
+    no: "No"
+    none: "None"
+    all: "All"
+    active: "Active"
+    complete: "Complete"
+    incomplete: "Incomplete"
+    needed: "Needed"
+    found: "Found"
+    ago: "ago"
+    and: "and"
+    more: "more"
+    edit: "Edit"
+    apply: "Apply"
+    view: "View"
+    close: "Close"
+    open: "Open"
+    confirm: "Confirm"
+    are_you_sure: "Are you sure?"
+    select: "Select"
+    or: "Or"

@@ -7,12 +7,12 @@
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <!-- Main Header Content -->
         <div class="flex-1">
-          <h1 class="text-3xl font-bold text-white mb-4">Match Management</h1>
-          <p class="text-purple-100 text-lg font-medium">Review and manage all matches in the system</p>
+          <h1 class="text-3xl font-bold text-white mb-4"><%= t('admin.matches_title') %></h1>
+          <p class="text-purple-100 text-lg font-medium"><%= t('admin.review_manage_matches') %></p>
           <p class="text-purple-200 text-sm mt-1 opacity-90">
-            <%= @stats[:total_matches] %> Total Matches • 
-            <%= @stats[:verified_matches] %> Verified • 
-            <%= @stats[:pending_matches] %> Pending Review
+            <%= @stats[:total_matches] %> <%= t('admin.total_matches') %> • 
+            <%= @stats[:verified_matches] %> <%= t('admin.verified') %> • 
+            <%= @stats[:pending_matches] %> <%= t('admin.pending_review') %>
           </p>
         </div>
       </div>
@@ -24,11 +24,11 @@
     <!-- Section Header -->
     <div class="flex items-center justify-between">
       <div>
-        <h2 class="text-2xl font-bold text-gray-900">System Overview</h2>
-        <p class="text-gray-600 mt-1">Key metrics and performance indicators</p>
+        <h2 class="text-2xl font-bold text-gray-900"><%= t('admin.system_overview') %></h2>
+        <p class="text-gray-600 mt-1"><%= t('admin.key_metrics') %></p>
       </div>
       <div class="text-sm text-gray-500">
-        Last updated <%= Time.current.strftime("%B %d, %Y at %I:%M %p") %>
+        <%= t('admin.last_updated') %> <%= Time.current.strftime("%B %d, %Y at %I:%M %p") %>
       </div>
     </div>
 
@@ -45,7 +45,7 @@
             </div>
           </div>
           <div class="ml-4 flex-1">
-            <p class="text-sm font-medium text-gray-600">Total Matches</p>
+            <p class="text-sm font-medium text-gray-600"><%= t('admin.total_matches') %></p>
             <p class="text-2xl font-bold text-gray-900"><%= @stats[:total_matches] %></p>
           </div>
         </div>
@@ -62,7 +62,7 @@
             </div>
           </div>
           <div class="ml-4 flex-1">
-            <p class="text-sm font-medium text-gray-600">Verified</p>
+            <p class="text-sm font-medium text-gray-600"><%= t('admin.verified') %></p>
             <div class="flex items-baseline">
               <p class="text-2xl font-bold text-gray-900"><%= @stats[:verified_matches] %></p>
               <% if @stats[:total_matches] > 0 %>
@@ -84,11 +84,11 @@
             </div>
           </div>
           <div class="ml-4 flex-1">
-            <p class="text-sm font-medium text-gray-600">Pending</p>
+            <p class="text-sm font-medium text-gray-600"><%= t('admin.pending') %></p>
             <div class="flex items-baseline">
               <p class="text-2xl font-bold text-gray-900"><%= @stats[:pending_matches] %></p>
               <% if @stats[:pending_matches] > 0 %>
-                <p class="ml-2 text-sm text-yellow-600">Needs Review</p>
+                <p class="ml-2 text-sm text-yellow-600"><%= t('admin.needs_review') %></p>
               <% end %>
             </div>
           </div>
@@ -106,7 +106,7 @@
             </div>
           </div>
           <div class="ml-4 flex-1">
-            <p class="text-sm font-medium text-gray-600">High Confidence</p>
+            <p class="text-sm font-medium text-gray-600"><%= t('admin.high_confidence') %></p>
             <p class="text-2xl font-bold text-gray-900"><%= @stats[:high_confidence_matches] %></p>
           </div>
         </div>
@@ -123,7 +123,7 @@
             </div>
           </div>
           <div class="ml-4 flex-1">
-            <p class="text-sm font-medium text-gray-600">Recent (7 days)</p>
+            <p class="text-sm font-medium text-gray-600"><%= t('admin.recent_7_days') %></p>
             <p class="text-2xl font-bold text-gray-900"><%= @stats[:recent_matches] %></p>
           </div>
         </div>
@@ -139,12 +139,12 @@
         <!-- Top Row: Title and Search -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h3 class="text-lg font-semibold text-gray-900">Match Management</h3>
+            <h3 class="text-lg font-semibold text-gray-900"><%= t('admin.matches_title') %></h3>
             <p class="text-sm text-gray-600 mt-1">
               <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800 mr-2 matches-count">
                 <%= @matches.count %>
               </span>
-              matches displayed
+              <%= t('admin.matches_displayed') %>
             </p>
           </div>
           
@@ -156,11 +156,11 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
               </div>
-              <input type="text" id="search" name="search" value="<%= params[:search] %>" placeholder="Search matches..."
+              <input type="text" id="search" name="search" value="<%= params[:search] %>" placeholder="<%= t('admin.search_matches') %>..."
                      class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-64 bg-white shadow-sm">
             </div>
             <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200 shadow-sm">
-              Search
+              <%= t('general.search') %>
             </button>
           </form>
         </div>
@@ -169,30 +169,30 @@
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-4 pt-4 border-t border-gray-200">
           <!-- Status Filter Pills -->
           <div class="flex items-center gap-2">
-            <span class="text-sm font-medium text-gray-700 mr-2">Status:</span>
+            <span class="text-sm font-medium text-gray-700 mr-2"><%= t('admin.status') %>:</span>
             <div class="flex items-center gap-2">
               <button type="button" data-filter="verified" data-value="" 
                       class="filter-button inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full transition-colors duration-200 #{params[:verified].blank? ? 'bg-blue-600 text-white shadow-sm' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}">
-                All
+                <%= t('general.all') %>
               </button>
               <button type="button" data-filter="verified" data-value="true" 
                       class="filter-button inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full transition-colors duration-200 #{params[:verified] == 'true' ? 'bg-green-600 text-white shadow-sm' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}">
-                Verified
+                <%= t('admin.verified') %>
               </button>
               <button type="button" data-filter="verified" data-value="false" 
                       class="filter-button inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full transition-colors duration-200 #{params[:verified] == 'false' ? 'bg-yellow-600 text-white shadow-sm' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}">
-                Pending
+                <%= t('admin.pending') %>
               </button>
             </div>
           </div>
 
           <!-- Score Filter -->
           <form id="score-filter-form" class="flex items-center gap-2">
-            <span class="text-sm font-medium text-gray-700">Min Score:</span>
+            <span class="text-sm font-medium text-gray-700"><%= t('admin.min_score') %>:</span>
             <input type="number" id="min_score" name="min_score" step="0.1" min="0" max="1" value="<%= params[:min_score] %>" placeholder="0.0" 
                    class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-20 bg-white shadow-sm">
             <button type="submit" class="inline-flex items-center px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors duration-200 shadow-sm">
-              Apply
+              <%= t('general.apply') %>
             </button>
           </form>
         </div>
@@ -205,7 +205,7 @@
         <div class="flex items-center justify-between">
           <div class="flex items-center">
             <span class="text-sm font-medium text-blue-900">
-              <span id="selected-count-bar">0</span> matches selected
+              <span id="selected-count-bar">0</span> <%= t('admin.matches_selected') %>
             </span>
           </div>
           <div class="flex items-center gap-3">
@@ -214,15 +214,15 @@
               <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
-              Verify Selected
+              <%= t('admin.verify_selected') %>
             </button>
             
-            <button type="submit" onclick="if(!confirm('Are you sure you want to reject the selected matches?')) return false; this.form.action='<%= bulk_reject_admin_matches_path %>'" 
+            <button type="submit" onclick="if(!confirm('<%= t('admin.confirm_reject_selected') %>')) return false; this.form.action='<%= bulk_reject_admin_matches_path %>'" 
                     class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors duration-200 shadow-sm">
               <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
               </svg>
-              Reject Selected
+              <%= t('admin.reject_selected') %>
             </button>
           </div>
         </div>
@@ -233,7 +233,7 @@
     <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
       <div class="flex items-center">
         <input type="checkbox" id="select_all" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2">
-        <label for="select_all" class="ml-3 text-sm font-medium text-gray-700">Select All</label>
+        <label for="select_all" class="ml-3 text-sm font-medium text-gray-700"><%= t('admin.select_all') %></label>
       </div>
     </div>
 
@@ -244,7 +244,7 @@
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
-        <span class="text-sm text-gray-600">Loading matches...</span>
+        <span class="text-sm text-gray-600"><%= t('admin.loading_matches') %>...</span>
       </div>
     </div>
 
@@ -258,12 +258,12 @@
               <th class="px-6 py-3 text-left">
                 <span class="sr-only">Select</span>
               </th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Seeker</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Found Person</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Similarity</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t('admin.date') %></th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t('admin.seeker') %></th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t('admin.found_person') %></th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t('admin.similarity') %></th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t('admin.status') %></th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t('admin.actions') %></th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
@@ -274,7 +274,7 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   <div class="font-medium"><%= match.created_at.strftime("%b %d, %Y") %></div>
-                  <div class="text-xs text-gray-500"><%= time_ago_in_words(match.created_at) %> ago</div>
+                  <div class="text-xs text-gray-500"><%= time_ago_in_words(match.created_at) %> <%= t('general.ago') %></div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
@@ -312,7 +312,7 @@
                         <span class="text-gray-500 text-xs">?</span>
                       </div>
                       <div class="ml-3">
-                        <span class="text-sm text-gray-400">No personal info</span>
+                        <span class="text-sm text-gray-400"><%= t('admin.no_personal_info') %></span>
                       </div>
                     </div>
                   <% end %>
@@ -328,11 +328,11 @@
                 <td class="px-6 py-4 whitespace-nowrap">
                   <% if match.is_verified? %>
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
-                      Verified
+                      <%= t('admin.verified') %>
                     </span>
                   <% else %>
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 border border-yellow-200">
-                      Pending
+                      <%= t('admin.pending') %>
                     </span>
                   <% end %>
                 </td>
@@ -343,7 +343,7 @@
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                     </svg>
-                    <span>View</span>
+                    <span><%= t('general.view') %></span>
                   <% end %>
                 </td>
               </tr>
@@ -356,7 +356,7 @@
       <% if respond_to?(:paginate) %>
         <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
           <div class="text-sm text-gray-700">
-            Showing matches for this page
+            <%= t('admin.showing_matches_page') %>
           </div>
           <div class="flex space-x-2">
             <%= paginate @matches %>
@@ -369,11 +369,11 @@
         <svg class="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
         </svg>
-        <h3 class="text-lg font-medium text-gray-900 mb-2">No Matches Found</h3>
+        <h3 class="text-lg font-medium text-gray-900 mb-2"><%= t('admin.no_matches_found') %></h3>
         <p class="text-gray-600 mb-6">
-          No matches have been generated yet. Create search profiles and run the matching algorithm to find potential connections.
+          <%= t('admin.no_matches_description') %>
         </p>
-        <%= link_to "View Search Profiles", search_profiles_path, 
+        <%= link_to t('admin.view_search_profiles'), search_profiles_path, 
             class: "inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200" %>
       </div>
     <% end %>

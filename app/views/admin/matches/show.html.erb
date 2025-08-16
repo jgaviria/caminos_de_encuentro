@@ -6,7 +6,7 @@
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
-        Back to Admin Matches
+        <%= t('admin.back_to_matches') %>
       <% end %>
     </div>
 
@@ -17,17 +17,17 @@
           <div class="flex-1">
             <div>
               <h1 class="text-3xl font-bold text-white mb-4">
-                Match Analysis #<%= @match.id %>
+                <%= t('admin.match_analysis') %> #<%= @match.id %>
               </h1>
-              <p class="text-white text-lg font-medium">Comprehensive matching criteria evaluation</p>
+              <p class="text-white text-lg font-medium"><%= t('admin.comprehensive_evaluation') %></p>
               <p class="text-white text-sm mt-1 opacity-90">
-                Review match quality and make verification decisions
+                <%= t('admin.review_quality') %>
               </p>
             </div>
           </div>
           <div class="flex items-center gap-3 mt-6 sm:mt-0">
             <div class="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
-              <div class="text-white text-sm font-medium">Similarity Score</div>
+              <div class="text-white text-sm font-medium"><%= t('admin.similarity_score') %></div>
               <div class="text-white text-2xl font-bold"><%= (@match.similarity_score * 100).round(1) %>%</div>
             </div>
           </div>
@@ -43,18 +43,18 @@
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
-                Verified Match
+                <%= t('admin.verified_match') %>
               </span>
             <% else %>
               <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-yellow-100 text-yellow-800 border border-yellow-200">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                Pending Review
+                <%= t('admin.pending_review') %>
               </span>
             <% end %>
             <span class="text-sm text-gray-600">
-              Created <%= @match.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+              <%= t('admin.created') %> <%= @match.created_at.strftime("%B %d, %Y at %I:%M %p") %>
             </span>
           </div>
           
@@ -65,16 +65,16 @@
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
-                Verify Match
+                <%= t('admin.verify_match') %>
               <% end %>
             <% end %>
             <%= button_to reject_admin_match_path(@match), method: :delete, 
-                data: { confirm: "Are you sure you want to reject this match?" },
+                data: { confirm: t('admin.confirm_reject_match') },
                 class: "inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm" do %>
               <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
               </svg>
-              Reject Match
+              <%= t('admin.reject_match') %>
             <% end %>
           </div>
         </div>
@@ -87,7 +87,7 @@
       <div class="xl:col-span-1">
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div class="text-center">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Overall Match Confidence</h3>
+            <h3 class="text-lg font-semibold text-gray-900 mb-4"><%= t('admin.overall_match_confidence') %></h3>
             <div class="relative w-40 h-40 mx-auto mb-6">
               <svg class="w-40 h-40 transform -rotate-90" viewBox="0 0 100 100">
                 <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="8" fill="transparent" class="text-gray-200"></circle>
@@ -100,13 +100,13 @@
               </div>
             </div>
             <div class="space-y-2">
-              <% confidence_level = @match.similarity_score >= 0.8 ? 'High' : @match.similarity_score >= 0.6 ? 'Medium' : 'Low' %>
+              <% confidence_level = @match.similarity_score >= 0.8 ? t('admin.high') : @match.similarity_score >= 0.6 ? t('admin.medium') : t('admin.low') %>
               <% confidence_color = @match.similarity_score >= 0.8 ? 'text-green-600' : @match.similarity_score >= 0.6 ? 'text-blue-600' : 'text-purple-600' %>
-              <div class="<%= confidence_color %> font-semibold text-lg"><%= confidence_level %> Confidence</div>
+              <div class="<%= confidence_color %> font-semibold text-lg"><%= confidence_level %> <%= t('admin.confidence') %></div>
               <div class="text-sm text-gray-600">
-                <%= confidence_level == 'High' ? 'Strong match - likely the same person' : 
-                    confidence_level == 'Medium' ? 'Moderate match - needs review' : 
-                    'Low match - may be different person' %>
+                <%= confidence_level == t('admin.high') ? t('admin.strong_match') : 
+                    confidence_level == t('admin.medium') ? t('admin.moderate_match') : 
+                    t('admin.low_match') %>
               </div>
             </div>
           </div>
@@ -116,7 +116,7 @@
       <!-- Detailed Matching Criteria -->
       <div class="xl:col-span-2">
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <h3 class="text-lg font-semibold text-gray-900 mb-6">Matching Criteria Breakdown</h3>
+          <h3 class="text-lg font-semibold text-gray-900 mb-6"><%= t('admin.matching_criteria_breakdown') %></h3>
           
           <!-- Name Analysis -->
           <div class="mb-6">
@@ -124,7 +124,7 @@
               <svg class="w-4 h-4 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
               </svg>
-              Name Comparison
+              <%= t('admin.name_comparison') %>
             </h4>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <% 
@@ -189,7 +189,7 @@
               <svg class="w-4 h-4 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
               </svg>
-              Location Comparison
+              <%= t('admin.location_comparison') %>
             </h4>
             <% if @search_profile.address && @matched_user&.address %>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -262,7 +262,7 @@
               <svg class="w-4 h-4 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
               </svg>
-              Additional Factors
+              <%= t('admin.additional_factors') %>
             </h4>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div class="bg-gray-50 rounded-lg p-4">
@@ -295,9 +295,9 @@
             <svg class="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
-            Search Profile (Seeker)
+            <%= t('admin.search_profile_seeker') %>
           </h3>
-          <p class="text-sm text-gray-600 mt-1">Person being searched for</p>
+          <p class="text-sm text-gray-600 mt-1"><%= t('admin.person_searched_for') %></p>
         </div>
         
         <div class="p-6 space-y-6">
@@ -351,9 +351,9 @@
             <svg class="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
             </svg>
-            Found Person
+            <%= t('admin.found_person') %>
           </h3>
-          <p class="text-sm text-gray-600 mt-1">Potential match from database</p>
+          <p class="text-sm text-gray-600 mt-1"><%= t('admin.potential_match') %></p>
         </div>
         
         <div class="p-6">
@@ -411,8 +411,8 @@
               <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
               </svg>
-              <h4 class="text-lg font-medium text-gray-400 mb-2">No Personal Information</h4>
-              <p class="text-sm text-gray-500">This user hasn't completed their personal profile yet</p>
+              <h4 class="text-lg font-medium text-gray-400 mb-2"><%= t('admin.no_personal_information') %></h4>
+              <p class="text-sm text-gray-500"><%= t('admin.profile_not_completed') %></p>
             </div>
           <% end %>
         </div>
@@ -428,7 +428,7 @@
           </svg>
         </div>
         <div class="ml-4 flex-1">
-          <h3 class="text-xl font-semibold text-gray-900 mb-4">Admin Review Guidelines</h3>
+          <h3 class="text-xl font-semibold text-gray-900 mb-4"><%= t('admin.review_guidelines') %></h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h4 class="text-sm font-semibold text-blue-800 uppercase tracking-wide mb-3">Primary Criteria</h4>

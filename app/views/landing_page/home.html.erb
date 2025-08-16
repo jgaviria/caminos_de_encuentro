@@ -10,8 +10,8 @@
             </svg>
           </div>
           <div>
-            <span class="text-xl font-bold text-gray-900 group-hover:text-indigo-600 transition-colors duration-200">Caminos de Encuentro</span>
-            <div class="text-xs text-gray-500 -mt-0.5">Reuniendo Familias</div>
+            <span class="text-xl font-bold text-gray-900 group-hover:text-indigo-600 transition-colors duration-200"><%= t('nav.title') %></span>
+            <div class="text-xs text-gray-500 -mt-0.5"><%= t('nav.subtitle') %></div>
           </div>
         </a>
       </div>
@@ -25,24 +25,34 @@
       </div>
       <div class="hidden lg:flex lg:gap-x-8">
         <a href="#servicios" class="relative text-sm font-semibold leading-6 text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md transition-all duration-200 group">
-          Servicios
+          <%= t('nav.services') %>
           <span class="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-indigo-500/0 via-indigo-500/40 to-indigo-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
         </a>
         <a href="#testimonios" class="relative text-sm font-semibold leading-6 text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md transition-all duration-200 group">
-          Testimonios
+          <%= t('nav.testimonials') %>
           <span class="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-indigo-500/0 via-indigo-500/40 to-indigo-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
         </a>
         <a href="#ayuda" class="relative text-sm font-semibold leading-6 text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md transition-all duration-200 group">
-          Ayuda
+          <%= t('nav.help') %>
           <span class="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-indigo-500/0 via-indigo-500/40 to-indigo-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
         </a>
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-x-4">
+        <!-- Language Toggle -->
+        <div class="flex items-center space-x-2 bg-gray-100 rounded-lg p-1">
+          <%= link_to url_for(locale: :es), class: "px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200 #{'bg-white text-gray-900 shadow-sm' if I18n.locale == :es} #{'text-gray-500 hover:text-gray-700' if I18n.locale != :es}" do %>
+            ES
+          <% end %>
+          <%= link_to url_for(locale: :en), class: "px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200 #{'bg-white text-gray-900 shadow-sm' if I18n.locale == :en} #{'text-gray-500 hover:text-gray-700' if I18n.locale != :en}" do %>
+            EN
+          <% end %>
+        </div>
+        
         <%= link_to new_user_session_path, class: "text-sm font-semibold leading-6 text-gray-700 hover:text-indigo-600 px-4 py-2 rounded-lg transition-all duration-200 hover:bg-gray-50" do %>
-          Entrar <span aria-hidden="true">→</span>
+          <%= t('nav.login') %> <span aria-hidden="true">→</span>
         <% end %>
         <%= link_to new_user_registration_path, class: "bg-indigo-600 text-white px-6 py-2.5 rounded-xl text-sm font-semibold shadow-lg hover:bg-indigo-700 transition-all duration-200" do %>
-          Empezar Búsqueda
+          <%= t('nav.start_search') %>
         <% end %>
       </div>
     </nav>
@@ -58,7 +68,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
               </svg>
             </div>
-            <span class="text-lg font-bold text-gray-900">Caminos</span>
+            <span class="text-lg font-bold text-gray-900"><%= t('nav.title') %></span>
           </a>
           <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700 hover:bg-gray-100 transition-colors" onclick="toggleMobileMenu()">
             <span class="sr-only">Close menu</span>
@@ -70,16 +80,26 @@
         <div class="mt-6 flow-root">
           <div class="-my-6 divide-y divide-gray-500/10">
             <div class="space-y-2 py-6">
-              <a href="#servicios" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-indigo-50 hover:text-indigo-600 transition-colors" onclick="toggleMobileMenu()">Servicios</a>
-              <a href="#testimonios" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-indigo-50 hover:text-indigo-600 transition-colors" onclick="toggleMobileMenu()">Testimonios</a>
-              <a href="#ayuda" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-indigo-50 hover:text-indigo-600 transition-colors" onclick="toggleMobileMenu()">Ayuda</a>
+              <a href="#servicios" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-indigo-50 hover:text-indigo-600 transition-colors" onclick="toggleMobileMenu()"><%= t('nav.services') %></a>
+              <a href="#testimonios" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-indigo-50 hover:text-indigo-600 transition-colors" onclick="toggleMobileMenu()"><%= t('nav.testimonials') %></a>
+              <a href="#ayuda" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-indigo-50 hover:text-indigo-600 transition-colors" onclick="toggleMobileMenu()"><%= t('nav.help') %></a>
             </div>
             <div class="py-6 space-y-3">
+              <!-- Mobile Language Toggle -->
+              <div class="flex items-center justify-center space-x-2 bg-gray-100 rounded-lg p-1 mx-3 mb-4">
+                <%= link_to url_for(locale: :es), class: "flex-1 px-3 py-2 text-sm font-medium rounded-md text-center transition-all duration-200 #{'bg-white text-gray-900 shadow-sm' if I18n.locale == :es} #{'text-gray-500 hover:text-gray-700' if I18n.locale != :es}" do %>
+                  Español
+                <% end %>
+                <%= link_to url_for(locale: :en), class: "flex-1 px-3 py-2 text-sm font-medium rounded-md text-center transition-all duration-200 #{'bg-white text-gray-900 shadow-sm' if I18n.locale == :en} #{'text-gray-500 hover:text-gray-700' if I18n.locale != :en}" do %>
+                  English
+                <% end %>
+              </div>
+              
               <%= link_to new_user_session_path, class: "-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 transition-colors" do %>
-                Entrar →
+                <%= t('nav.login') %> →
               <% end %>
               <%= link_to new_user_registration_path, class: "block rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-3 py-2.5 text-center text-base font-semibold text-white shadow-lg" do %>
-                Empezar Búsqueda
+                <%= t('nav.start_search') %>
               <% end %>
             </div>
           </div>
@@ -110,9 +130,9 @@
     <!-- Feature section -->
 <div class="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8">
   <div class="mx-auto max-w-2xl lg:text-center">
-    <h2 class="text-base font-semibold leading-7 text-indigo-600">Encuentra a tus seres queridos</h2>
-    <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Tecnología avanzada para ayudarte en la búsqueda</p>
-    <p class="mt-6 text-lg leading-8 text-gray-600">Utilizamos algoritmos de coincidencia, filtrado avanzado y protección de datos para ayudarte a reconectar con tus seres queridos desaparecidos.</p>
+    <h2 class="text-base font-semibold leading-7 text-indigo-600"><%= t('landing.features.title') %></h2>
+    <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"><%= t('landing.features.heading') %></p>
+    <p class="mt-6 text-lg leading-8 text-gray-600"><%= t('landing.features.description') %></p>
   </div>
   <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
     <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
@@ -126,9 +146,9 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" />
             </svg>
           </div>
-          Algoritmo de coincidencia avanzada
+          <%= t('landing.features.algorithm.title') %>
         </dt>
-        <dd class="mt-2 text-base leading-7 text-gray-600">Nuestro sistema analiza atributos físicos, fechas y ubicaciones para identificar coincidencias de alta precisión, agilizando la búsqueda de manera inteligente.</dd>
+        <dd class="mt-2 text-base leading-7 text-gray-600"><%= t('landing.features.algorithm.description') %></dd>
       </div>
       
       <!-- Filtro detallado de atributos -->
@@ -140,9 +160,9 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
             </svg>
           </div>
-          Filtro detallado de atributos
+          <%= t('landing.features.filter.title') %>
         </dt>
-        <dd class="mt-2 text-base leading-7 text-gray-600">Define criterios específicos como color de ojos, estatura o lugar de desaparición para obtener resultados más precisos.</dd>
+        <dd class="mt-2 text-base leading-7 text-gray-600"><%= t('landing.features.filter.description') %></dd>
       </div>
 
       <!-- Conexión con comunidades de búsqueda -->
@@ -154,9 +174,9 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
             </svg>
           </div>
-          Conexión con comunidades de búsqueda
+          <%= t('landing.features.community.title') %>
         </dt>
-        <dd class="mt-2 text-base leading-7 text-gray-600">Accede a redes de ayuda y grupos de apoyo que trabajan en la búsqueda de personas desaparecidas, fortaleciendo tus esfuerzos con el respaldo de una comunidad.</dd>
+        <dd class="mt-2 text-base leading-7 text-gray-600"><%= t('landing.features.community.description') %></dd>
       </div>
 
       <!-- Seguridad de datos avanzada -->
@@ -168,9 +188,9 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M7.864 4.243A7.5 7.5 0 0 1 19.5 10.5c0 2.92-.556 5.709-1.568 8.268M5.742 6.364A7.465 7.465 0 0 0 4.5 10.5a7.464 7.464 0 0 1-1.15 3.993m1.989 3.559A11.209 11.209 0 0 0 8.25 10.5a3.75 3.75 0 1 1 7.5 0c0 .527-.021 1.049-.064 1.565M12 10.5a14.94 14.94 0 0 1-3.6 9.75m6.633-4.596a18.666 18.666 0 0 1-2.485 5.33" />
             </svg>
           </div>
-          Seguridad de datos avanzada
+          <%= t('landing.features.security.title') %>
         </dt>
-        <dd class="mt-2 text-base leading-7 text-gray-600">Protegemos tus datos con encriptación de última generación, garantizando que la información compartida sea segura y esté bien resguardada.</dd>
+        <dd class="mt-2 text-base leading-7 text-gray-600"><%= t('landing.features.security.description') %></dd>
       </div>
     </dl>
   </div>
@@ -191,11 +211,11 @@
       <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="">
       <figure>
         <blockquote class="mt-6 text-lg font-light text-white sm:text-xl sm:leading-8 italic">
-          <p>"Aunque los años se desvanezcan como arena entre los dedos, la esperanza de un reencuentro sigue siendo el fuego que ilumina nuestros pasos en la oscuridad."</p>
+          <p>"<%= t('landing.testimonial.quote') %>"</p>
         </blockquote>
         <figcaption class="mt-6 text-base text-white">
-          <div class="font-semibold">— Pablo Neruda</div>
-          <div class="mt-1">Poeta y Premio Nobel de Literatura</div>
+          <div class="font-semibold">— <%= t('landing.testimonial.author') %></div>
+          <div class="mt-1"><%= t('landing.testimonial.title') %></div>
         </figcaption>
       </figure>
     </div>
@@ -206,10 +226,10 @@
 <div class="py-24 sm:pt-48">
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-4xl text-center">
-      <h2 class="text-base font-semibold leading-7 text-indigo-600">Planes de precios</h2>
-      <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Opciones para cada tipo de búsqueda</p>
+      <h2 class="text-base font-semibold leading-7 text-indigo-600"><%= t('landing.pricing.title') %></h2>
+      <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl"><%= t('landing.pricing.heading') %></p>
     </div>
-    <p class="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600">Explora los planes que mejor se ajusten a tus necesidades para ayudar a encontrar a tus seres queridos.</p>
+    <p class="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600"><%= t('landing.pricing.description') %></p>
     
     <div class="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-8">
       
@@ -217,126 +237,126 @@
       <div class="flex flex-col h-full rounded-3xl bg-white p-8 ring-1 ring-gray-200 xl:p-10">
         <div class="flex-1">
           <div class="flex items-center justify-between gap-x-4">
-            <h3 id="tier-individual" class="text-lg font-semibold leading-8 text-gray-900">Individual</h3>
+            <h3 id="tier-individual" class="text-lg font-semibold leading-8 text-gray-900"><%= t('landing.pricing.individual.title') %></h3>
           </div>
-          <p class="mt-4 text-sm leading-6 text-gray-600">Ideal para personas que buscan un ser querido con acceso básico.</p>
+          <p class="mt-4 text-sm leading-6 text-gray-600"><%= t('landing.pricing.individual.description') %></p>
           <p class="mt-6 flex items-baseline gap-x-1">
-            <span class="text-4xl font-bold tracking-tight text-gray-900">$15</span>
-            <span class="text-sm font-semibold leading-6 text-gray-600">/mes</span>
+            <span class="text-4xl font-bold tracking-tight text-gray-900"><%= t('landing.pricing.individual.price') %></span>
+            <span class="text-sm font-semibold leading-6 text-gray-600"><%= t('landing.pricing.individual.period') %></span>
           </p>
           <ul role="list" class="mt-8 space-y-3 text-sm leading-6 text-gray-600">
             <li class="flex gap-x-3">
               <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
               </svg>
-              5 búsquedas por mes
+              <%= t('landing.pricing.individual.feature1') %>
             </li>
             <li class="flex gap-x-3">
               <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
               </svg>
-              Filtros básicos de atributos
+              <%= t('landing.pricing.individual.feature2') %>
             </li>
             <li class="flex gap-x-3">
               <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
               </svg>
-              Soporte estándar (48 horas de respuesta)
+              <%= t('landing.pricing.individual.feature3') %>
             </li>
           </ul>
         </div>
-        <a href="#" aria-describedby="tier-individual" class="mt-8 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 transition-colors">Comprar plan</a>
+        <a href="#" aria-describedby="tier-individual" class="mt-8 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 transition-colors"><%= t('landing.pricing.individual.cta') %></a>
       </div>
       
       <!-- Plan Familiar -->
       <div class="flex flex-col h-full rounded-3xl bg-white p-8 ring-1 ring-gray-200 lg:z-10 xl:p-10 relative">
         <div class="absolute -top-5 left-1/2 transform -translate-x-1/2">
-          <span class="inline-flex items-center rounded-full bg-indigo-600 px-3 py-1 text-xs font-semibold text-white">Más popular</span>
+          <span class="inline-flex items-center rounded-full bg-indigo-600 px-3 py-1 text-xs font-semibold text-white"><%= t('landing.pricing.family.badge') %></span>
         </div>
         <div class="flex-1">
           <div class="flex items-center justify-between gap-x-4">
-            <h3 id="tier-familiar" class="text-lg font-semibold leading-8 text-indigo-600">Familiar</h3>
+            <h3 id="tier-familiar" class="text-lg font-semibold leading-8 text-indigo-600"><%= t('landing.pricing.family.title') %></h3>
           </div>
-          <p class="mt-4 text-sm leading-6 text-gray-600">Diseñado para familias que buscan apoyo en búsquedas múltiples.</p>
+          <p class="mt-4 text-sm leading-6 text-gray-600"><%= t('landing.pricing.family.description') %></p>
           <p class="mt-6 flex items-baseline gap-x-1">
-            <span class="text-4xl font-bold tracking-tight text-gray-900">$30</span>
-            <span class="text-sm font-semibold leading-6 text-gray-600">/mes</span>
+            <span class="text-4xl font-bold tracking-tight text-gray-900"><%= t('landing.pricing.family.price') %></span>
+            <span class="text-sm font-semibold leading-6 text-gray-600"><%= t('landing.pricing.family.period') %></span>
           </p>
           <ul role="list" class="mt-8 space-y-3 text-sm leading-6 text-gray-600">
             <li class="flex gap-x-3">
               <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
               </svg>
-              20 búsquedas por mes
+              <%= t('landing.pricing.family.feature1') %>
             </li>
             <li class="flex gap-x-3">
               <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
               </svg>
-              Filtros avanzados de atributos
+              <%= t('landing.pricing.family.feature2') %>
             </li>
             <li class="flex gap-x-3">
               <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
               </svg>
-              Soporte prioritario (24 horas de respuesta)
+              <%= t('landing.pricing.family.feature3') %>
             </li>
             <li class="flex gap-x-3">
               <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
               </svg>
-              Historial de búsquedas
+              <%= t('landing.pricing.family.feature4') %>
             </li>
           </ul>
         </div>
-        <a href="#" aria-describedby="tier-familiar" class="mt-8 block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 transition-colors">Comprar plan</a>
+        <a href="#" aria-describedby="tier-familiar" class="mt-8 block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 transition-colors"><%= t('landing.pricing.family.cta') %></a>
       </div>
       
       <!-- Plan Corporativo -->
       <div class="flex flex-col h-full rounded-3xl bg-white p-8 ring-1 ring-gray-200 xl:p-10">
         <div class="flex-1">
           <div class="flex items-center justify-between gap-x-4">
-            <h3 id="tier-empresarial" class="text-lg font-semibold leading-8 text-gray-900">Corporativo</h3>
+            <h3 id="tier-empresarial" class="text-lg font-semibold leading-8 text-gray-900"><%= t('landing.pricing.corporate.title') %></h3>
           </div>
-          <p class="mt-4 text-sm leading-6 text-gray-600">Para organizaciones dedicadas a la búsqueda y apoyo de varias personas.</p>
+          <p class="mt-4 text-sm leading-6 text-gray-600"><%= t('landing.pricing.corporate.description') %></p>
           <p class="mt-6 flex items-baseline gap-x-1">
-            <span class="text-4xl font-bold tracking-tight text-gray-900">$50</span>
-            <span class="text-sm font-semibold leading-6 text-gray-600">/mes</span>
+            <span class="text-4xl font-bold tracking-tight text-gray-900"><%= t('landing.pricing.corporate.price') %></span>
+            <span class="text-sm font-semibold leading-6 text-gray-600"><%= t('landing.pricing.corporate.period') %></span>
           </p>
           <ul role="list" class="mt-8 space-y-3 text-sm leading-6 text-gray-600">
             <li class="flex gap-x-3">
               <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
               </svg>
-              Búsquedas ilimitadas
+              <%= t('landing.pricing.corporate.feature1') %>
             </li>
             <li class="flex gap-x-3">
               <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
               </svg>
-              Filtros personalizados y algoritmos de coincidencia
+              <%= t('landing.pricing.corporate.feature2') %>
             </li>
             <li class="flex gap-x-3">
               <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
               </svg>
-              Soporte dedicado (respuesta en 1 hora)
+              <%= t('landing.pricing.corporate.feature3') %>
             </li>
             <li class="flex gap-x-3">
               <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
               </svg>
-              Acceso a estadísticas avanzadas
+              <%= t('landing.pricing.corporate.feature4') %>
             </li>
             <li class="flex gap-x-3">
               <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
               </svg>
-              Capacitación de uso y soporte técnico
+              <%= t('landing.pricing.corporate.feature5') %>
             </li>
           </ul>
         </div>
-        <a href="#" aria-describedby="tier-empresarial" class="mt-8 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 transition-colors">Comprar plan</a>
+        <a href="#" aria-describedby="tier-empresarial" class="mt-8 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 transition-colors"><%= t('landing.pricing.corporate.cta') %></a>
       </div>
     </div>
   </div>
@@ -345,47 +365,47 @@
 
     <!-- FAQs -->
     <div class="mx-auto max-w-2xl divide-y divide-gray-900/10 px-6 pb-8 sm:pb-24 sm:pt-12 lg:max-w-7xl lg:px-8 lg:pb-32">
-      <h2 class="text-2xl font-bold leading-10 tracking-tight text-gray-900">Preguntas Frecuentes</h2>
+      <h2 class="text-2xl font-bold leading-10 tracking-tight text-gray-900"><%= t('landing.faq.title') %></h2>
       <dl class="mt-10 space-y-8 divide-y divide-gray-900/10">
         <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
-          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">¿Cómo funciona Caminos de Encuentro?</dt>
+          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5"><%= t('landing.faq.how_it_works.question') %></dt>
           <dd class="mt-4 lg:col-span-7 lg:mt-0">
-            <p class="text-base leading-7 text-gray-600">Nuestra plataforma utiliza algoritmos avanzados de coincidencia para ayudarte a encontrar a tus seres queridos. Simplemente crea un perfil con los datos de la persona que buscas, y nuestro sistema comparará esta información con nuestra base de datos para encontrar posibles coincidencias.</p>
+            <p class="text-base leading-7 text-gray-600"><%= t('landing.faq.how_it_works.answer') %></p>
           </dd>
         </div>
 
         <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
-          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">¿Es segura mi información personal?</dt>
+          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5"><%= t('landing.faq.security.question') %></dt>
           <dd class="mt-4 lg:col-span-7 lg:mt-0">
-            <p class="text-base leading-7 text-gray-600">Absolutamente. Utilizamos encriptación de última generación y seguimos los más altos estándares de seguridad para proteger todos los datos. Tu información solo se utiliza para facilitar la búsqueda y nunca se comparte con terceros sin tu consentimiento explícito.</p>
+            <p class="text-base leading-7 text-gray-600"><%= t('landing.faq.security.answer') %></p>
           </dd>
         </div>
 
         <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
-          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">¿Cuánto tiempo toma encontrar a alguien?</dt>
+          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5"><%= t('landing.faq.time.question') %></dt>
           <dd class="mt-4 lg:col-span-7 lg:mt-0">
-            <p class="text-base leading-7 text-gray-600">El tiempo varía según cada caso. Algunas búsquedas pueden mostrar resultados inmediatamente si la persona ya está en nuestra base de datos, mientras que otras pueden tomar días, semanas o más tiempo. Nuestro sistema trabaja continuamente para aumentar las posibilidades de éxito.</p>
+            <p class="text-base leading-7 text-gray-600"><%= t('landing.faq.time.answer') %></p>
           </dd>
         </div>
 
         <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
-          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">¿Qué información necesito para crear una búsqueda?</dt>
+          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5"><%= t('landing.faq.information.question') %></dt>
           <dd class="mt-4 lg:col-span-7 lg:mt-0">
-            <p class="text-base leading-7 text-gray-600">Necesitas la mayor cantidad de información posible: nombre completo, fecha de nacimiento aproximada, características físicas, última ubicación conocida y cualquier otro detalle relevante. Mientras más información proporciones, más precisos serán los resultados.</p>
+            <p class="text-base leading-7 text-gray-600"><%= t('landing.faq.information.answer') %></p>
           </dd>
         </div>
 
         <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
-          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">¿Puedo cancelar mi plan en cualquier momento?</dt>
+          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5"><%= t('landing.faq.cancellation.question') %></dt>
           <dd class="mt-4 lg:col-span-7 lg:mt-0">
-            <p class="text-base leading-7 text-gray-600">Sí, puedes cancelar tu suscripción en cualquier momento desde tu panel de usuario. No hay contratos de permanencia ni penalizaciones por cancelación temprana. Tu acceso continuará hasta el final del período de facturación actual.</p>
+            <p class="text-base leading-7 text-gray-600"><%= t('landing.faq.cancellation.answer') %></p>
           </dd>
         </div>
 
         <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
-          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">¿Ofrecen soporte para casos internacionales?</dt>
+          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5"><%= t('landing.faq.international.question') %></dt>
           <dd class="mt-4 lg:col-span-7 lg:mt-0">
-            <p class="text-base leading-7 text-gray-600">Sí, trabajamos con una red global de organizaciones y bases de datos. Nuestro alcance se extiende más allá de las fronteras nacionales para ayudar en la búsqueda de personas que pueden haber migrado o estar en otros países.</p>
+            <p class="text-base leading-7 text-gray-600"><%= t('landing.faq.international.answer') %></p>
           </dd>
         </div>
       </dl>
@@ -423,13 +443,12 @@
               </svg>
             </div>
             <div>
-              <span class="text-xl font-bold text-white">Caminos de Encuentro</span>
-              <div class="text-sm text-gray-400 -mt-0.5">Reuniendo Familias</div>
+              <span class="text-xl font-bold text-white"><%= t('nav.title') %></span>
+              <div class="text-sm text-gray-400 -mt-0.5"><%= t('nav.subtitle') %></div>
             </div>
           </div>
           <p class="text-sm leading-6 text-gray-300">
-            Utilizamos tecnología avanzada para ayudar a reunir familias separadas por migración, conflictos o tragedias. 
-            Cada búsqueda es un paso hacia el reencuentro.
+            <%= t('footer.description') %>
           </p>
           <div class="flex space-x-6">
             <a href="#" class="text-gray-400 hover:text-gray-300 transition-colors">
@@ -457,72 +476,72 @@
         <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
           <div class="md:grid md:grid-cols-2 md:gap-8">
             <div>
-              <h3 class="text-sm font-semibold leading-6 text-white">Servicios</h3>
+              <h3 class="text-sm font-semibold leading-6 text-white"><%= t('footer.services.title') %></h3>
               <ul role="list" class="mt-6 space-y-4">
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Búsqueda de personas</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.services.search') %></a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Algoritmos de coincidencia</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.services.algorithms') %></a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Seguridad de datos</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.services.security') %></a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Red global</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.services.network') %></a>
                 </li>
               </ul>
             </div>
             <div class="mt-10 md:mt-0">
-              <h3 class="text-sm font-semibold leading-6 text-white">Soporte</h3>
+              <h3 class="text-sm font-semibold leading-6 text-white"><%= t('footer.support.title') %></h3>
               <ul role="list" class="mt-6 space-y-4">
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Centro de ayuda</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.support.help_center') %></a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Guías de uso</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.support.guides') %></a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Contacto</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.support.contact') %></a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Emergencias</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.support.emergency') %></a>
                 </li>
               </ul>
             </div>
           </div>
           <div class="md:grid md:grid-cols-2 md:gap-8">
             <div>
-              <h3 class="text-sm font-semibold leading-6 text-white">Recursos</h3>
+              <h3 class="text-sm font-semibold leading-6 text-white"><%= t('footer.resources.title') %></h3>
               <ul role="list" class="mt-6 space-y-4">
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Blog</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.resources.blog') %></a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Historias de éxito</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.resources.success_stories') %></a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Organizaciones aliadas</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.resources.partners') %></a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Recursos legales</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.resources.legal_resources') %></a>
                 </li>
               </ul>
             </div>
             <div class="mt-10 md:mt-0">
-              <h3 class="text-sm font-semibold leading-6 text-white">Legal</h3>
+              <h3 class="text-sm font-semibold leading-6 text-white"><%= t('footer.legal.title') %></h3>
               <ul role="list" class="mt-6 space-y-4">
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Política de privacidad</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.legal.privacy') %></a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Términos de servicio</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.legal.terms') %></a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Cookies</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.legal.cookies') %></a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Transparencia</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.legal.transparency') %></a>
                 </li>
               </ul>
             </div>
@@ -535,11 +554,11 @@
         <div class="md:flex md:items-center md:justify-between">
           <div class="flex space-x-6 md:order-2">
             <a href="#" class="text-gray-400 hover:text-gray-300 text-sm transition-colors">
-              Línea de ayuda: +57 (1) 800-FAMILIAS
+              <%= t('footer.help_line') %>
             </a>
           </div>
           <p class="mt-8 text-xs leading-5 text-gray-400 md:order-1 md:mt-0">
-            &copy; 2024 Caminos de Encuentro. Todos los derechos reservados. Una iniciativa para reunir familias.
+            <%= t('footer.copyright') %>
           </p>
         </div>
       </div>
