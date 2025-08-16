@@ -7,16 +7,45 @@ Rails.application.routes.draw do
     root to: "dashboards#show", as: :authenticated_root
   end
 
-  get 'dashboard', to: 'dashboards#show', as: :dashboard
-  
   unauthenticated do
     root to: "landing_page#home", as: :unauthenticated_root
   end
 
+  # General root route fallback
+  root to: "dashboards#show"
+
+  get "dashboard", to: "dashboards#show", as: :dashboard
+
+  resources :search_profiles, only: [ :index ] do
+    member do
+      post "match"
+    end
+  end
+
+  resources :matches, only: [:index, :show, :destroy] do
+    member do
+      patch 'verify'
+    end
+  end
+  
+  namespace :admin do
+    resources :matches do
+      collection do
+        post 'bulk_verify'
+        post 'bulk_reject'
+        get 'export'
+      end
+      member do
+        patch 'verify'
+        delete 'reject'
+      end
+    end
+  end
+
   # Resourceful routes for personal information, addresses, and search profiles
-  resource :personal_info, only: [:new, :create, :edit, :update]
-  resource :address, only: [:new, :create, :edit, :update]
-  resources :search_profiles, only: [:new, :create, :edit, :update]
+  resource :personal_info, only: [ :new, :create, :edit, :update ]
+  resource :address, only: [ :new, :create, :edit, :update ]
+  resources :search_profiles, only: [ :new, :create, :edit, :update ]
 
   # Health check route
   get "up", to: "rails/health#show", as: :rails_health_check

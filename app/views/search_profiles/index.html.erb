@@ -1,0 +1,178 @@
+<!-- Search Profiles Index -->
+<div class="space-y-6">
+  <!-- Page Header -->
+  <%= render 'shared/page_header', 
+      title: 'Search Profiles', 
+      description: 'Manage and create search profiles for people you are looking for',
+      action_text: 'Create New Profile',
+      action_url: new_search_profile_path %>
+
+  <!-- Statistics Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <%= render 'shared/stat_card', 
+        title: 'Total Profiles', 
+        value: @search_profiles.count, 
+        icon: 'users', 
+        color: 'blue' %>
+    
+    <%= render 'shared/stat_card', 
+        title: 'Your Profiles', 
+        value: @search_profiles.where(user: current_user).count, 
+        icon: 'heart', 
+        color: 'green' %>
+    
+    <%= render 'shared/stat_card', 
+        title: 'Recent Profiles', 
+        value: @search_profiles.where('created_at >= ?', 1.week.ago).count, 
+        icon: 'calendar', 
+        color: 'purple' %>
+    
+    <% if current_user.admin? %>
+      <%= render 'shared/stat_card', 
+          title: 'Total Matches', 
+          value: Match.count, 
+          icon: 'target', 
+          color: 'indigo' %>
+    <% else %>
+      <%= render 'shared/stat_card', 
+          title: 'Completed Setup', 
+          value: (current_user.personal_info && current_user.address) ? 'Yes' : 'No', 
+          icon: 'check', 
+          color: (current_user.personal_info && current_user.address) ? 'green' : 'yellow' %>
+    <% end %>
+  </div>
+
+  <!-- Search Profiles Grid -->
+  <% if @search_profiles.any? %>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h3 class="text-lg font-medium text-gray-900">All Search Profiles</h3>
+        <p class="text-sm text-gray-600 mt-1">Browse and manage search profiles</p>
+      </div>
+      
+      <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% @search_profiles.each do |profile| %>
+            <div class="bg-gray-50 rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-200">
+              <div class="p-6">
+                <!-- Profile Header -->
+                <div class="flex items-center mb-4">
+                  <div class="h-12 w-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                    <span class="text-white font-medium text-lg">
+                      <%= profile.first_name.first.upcase %>
+                    </span>
+                  </div>
+                  <div class="ml-4">
+                    <h4 class="text-lg font-medium text-gray-900">
+                      <%= profile.first_name %>
+                      <% if profile.middle_name.present? %>
+                        <%= profile.middle_name %>
+                      <% end %>
+                      <%= profile.last_name %>
+                    </h4>
+                    <p class="text-sm text-gray-500">
+                      Search Profile
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Profile Details -->
+                <div class="space-y-3 mb-6">
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-500">Created by:</span>
+                    <span class="text-sm font-medium text-gray-900">
+                      <% if profile.user == current_user %>
+                        You
+                      <% else %>
+                        <%= profile.user.email %>
+                      <% end %>
+                    </span>
+                  </div>
+                  
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-500">Created:</span>
+                    <span class="text-sm text-gray-900">
+                      <%= time_ago_in_words(profile.created_at) %> ago
+                    </span>
+                  </div>
+
+                  <% if profile.address %>
+                    <div class="flex items-center justify-between">
+                      <span class="text-sm text-gray-500">Location:</span>
+                      <span class="text-sm text-gray-900">
+                        <%= [profile.address.city, profile.address.state].compact.join(", ") %>
+                      </span>
+                    </div>
+                  <% end %>
+
+                  <!-- Ownership indicator -->
+                  <% if profile.user == current_user %>
+                    <%= render 'shared/status_badge', status: 'success', text: 'Your Profile' %>
+                  <% elsif current_user.admin? %>
+                    <%= render 'shared/status_badge', status: 'info', text: 'User Profile' %>
+                  <% end %>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex space-x-3">
+                  <% if profile.user == current_user %>
+                    <%= link_to "Edit", edit_search_profile_path(profile), 
+                        class: "flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium text-center transition-colors duration-200" %>
+                  <% end %>
+                  
+                  <% if current_user.admin? %>
+                    <%= button_to "Run Match", match_search_profile_path(profile), method: :post,
+                        confirm: "This will start the matching process for #{profile.first_name} #{profile.last_name}. Continue?",
+                        class: "flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200" %>
+                  <% else %>
+                    <div class="flex-1 bg-gray-300 text-gray-500 px-4 py-2 rounded-lg text-sm font-medium text-center cursor-not-allowed">
+                      Admin Only
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <!-- Empty State -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+      <div class="px-6 py-12 text-center">
+        <svg class="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">No Search Profiles Yet</h3>
+        <p class="text-gray-600 mb-6">
+          Get started by creating your first search profile for someone you're looking for.
+        </p>
+        <%= link_to "Create Your First Profile", new_search_profile_path, 
+            class: "inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200" %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Help Section -->
+  <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+    <div class="flex items-start">
+      <div class="flex-shrink-0">
+        <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+      </div>
+      <div class="ml-3">
+        <h3 class="text-sm font-medium text-blue-900">How Search Profiles Work</h3>
+        <div class="mt-2 text-sm text-blue-800">
+          <p>Search profiles contain information about people you're looking for. 
+          <% if current_user.admin? %>
+            As an admin, you can run matching algorithms to find potential connections between search profiles and registered users.
+          <% else %>
+            Our administrators use advanced algorithms to find potential matches and will contact you if any are found.
+          <% end %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

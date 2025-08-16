@@ -1,0 +1,421 @@
+<!-- Admin Matches Management -->
+<div class="space-y-8">
+  <!-- Enhanced Admin Header -->
+  <div class="relative bg-gradient-to-r from-purple-600 via-purple-700 to-indigo-700 rounded-2xl shadow-xl overflow-hidden">
+    
+    <div class="relative px-6 py-10 sm:px-10 sm:py-12">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <!-- Main Header Content -->
+        <div class="flex-1">
+          <h1 class="text-3xl font-bold text-white mb-4">Match Management</h1>
+          <p class="text-purple-100 text-lg font-medium">Review and manage all matches in the system</p>
+          <p class="text-purple-200 text-sm mt-1 opacity-90">
+            <%= @stats[:total_matches] %> Total Matches • 
+            <%= @stats[:verified_matches] %> Verified • 
+            <%= @stats[:pending_matches] %> Pending Review
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enhanced Statistics Section -->
+  <div class="space-y-6">
+    <!-- Section Header -->
+    <div class="flex items-center justify-between">
+      <div>
+        <h2 class="text-2xl font-bold text-gray-900">System Overview</h2>
+        <p class="text-gray-600 mt-1">Key metrics and performance indicators</p>
+      </div>
+      <div class="text-sm text-gray-500">
+        Last updated <%= Time.current.strftime("%B %d, %Y at %I:%M %p") %>
+      </div>
+    </div>
+
+    <!-- Enhanced Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+      <!-- Total Matches -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-200">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="ml-4 flex-1">
+            <p class="text-sm font-medium text-gray-600">Total Matches</p>
+            <p class="text-2xl font-bold text-gray-900"><%= @stats[:total_matches] %></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Verified -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-200">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="ml-4 flex-1">
+            <p class="text-sm font-medium text-gray-600">Verified</p>
+            <div class="flex items-baseline">
+              <p class="text-2xl font-bold text-gray-900"><%= @stats[:verified_matches] %></p>
+              <% if @stats[:total_matches] > 0 %>
+                <p class="ml-2 text-sm text-green-600"><%= ((@stats[:verified_matches].to_f / @stats[:total_matches]) * 100).round(1) %>%</p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-200">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="ml-4 flex-1">
+            <p class="text-sm font-medium text-gray-600">Pending</p>
+            <div class="flex items-baseline">
+              <p class="text-2xl font-bold text-gray-900"><%= @stats[:pending_matches] %></p>
+              <% if @stats[:pending_matches] > 0 %>
+                <p class="ml-2 text-sm text-yellow-600">Needs Review</p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- High Confidence -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-200">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="ml-4 flex-1">
+            <p class="text-sm font-medium text-gray-600">High Confidence</p>
+            <p class="text-2xl font-bold text-gray-900"><%= @stats[:high_confidence_matches] %></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-200">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="ml-4 flex-1">
+            <p class="text-sm font-medium text-gray-600">Recent (7 days)</p>
+            <p class="text-2xl font-bold text-gray-900"><%= @stats[:recent_matches] %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table with Integrated Filters and Actions -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <!-- Table Header with Filters -->
+    <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
+        <!-- Left side: Title and count -->
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900">Match Results</h3>
+          <p class="text-sm text-gray-600">Found <%= @matches.count %> matches</p>
+        </div>
+        
+        <!-- Right side: Filters -->
+        <%= form_with url: admin_matches_path, method: :get, local: true, class: "flex flex-col sm:flex-row gap-3" do |form| %>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <%= form.select :verified, options_for_select([
+              ['All Matches', ''],
+              ['Verified Only', 'true'],
+              ['Pending Only', 'false']
+            ], params[:verified]), { prompt: 'Filter by status' }, { class: "px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" } %>
+            
+            <%= form.number_field :min_score, step: 0.1, min: 0, max: 1, value: params[:min_score], placeholder: "Min score", class: "px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+            
+            <%= form.submit "Filter", class: "px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors duration-200" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Bulk Actions Bar -->
+    <%= form_with url: bulk_verify_admin_matches_path, method: :post, local: true, id: "bulk_form" do |form| %>
+      <div class="px-6 py-3 bg-amber-50 border-b border-amber-200" id="bulk-actions-bar" style="display: none;">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <span class="text-sm font-medium text-amber-800">
+              <span id="selected-count-bar">0</span> matches selected
+            </span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <button type="submit" onclick="this.form.action='<%= bulk_verify_admin_matches_path %>'" 
+                    class="inline-flex items-center px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-md transition-colors duration-200">
+              <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Verify
+            </button>
+            
+            <button type="submit" onclick="if(!confirm('Are you sure you want to reject the selected matches?')) return false; this.form.action='<%= bulk_reject_admin_matches_path %>'" 
+                    class="inline-flex items-center px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md transition-colors duration-200">
+              <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+              Reject
+            </button>
+            
+            <%= link_to export_admin_matches_path(format: :csv), 
+                class: "inline-flex items-center px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md transition-colors duration-200" do %>
+              <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              Export
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Select All Header -->
+    <div class="px-6 py-3 border-b border-gray-200 bg-gray-50">
+      <div class="flex items-center">
+        <input type="checkbox" id="select_all" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+        <label for="select_all" class="ml-2 text-sm font-medium text-gray-700">Select All</label>
+      </div>
+    </div>
+
+    <!-- Table Content -->
+    <% if @matches.any? %>
+      <div class="overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left">
+                <span class="sr-only">Select</span>
+              </th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Match</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Seeker</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Found Person</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Similarity</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <% @matches.each do |match| %>
+              <tr class="hover:bg-gray-50 transition-colors duration-150">
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <input type="checkbox" name="match_ids[]" value="<%= match.id %>" class="match_checkbox rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="flex items-center">
+                    <div class="h-8 w-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                      <span class="text-white text-xs font-medium">#</span>
+                    </div>
+                    <div class="ml-3">
+                      <div class="text-sm font-medium text-gray-900">#<%= match.id %></div>
+                      <div class="text-xs text-gray-500"><%= time_ago_in_words(match.created_at) %> ago</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="flex items-center">
+                    <div class="h-8 w-8 bg-green-500 rounded-full flex items-center justify-center">
+                      <span class="text-white text-xs font-medium">
+                        <%= match.search_profile.first_name.first.upcase %>
+                      </span>
+                    </div>
+                    <div class="ml-3">
+                      <div class="text-sm font-medium text-gray-900">
+                        <%= match.search_profile.first_name %> <%= match.search_profile.last_name %>
+                      </div>
+                      <div class="text-xs text-gray-500"><%= match.search_profile.user.email %></div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <% if match.user&.personal_info %>
+                    <div class="flex items-center">
+                      <div class="h-8 w-8 bg-purple-500 rounded-full flex items-center justify-center">
+                        <span class="text-white text-xs font-medium">
+                          <%= match.user.personal_info.first_name.first.upcase %>
+                        </span>
+                      </div>
+                      <div class="ml-3">
+                        <div class="text-sm font-medium text-gray-900">
+                          <%= match.user.personal_info.first_name %> <%= match.user.personal_info.last_name %>
+                        </div>
+                        <div class="text-xs text-gray-500"><%= match.user.email %></div>
+                      </div>
+                    </div>
+                  <% else %>
+                    <div class="flex items-center">
+                      <div class="h-8 w-8 bg-gray-300 rounded-full flex items-center justify-center">
+                        <span class="text-gray-500 text-xs">?</span>
+                      </div>
+                      <div class="ml-3">
+                        <span class="text-sm text-gray-400">No personal info</span>
+                      </div>
+                    </div>
+                  <% end %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="flex items-center">
+                    <div class="w-20 bg-gray-200 rounded-full h-2 mr-3">
+                      <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300" style="width: <%= (match.similarity_score * 100).round(1) %>%"></div>
+                    </div>
+                    <span class="text-sm font-medium text-gray-900"><%= (match.similarity_score * 100).round(1) %>%</span>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <%= render 'shared/status_badge', 
+                      status: match.is_verified? ? 'success' : 'pending',
+                      text: match.is_verified? ? 'Verified' : 'Pending' %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <%= match.created_at.strftime("%b %d, %Y") %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="flex space-x-2">
+                    <!-- View Button -->
+                    <%= link_to admin_match_path(match), 
+                        class: "inline-flex items-center px-3 py-1.5 bg-blue-100 hover:bg-blue-200 text-blue-700 text-xs font-medium rounded-lg transition-colors duration-200" do %>
+                      <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                      </svg>
+                      View
+                    <% end %>
+                    
+                    <!-- Verify Button (only for unverified) -->
+                    <% unless match.is_verified? %>
+                      <%= link_to verify_admin_match_path(match), method: :patch, 
+                          class: "inline-flex items-center px-3 py-1.5 bg-green-100 hover:bg-green-200 text-green-700 text-xs font-medium rounded-lg transition-colors duration-200" do %>
+                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Verify
+                      <% end %>
+                    <% end %>
+                    
+                    <!-- Reject Button -->
+                    <%= link_to reject_admin_match_path(match), method: :delete, 
+                        confirm: "Are you sure you want to reject this match?", 
+                        class: "inline-flex items-center px-3 py-1.5 bg-red-100 hover:bg-red-200 text-red-700 text-xs font-medium rounded-lg transition-colors duration-200" do %>
+                      <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                      </svg>
+                      Reject
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <% if respond_to?(:paginate) %>
+        <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+          <div class="text-sm text-gray-700">
+            Showing matches for this page
+          </div>
+          <div class="flex space-x-2">
+            <%= paginate @matches %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <!-- Empty State -->
+      <div class="px-6 py-12 text-center">
+        <svg class="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+        </svg>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">No Matches Found</h3>
+        <p class="text-gray-600 mb-6">
+          No matches have been generated yet. Create search profiles and run the matching algorithm to find potential connections.
+        </p>
+        <%= link_to "View Search Profiles", search_profiles_path, 
+            class: "inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  // Enhanced checkbox handling with bulk actions bar
+  function updateSelectionCounter() {
+    const checkboxes = document.querySelectorAll('.match_checkbox');
+    const checkedBoxes = document.querySelectorAll('.match_checkbox:checked');
+    const bulkActionsBar = document.getElementById('bulk-actions-bar');
+    const counterBar = document.getElementById('selected-count-bar');
+    
+    // Update counter and show/hide bulk actions bar
+    if (counterBar) {
+      counterBar.textContent = checkedBoxes.length;
+    }
+    
+    if (bulkActionsBar) {
+      if (checkedBoxes.length > 0) {
+        bulkActionsBar.style.display = 'block';
+      } else {
+        bulkActionsBar.style.display = 'none';
+      }
+    }
+    
+    // Update select all checkbox state
+    const selectAllCheckbox = document.getElementById('select_all');
+    if (selectAllCheckbox) {
+      if (checkedBoxes.length === 0) {
+        selectAllCheckbox.indeterminate = false;
+        selectAllCheckbox.checked = false;
+      } else if (checkedBoxes.length === checkboxes.length) {
+        selectAllCheckbox.indeterminate = false;
+        selectAllCheckbox.checked = true;
+      } else {
+        selectAllCheckbox.indeterminate = true;
+        selectAllCheckbox.checked = false;
+      }
+    }
+  }
+
+  // Handle select all checkbox
+  document.getElementById('select_all')?.addEventListener('change', function() {
+    const checkboxes = document.querySelectorAll('.match_checkbox');
+    checkboxes.forEach(checkbox => {
+      checkbox.checked = this.checked;
+    });
+    updateSelectionCounter();
+  });
+
+  // Handle individual checkboxes
+  document.querySelectorAll('.match_checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', updateSelectionCounter);
+  });
+
+  // Initialize counter on page load
+  document.addEventListener('DOMContentLoaded', updateSelectionCounter);
+</script>

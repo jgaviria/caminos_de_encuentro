@@ -4,7 +4,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
          
-         has_one :personal_info, dependent: :destroy
-         has_one :address, dependent: :destroy
-         has_many :search_profiles, dependent: :destroy
+  has_one :personal_info, dependent: :destroy
+  has_one :address, dependent: :destroy
+  has_many :search_profiles, dependent: :destroy
+  has_many :matches
+  
+  # Admin functionality
+  def admin?
+    admin == true
+  end
 end

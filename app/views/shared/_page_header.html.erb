@@ -1,0 +1,58 @@
+<%
+  # Page header component with title, description and actions
+  # Usage: <%= render 'shared/page_header', title: 'Search Profiles', description: 'Manage your search profiles', action_text: 'New Profile', action_url: new_search_profile_path %>
+  
+  title = local_assigns.fetch(:title, 'Page Title')
+  description = local_assigns.fetch(:description, nil)
+  action_text = local_assigns.fetch(:action_text, nil)
+  action_url = local_assigns.fetch(:action_url, nil)
+  action_icon = local_assigns.fetch(:action_icon, nil)
+  search = local_assigns.fetch(:search, false)
+  search_url = local_assigns.fetch(:search_url, nil)
+  search_placeholder = local_assigns.fetch(:search_placeholder, 'Search...')
+%>
+
+<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+    <div class="mb-4 sm:mb-0">
+      <h1 class="text-2xl font-semibold text-gray-900"><%= local_assigns.fetch(:title, 'Page Title') %></h1>
+      <% if local_assigns.fetch(:description, nil) %>
+        <p class="text-gray-600 mt-1"><%= local_assigns.fetch(:description, nil) %></p>
+      <% end %>
+    </div>
+    
+    <div class="flex flex-col sm:flex-row gap-3">
+      <% if local_assigns.fetch(:search, false) && local_assigns.fetch(:search_url, nil) %>
+        <%= form_with url: local_assigns.fetch(:search_url, nil), method: :get, local: true, class: "flex items-center" do |form| %>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+            </div>
+            <%= form.text_field :search, 
+                placeholder: local_assigns.fetch(:search_placeholder, 'Search...'),
+                value: params[:search],
+                class: "pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm" %>
+          </div>
+          <%= form.submit "Search", class: "ml-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 text-sm font-medium transition-colors duration-200" %>
+        <% end %>
+      <% end %>
+      
+      <% if local_assigns.fetch(:action_text, nil) && local_assigns.fetch(:action_url, nil) %>
+        <%= link_to local_assigns.fetch(:action_url, nil), class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium text-sm transition-colors duration-200" do %>
+          <% if local_assigns.fetch(:action_icon, nil) %>
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <%= local_assigns.fetch(:action_icon, nil).html_safe %>
+            </svg>
+          <% else %>
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+          <% end %>
+          <%= local_assigns.fetch(:action_text, nil) %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

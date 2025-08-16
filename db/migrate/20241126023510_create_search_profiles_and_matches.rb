@@ -11,7 +11,7 @@ class CreateSearchProfilesAndMatches < ActiveRecord::Migration[7.0]
 
     create_table :matches do |t|
       t.references :search_profile, null: false, foreign_key: true
-      t.uuid :matched_user_id, null: false
+      t.references :user, null: true, foreign_key: true # For the seeker's address
       t.float :similarity_score, default: 0.0
       t.boolean :is_verified, default: false
 

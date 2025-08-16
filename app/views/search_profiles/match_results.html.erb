@@ -1,0 +1,23 @@
+<!-- app/views/search_profiles/match_results.html.erb -->
+
+<div class="container mx-auto py-8">
+  <h2 class="text-2xl font-bold mb-6">Match Results for <%= @profile.first_name %> <%= @profile.last_name %></h2>
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-200">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="py-2 px-4 border-b">Matched Profile</th>
+          <th class="py-2 px-4 border-b">Similarity Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @matches.each do |match| %>
+          <tr>
+            <td class="py-2 px-4 border-b"><%= match.matched_profile.first_name %> <%= match.matched_profile.last_name %></td>
+            <td class="py-2 px-4 border-b"><%= match.similarity_score %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

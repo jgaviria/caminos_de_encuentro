@@ -1,57 +1,418 @@
-<!-- app/views/dashboards/show.html.erb -->
-<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-md w-full space-y-8">
-    <div>
-      <img
-        class="mx-auto h-12 w-auto"
-        src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-        alt="Workflow"
-      />
-      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-        Caminos de Encuentro
-      </h2>
+<!-- Dashboard -->
+<div class="space-y-8">
+  <!-- Enhanced Welcome Header with User Context -->
+  <div class="relative bg-gradient-to-r from-blue-600 via-blue-700 to-purple-700 rounded-2xl shadow-xl overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-10">
+      <svg class="h-full w-full" fill="currentColor" viewBox="0 0 100 100">
+        <defs>
+          <pattern id="hero-pattern" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1"/>
+          </pattern>
+        </defs>
+        <rect width="100" height="100" fill="url(#hero-pattern)"/>
+      </svg>
     </div>
-    <div class="mt-8 space-y-6">
-      <!-- Personal Information Button -->
-      <div>
-        <button
-          type="button"
-          onclick="window.location.href='<%= new_personal_info_path %>'"
-          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >
-          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-            <i class="fas fa-user"></i>
-          </span>
-          Complete Personal Information
-        </button>
-      </div>
-      <!-- Address Information Button -->
-      <div>
-        <button
-          type="button"
-          onclick="window.location.href='<%= new_address_path %>'"
-          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >
-          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-            <i class="fas fa-map-marker-alt"></i>
-          </span>
-          Complete Address Information
-        </button>
-      </div>
-      <!-- Search Profile Button -->
-      <div>
-        <button
-          type="button"
-          onclick="window.location.href='<%= new_search_profile_path %>'"
-          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >
-          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-            <i class="fas fa-search"></i>
-          </span>
-          Complete Search Profile
-        </button>
+    
+    <div class="relative px-6 py-10 sm:px-10 sm:py-12">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <!-- Main Welcome Content -->
+        <div class="flex-1">
+          <div class="flex items-center mb-4">
+            <div class="h-16 w-16 bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+              <svg class="h-10 w-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+            </div>
+            <div class="ml-6">
+              <div class="flex items-center space-x-3 mb-2">
+                <h1 class="text-3xl font-bold text-white">
+                  Welcome back<% if current_user.personal_info %>, <%= current_user.personal_info.first_name %><% end %>
+                </h1>
+                <% if current_user.admin? %>
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-500 bg-opacity-20 text-purple-100 border border-purple-300 border-opacity-30">
+                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                    Administrator
+                  </span>
+                <% end %>
+              </div>
+              <p class="text-blue-100 text-lg font-medium">Reuniting families, one search at a time</p>
+              <p class="text-blue-200 text-sm mt-1 opacity-90">
+                <% profile_completion = [(current_user.personal_info ? 1 : 0), (current_user.address ? 1 : 0)].sum %>
+                Profile <%= profile_completion == 2 ? 'Complete' : "#{(profile_completion * 50).to_i}% Complete" %> •
+                <%= pluralize(current_user.search_profiles.count, 'Search Profile') %> Created
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Quick Action Button -->
+        <div class="mt-6 sm:mt-0 sm:ml-8 flex-shrink-0">
+          <% if current_user.personal_info && current_user.address %>
+            <%= link_to new_search_profile_path, class: "inline-flex items-center px-6 py-3 bg-white bg-opacity-20 backdrop-blur-sm hover:bg-opacity-30 text-white font-semibold rounded-xl transition-all duration-200 border border-white border-opacity-30" do %>
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+              </svg>
+              New Search Profile
+            <% end %>
+          <% elsif !current_user.personal_info %>
+            <%= link_to new_personal_info_path, class: "inline-flex items-center px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-yellow-900 font-semibold rounded-xl transition-all duration-200 shadow-lg" do %>
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+              Complete Profile
+            <% end %>
+          <% else %>
+            <%= link_to new_address_path, class: "inline-flex items-center px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-yellow-900 font-semibold rounded-xl transition-all duration-200 shadow-lg" do %>
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+              </svg>
+              Add Address
+            <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
+  <!-- Enhanced Statistics Section -->
+  <div class="space-y-6">
+    <!-- Section Header -->
+    <div class="flex items-center justify-between">
+      <div>
+        <h2 class="text-2xl font-bold text-gray-900">Your Dashboard</h2>
+        <p class="text-gray-600 mt-1">Track your progress and activity</p>
+      </div>
+      <div class="text-sm text-gray-500">
+        Last updated <%= Time.current.strftime("%B %d, %Y") %>
+      </div>
+    </div>
+
+    <!-- Enhanced Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- My Profiles Card -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-200">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="ml-4 flex-1">
+            <p class="text-sm font-medium text-gray-600">Search Profiles</p>
+            <div class="flex items-baseline">
+              <p class="text-2xl font-bold text-gray-900"><%= current_user.search_profiles.count %></p>
+              <% if current_user.search_profiles.count > 0 %>
+                <p class="ml-2 text-sm text-green-600">Active</p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Completion Card -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-200">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-gradient-to-br <%= current_user.personal_info ? 'from-green-500 to-green-600' : 'from-yellow-500 to-yellow-600' %> rounded-xl flex items-center justify-center">
+              <% if current_user.personal_info %>
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              <% else %>
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+              <% end %>
+            </div>
+          </div>
+          <div class="ml-4 flex-1">
+            <p class="text-sm font-medium text-gray-600">Profile Status</p>
+            <div class="flex items-baseline">
+              <p class="text-lg font-bold <%= current_user.personal_info ? 'text-green-600' : 'text-yellow-600' %>">
+                <%= current_user.personal_info ? 'Complete' : 'Incomplete' %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address Completion Card -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-200">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-gradient-to-br <%= current_user.address ? 'from-green-500 to-green-600' : 'from-yellow-500 to-yellow-600' %> rounded-xl flex items-center justify-center">
+              <% if current_user.address %>
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              <% else %>
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                </svg>
+              <% end %>
+            </div>
+          </div>
+          <div class="ml-4 flex-1">
+            <p class="text-sm font-medium text-gray-600">Address Info</p>
+            <div class="flex items-baseline">
+              <p class="text-lg font-bold <%= current_user.address ? 'text-green-600' : 'text-yellow-600' %>">
+                <%= current_user.address ? 'Complete' : 'Needed' %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dynamic Fourth Card -->
+      <% if current_user.admin? %>
+        <!-- Admin Total Matches -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-200">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="ml-4 flex-1">
+              <p class="text-sm font-medium text-gray-600">Total Matches</p>
+              <div class="flex items-baseline">
+                <p class="text-2xl font-bold text-gray-900"><%= Match.count %></p>
+                <p class="ml-2 text-sm text-purple-600">System-wide</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <!-- User Matches -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-200">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="ml-4 flex-1">
+              <p class="text-sm font-medium text-gray-600">My Matches</p>
+              <div class="flex items-baseline">
+                <% user_matches = Match.joins(:search_profile).where(search_profiles: { user: current_user }).count %>
+                <p class="text-2xl font-bold text-gray-900"><%= user_matches %></p>
+                <% if user_matches > 0 %>
+                  <p class="ml-2 text-sm text-purple-600">Found</p>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Action Cards -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Profile Setup -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h3 class="text-lg font-medium text-gray-900">Complete Your Profile</h3>
+        <p class="text-sm text-gray-600 mt-1">Set up your account information to get started</p>
+      </div>
+      <div class="px-6 py-4 space-y-4">
+        <!-- Personal Information Card -->
+        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <div class="h-8 w-8 <%= current_user.personal_info ? 'bg-green-500' : 'bg-yellow-500' %> rounded-full flex items-center justify-center">
+                <% if current_user.personal_info %>
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                <% else %>
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                  </svg>
+                <% end %>
+              </div>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-sm font-medium text-gray-900">Personal Information</h4>
+              <p class="text-sm text-gray-500">
+                <% if current_user.personal_info %>
+                  Complete ✓
+                <% else %>
+                  Required for search profiles
+                <% end %>
+              </p>
+            </div>
+          </div>
+          <% if current_user.personal_info %>
+            <%= link_to "Edit", edit_personal_info_path(current_user.personal_info), 
+                class: "text-blue-600 hover:text-blue-700 text-sm font-medium" %>
+          <% else %>
+            <%= link_to "Complete", new_personal_info_path, 
+                class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200" %>
+          <% end %>
+        </div>
+
+        <!-- Address Information Card -->
+        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <div class="h-8 w-8 <%= current_user.address ? 'bg-green-500' : 'bg-yellow-500' %> rounded-full flex items-center justify-center">
+                <% if current_user.address %>
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                <% else %>
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                <% end %>
+              </div>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-sm font-medium text-gray-900">Address Information</h4>
+              <p class="text-sm text-gray-500">
+                <% if current_user.address %>
+                  Complete ✓
+                <% else %>
+                  Helps with location-based matching
+                <% end %>
+              </p>
+            </div>
+          </div>
+          <% if current_user.address %>
+            <%= link_to "Edit", edit_address_path(current_user.address), 
+                class: "text-blue-600 hover:text-blue-700 text-sm font-medium" %>
+          <% else %>
+            <%= link_to "Complete", new_address_path, 
+                class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Profiles -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h3 class="text-lg font-medium text-gray-900">Search Profiles</h3>
+        <p class="text-sm text-gray-600 mt-1">Create and manage profiles for people you're looking for</p>
+      </div>
+      <div class="px-6 py-4">
+        <% if current_user.search_profiles.any? %>
+          <div class="space-y-3 mb-4">
+            <% current_user.search_profiles.limit(3).each do |profile| %>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div class="flex items-center">
+                  <div class="h-8 w-8 bg-blue-500 rounded-full flex items-center justify-center">
+                    <span class="text-white text-sm font-medium">
+                      <%= profile.first_name.first.upcase %>
+                    </span>
+                  </div>
+                  <div class="ml-3">
+                    <p class="text-sm font-medium text-gray-900">
+                      <%= profile.first_name %> <%= profile.last_name %>
+                    </p>
+                    <p class="text-xs text-gray-500">
+                      Created <%= time_ago_in_words(profile.created_at) %> ago
+                    </p>
+                  </div>
+                </div>
+                <% if current_user.admin? %>
+                  <%= link_to "Match", match_search_profile_path(profile), method: :post,
+                      class: "text-blue-600 hover:text-blue-700 text-sm font-medium" %>
+                <% end %>
+              </div>
+            <% end %>
+            
+            <% if current_user.search_profiles.count > 3 %>
+              <p class="text-xs text-gray-500 text-center">
+                And <%= current_user.search_profiles.count - 3 %> more...
+              </p>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="text-center py-6">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <h4 class="mt-2 text-sm font-medium text-gray-900">No search profiles yet</h4>
+            <p class="mt-1 text-sm text-gray-500">Create your first search profile to get started.</p>
+          </div>
+        <% end %>
+        
+        <div class="flex space-x-3">
+          <%= link_to "Create New Profile", new_search_profile_path, 
+              class: "flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium text-center transition-colors duration-200" %>
+          <%= link_to "View All", search_profiles_path, 
+              class: "flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium text-center transition-colors duration-200" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Section -->
+  <% if current_user.admin? %>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      <div class="px-6 py-4 border-b border-gray-200">
+        <div class="flex items-center">
+          <div class="h-8 w-8 bg-purple-500 rounded-full flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+          </div>
+          <h3 class="ml-3 text-lg font-medium text-gray-900">Admin Dashboard</h3>
+          <%= render 'shared/status_badge', status: 'admin', text: 'Admin' %>
+        </div>
+        <p class="text-sm text-gray-600 mt-1">Administrative tools and match management</p>
+      </div>
+      <div class="px-6 py-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <%= link_to admin_matches_path, class: "flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200" do %>
+            <div class="h-10 w-10 bg-blue-500 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-sm font-medium text-gray-900">Manage Matches</h4>
+              <p class="text-sm text-gray-500"><%= Match.count %> total matches</p>
+            </div>
+          <% end %>
+          
+          <%= link_to search_profiles_path, class: "flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200" do %>
+            <div class="h-10 w-10 bg-green-500 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-sm font-medium text-gray-900">All Profiles</h4>
+              <p class="text-sm text-gray-500"><%= SearchProfile.count %> total profiles</p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Recent Activity (if you want to add this later) -->
+  <!--
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-200">
+      <h3 class="text-lg font-medium text-gray-900">Recent Activity</h3>
+    </div>
+    <div class="px-6 py-4">
+      <p class="text-sm text-gray-500">No recent activity</p>
+    </div>
+  </div>
+  -->
+</div>

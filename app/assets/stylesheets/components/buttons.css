@@ -1,0 +1,86 @@
+/* Button Components */
+
+/* Base button styles - extends Tailwind utilities */
+.btn-base {
+  @apply inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+.btn-sm {
+  @apply px-3 py-1.5 text-sm;
+}
+
+.btn-md {
+  @apply px-4 py-2 text-sm;
+}
+
+.btn-lg {
+  @apply px-6 py-3 text-base;
+}
+
+/* Button variants */
+.btn-primary {
+  @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 border border-blue-600;
+}
+
+.btn-secondary {
+  @apply bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-gray-500 border border-gray-300;
+}
+
+.btn-success {
+  @apply bg-green-600 text-white hover:bg-green-700 focus:ring-green-500 border border-green-600;
+}
+
+.btn-danger {
+  @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 border border-red-600;
+}
+
+.btn-warning {
+  @apply bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-yellow-500 border border-yellow-500;
+}
+
+.btn-outline {
+  @apply bg-transparent text-blue-600 hover:bg-blue-50 focus:ring-blue-500 border border-blue-600;
+}
+
+.btn-disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* Action button (Bimini Pulpit style) */
+.action-button {
+  @apply flex items-center justify-center gap-1 font-medium rounded-md text-sm w-28 h-10 px-3 py-2 transition duration-300 ease-in-out;
+}
+
+.action-button-primary {
+  @apply text-blue-600 border-2 border-blue-600 bg-transparent hover:bg-blue-600 hover:text-white;
+}
+
+.action-button-secondary {
+  @apply text-gray-600 border-2 border-gray-600 bg-transparent hover:bg-gray-600 hover:text-white;
+}
+
+/* Floating action button */
+.fab {
+  @apply fixed bottom-6 right-6 w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 hover:shadow-xl transform hover:scale-105 transition-all duration-200 z-50;
+}
+
+/* Button groups */
+.btn-group {
+  @apply inline-flex rounded-lg shadow-sm;
+}
+
+.btn-group > * {
+  @apply relative -ml-px;
+}
+
+.btn-group > *:first-child {
+  @apply ml-0 rounded-l-lg;
+}
+
+.btn-group > *:last-child {
+  @apply rounded-r-lg;
+}
+
+.btn-group > *:not(:first-child):not(:last-child) {
+  @apply rounded-none;
+}
