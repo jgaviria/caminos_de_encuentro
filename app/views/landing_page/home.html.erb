@@ -1,44 +1,66 @@
 <div class="bg-white">
   <!-- Header -->
-  <header class="absolute inset-x-0 top-0 z-50">
-    <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+  <header class="fixed inset-x-0 top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm">
+    <nav class="flex items-center justify-between p-6 lg:px-8 max-w-7xl mx-auto" aria-label="Global">
       <div class="flex lg:flex-1">
-        <a href="#" class="-m-1.5 p-1.5">
-          <span class="sr-only">Your Company</span>
-          <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="">
+        <a href="#" class="-m-1.5 p-1.5 flex items-center group">
+          <div class="h-10 w-10 bg-gradient-to-br from-indigo-600 to-purple-700 rounded-xl flex items-center justify-center mr-3 group-hover:scale-105 transition-transform duration-200">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </div>
+          <div>
+            <span class="text-xl font-bold text-gray-900 group-hover:text-indigo-600 transition-colors duration-200">Caminos de Encuentro</span>
+            <div class="text-xs text-gray-500 -mt-0.5">Reuniendo Familias</div>
+          </div>
         </a>
       </div>
       <div class="flex lg:hidden">
-        <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+        <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 hover:bg-gray-100 transition-colors" onclick="toggleMobileMenu()">
           <span class="sr-only">Open main menu</span>
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>
         </button>
       </div>
-      <div class="hidden lg:flex lg:gap-x-12">
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Servicios</a>
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Testimonios</a>
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Ayuda</a>
+      <div class="hidden lg:flex lg:gap-x-8">
+        <a href="#servicios" class="relative text-sm font-semibold leading-6 text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md transition-all duration-200 group">
+          Servicios
+          <span class="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-indigo-500/0 via-indigo-500/40 to-indigo-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
+        </a>
+        <a href="#testimonios" class="relative text-sm font-semibold leading-6 text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md transition-all duration-200 group">
+          Testimonios
+          <span class="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-indigo-500/0 via-indigo-500/40 to-indigo-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
+        </a>
+        <a href="#ayuda" class="relative text-sm font-semibold leading-6 text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md transition-all duration-200 group">
+          Ayuda
+          <span class="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-indigo-500/0 via-indigo-500/40 to-indigo-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
+        </a>
       </div>
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        
-<a href="<%= new_user_session_path %>" class="text-sm font-semibold leading-6 text-gray-900">
-  Entrar <span aria-hidden="true">&rarr;</span>
-</a>
+      <div class="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-x-4">
+        <%= link_to new_user_session_path, class: "text-sm font-semibold leading-6 text-gray-700 hover:text-indigo-600 px-4 py-2 rounded-lg transition-all duration-200 hover:bg-gray-50" do %>
+          Entrar <span aria-hidden="true">→</span>
+        <% end %>
+        <%= link_to new_user_registration_path, class: "bg-indigo-600 text-white px-6 py-2.5 rounded-xl text-sm font-semibold shadow-lg hover:bg-indigo-700 transition-all duration-200" do %>
+          Empezar Búsqueda
+        <% end %>
       </div>
     </nav>
     <!-- Mobile menu, show/hide based on menu open state. -->
-    <div class="lg:hidden" role="dialog" aria-modal="true">
+    <div id="mobile-menu" class="lg:hidden hidden" role="dialog" aria-modal="true">
       <!-- Background backdrop, show/hide based on slide-over state. -->
-      <div class="fixed inset-0 z-50"></div>
-      <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+      <div class="fixed inset-0 z-50 bg-gray-600/50" onclick="toggleMobileMenu()"></div>
+      <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 shadow-xl">
         <div class="flex items-center justify-between">
-          <a href="#" class="-m-1.5 p-1.5">
-            <span class="sr-only">Your Company</span>
-            <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="">
+          <a href="#" class="-m-1.5 p-1.5 flex items-center">
+            <div class="h-8 w-8 bg-gradient-to-br from-indigo-600 to-purple-700 rounded-lg flex items-center justify-center mr-2">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+            </div>
+            <span class="text-lg font-bold text-gray-900">Caminos</span>
           </a>
-          <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+          <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700 hover:bg-gray-100 transition-colors" onclick="toggleMobileMenu()">
             <span class="sr-only">Close menu</span>
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -48,65 +70,42 @@
         <div class="mt-6 flow-root">
           <div class="-my-6 divide-y divide-gray-500/10">
             <div class="space-y-2 py-6">
-              <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Product</a>
-              <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Features</a>
-              <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Marketplace</a>
-              <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Company</a>
+              <a href="#servicios" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-indigo-50 hover:text-indigo-600 transition-colors" onclick="toggleMobileMenu()">Servicios</a>
+              <a href="#testimonios" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-indigo-50 hover:text-indigo-600 transition-colors" onclick="toggleMobileMenu()">Testimonios</a>
+              <a href="#ayuda" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-indigo-50 hover:text-indigo-600 transition-colors" onclick="toggleMobileMenu()">Ayuda</a>
             </div>
-            <div class="py-6">
-              <a href="#" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log in</a>
+            <div class="py-6 space-y-3">
+              <%= link_to new_user_session_path, class: "-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 transition-colors" do %>
+                Entrar →
+              <% end %>
+              <%= link_to new_user_registration_path, class: "block rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-3 py-2.5 text-center text-base font-semibold text-white shadow-lg" do %>
+                Empezar Búsqueda
+              <% end %>
             </div>
           </div>
         </div>
       </div>
     </div>
+    
+    <script>
+      function toggleMobileMenu() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('hidden');
+      }
+      
+      // Close mobile menu when clicking on navigation links
+      document.addEventListener('DOMContentLoaded', function() {
+        const mobileLinks = document.querySelectorAll('#mobile-menu a[href^="#"]');
+        mobileLinks.forEach(link => {
+          link.addEventListener('click', function() {
+            setTimeout(() => toggleMobileMenu(), 100);
+          });
+        });
+      });
+    </script>
   </header>
 
   <main class="isolate">
-    <!-- Hero section -->
-    <div class="relative pt-14">
-      <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
-        <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-      </div>
-      <div class="py-24 sm:py-32">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
-          <div class="mx-auto max-w-2xl text-center">
-            <h1 class="text-balance text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Caminos De Encuentro</h1>
-            <p class="mt-6 text-lg leading-8 text-gray-600">Aunque los años se desvanezcan como arena entre los dedos, la esperanza de un reencuentro sigue siendo el fuego que ilumina nuestros pasos en la oscuridad.</p>
-            <p class="mt-2 text-sm text-gray-400 font-light">— Pablo Neruda</p>
-            <div class="mt-10 flex items-center justify-center gap-x-6">
-              <a href="#" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Empecemos</a>
-              <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Mas informacion <span aria-hidden="true">→</span></a>
-            </div>
-          </div>
-          <div class="mt-16 flow-root sm:mt-24">
-            <div class="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-              <img src="https://tailwindui.com/plus/img/component-images/project-app-screenshot.png" alt="App screenshot" width="2432" height="1442" class="rounded-md shadow-2xl ring-1 ring-gray-900/10">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
-        <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-      </div>
-    </div>
-
-    <!-- Logo cloud -->
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="mx-auto grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-12 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 sm:gap-y-14 lg:mx-0 lg:max-w-none lg:grid-cols-5">
-        <img class="col-span-2 max-h-12 w-full object-contain lg:col-span-1" src="https://tailwindui.com/plus/img/logos/158x48/transistor-logo-gray-900.svg" alt="Transistor" width="158" height="48">
-        <img class="col-span-2 max-h-12 w-full object-contain lg:col-span-1" src="https://tailwindui.com/plus/img/logos/158x48/reform-logo-gray-900.svg" alt="Reform" width="158" height="48">
-        <img class="col-span-2 max-h-12 w-full object-contain lg:col-span-1" src="https://tailwindui.com/plus/img/logos/158x48/tuple-logo-gray-900.svg" alt="Tuple" width="158" height="48">
-        <img class="col-span-2 max-h-12 w-full object-contain sm:col-start-2 lg:col-span-1" src="https://tailwindui.com/plus/img/logos/158x48/savvycal-logo-gray-900.svg" alt="SavvyCal" width="158" height="48">
-        <img class="col-span-2 col-start-2 max-h-12 w-full object-contain sm:col-start-auto lg:col-span-1" src="https://tailwindui.com/plus/img/logos/158x48/statamic-logo-gray-900.svg" alt="Statamic" width="158" height="48">
-      </div>
-      <div class="mt-16 flex justify-center">
-        <p class="relative rounded-full px-4 py-1.5 text-sm leading-6 text-gray-600 ring-1 ring-inset ring-gray-900/10 hover:ring-gray-900/20">
-          <span class="hidden md:inline">Modelos de coincidencia avanzada.</span>
-          <a href="#" class="font-semibold text-indigo-600"><span class="absolute inset-0" aria-hidden="true"></span> Casos de estudio <span aria-hidden="true">&rarr;</span></a>
-        </p>
-      </div>
-    </div>
 
     <!-- Feature section -->
 <div class="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8">
@@ -178,8 +177,8 @@
 </div>
 
     <!-- Sección de Testimonios -->
-<div class="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">
-  <div class="relative overflow-hidden bg-gray-900 px-6 py-20 shadow-xl sm:rounded-3xl sm:px-10 sm:py-24 md:px-12 lg:px-20">
+<div class="mx-auto mt-32 max-w-4xl sm:mt-56 sm:px-6 lg:px-8">
+  <div class="relative overflow-hidden bg-gray-900 px-6 py-20 shadow-xl sm:rounded-3xl sm:px-10 sm:py-24 md:px-12 lg:px-16">
     <img class="absolute inset-0 h-full w-full object-cover brightness-150 saturate-0" src="https://images.unsplash.com/photo-1601381718415-a05fb0a261f3?ixid=MXwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8ODl8fHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1216&q=80" alt="">
     <div class="absolute inset-0 bg-gray-900/90 mix-blend-multiply"></div>
     <div class="absolute -left-80 -top-56 transform-gpu blur-3xl" aria-hidden="true">
@@ -191,12 +190,12 @@
     <div class="relative mx-auto max-w-2xl lg:mx-0">
       <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="">
       <figure>
-        <blockquote class="mt-6 text-lg font-semibold text-white sm:text-xl sm:leading-8">
-          <p>“Después de años de búsqueda y momentos de desesperanza, logré reencontrarme con mi hermano gracias a esta plataforma. La precisión del sistema para filtrar información y las herramientas de coincidencia me ayudaron a ubicarlo. Hoy, nuestra familia está nuevamente completa.”</p>
+        <blockquote class="mt-6 text-lg font-light text-white sm:text-xl sm:leading-8 italic">
+          <p>"Aunque los años se desvanezcan como arena entre los dedos, la esperanza de un reencuentro sigue siendo el fuego que ilumina nuestros pasos en la oscuridad."</p>
         </blockquote>
         <figcaption class="mt-6 text-base text-white">
-          <div class="font-semibold">María Gómez</div>
-          <div class="mt-1">Usuaria de Caminos de Encuentro</div>
+          <div class="font-semibold">— Pablo Neruda</div>
+          <div class="mt-1">Poeta y Premio Nobel de Literatura</div>
         </figcaption>
       </figure>
     </div>
@@ -212,11 +211,11 @@
     </div>
     <p class="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600">Explora los planes que mejor se ajusten a tus necesidades para ayudar a encontrar a tus seres queridos.</p>
     
-    <div class="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+    <div class="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-8">
       
       <!-- Plan Individual -->
-      <div class="flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 ring-gray-200 lg:mt-8 lg:rounded-r-none xl:p-10">
-        <div>
+      <div class="flex flex-col h-full rounded-3xl bg-white p-8 ring-1 ring-gray-200 xl:p-10">
+        <div class="flex-1">
           <div class="flex items-center justify-between gap-x-4">
             <h3 id="tier-individual" class="text-lg font-semibold leading-8 text-gray-900">Individual</h3>
           </div>
@@ -226,20 +225,37 @@
             <span class="text-sm font-semibold leading-6 text-gray-600">/mes</span>
           </p>
           <ul role="list" class="mt-8 space-y-3 text-sm leading-6 text-gray-600">
-            <li class="flex gap-x-3">5 búsquedas por mes</li>
-            <li class="flex gap-x-3">Filtros básicos de atributos</li>
-            <li class="flex gap-x-3">Soporte estándar (48 horas de respuesta)</li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              5 búsquedas por mes
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              Filtros básicos de atributos
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              Soporte estándar (48 horas de respuesta)
+            </li>
           </ul>
         </div>
-        <a href="#" aria-describedby="tier-individual" class="mt-8 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300">Comprar plan</a>
+        <a href="#" aria-describedby="tier-individual" class="mt-8 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 transition-colors">Comprar plan</a>
       </div>
       
       <!-- Plan Familiar -->
-      <div class="flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 ring-gray-200 lg:z-10 lg:rounded-b-none xl:p-10">
-        <div>
+      <div class="flex flex-col h-full rounded-3xl bg-white p-8 ring-1 ring-gray-200 lg:z-10 xl:p-10 relative">
+        <div class="absolute -top-5 left-1/2 transform -translate-x-1/2">
+          <span class="inline-flex items-center rounded-full bg-indigo-600 px-3 py-1 text-xs font-semibold text-white">Más popular</span>
+        </div>
+        <div class="flex-1">
           <div class="flex items-center justify-between gap-x-4">
             <h3 id="tier-familiar" class="text-lg font-semibold leading-8 text-indigo-600">Familiar</h3>
-            <p class="rounded-full bg-indigo-600/10 px-2.5 py-1 text-xs font-semibold leading-5 text-indigo-600">Más popular</p>
           </div>
           <p class="mt-4 text-sm leading-6 text-gray-600">Diseñado para familias que buscan apoyo en búsquedas múltiples.</p>
           <p class="mt-6 flex items-baseline gap-x-1">
@@ -247,18 +263,38 @@
             <span class="text-sm font-semibold leading-6 text-gray-600">/mes</span>
           </p>
           <ul role="list" class="mt-8 space-y-3 text-sm leading-6 text-gray-600">
-            <li class="flex gap-x-3">20 búsquedas por mes</li>
-            <li class="flex gap-x-3">Filtros avanzados de atributos</li>
-            <li class="flex gap-x-3">Soporte prioritario (24 horas de respuesta)</li>
-            <li class="flex gap-x-3">Historial de búsquedas</li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              20 búsquedas por mes
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              Filtros avanzados de atributos
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              Soporte prioritario (24 horas de respuesta)
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              Historial de búsquedas
+            </li>
           </ul>
         </div>
-        <a href="#" aria-describedby="tier-familiar" class="mt-8 block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500">Comprar plan</a>
+        <a href="#" aria-describedby="tier-familiar" class="mt-8 block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 transition-colors">Comprar plan</a>
       </div>
       
       <!-- Plan Corporativo -->
-      <div class="flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 ring-gray-200 lg:mt-8 lg:rounded-l-none xl:p-10">
-        <div>
+      <div class="flex flex-col h-full rounded-3xl bg-white p-8 ring-1 ring-gray-200 xl:p-10">
+        <div class="flex-1">
           <div class="flex items-center justify-between gap-x-4">
             <h3 id="tier-empresarial" class="text-lg font-semibold leading-8 text-gray-900">Corporativo</h3>
           </div>
@@ -268,14 +304,39 @@
             <span class="text-sm font-semibold leading-6 text-gray-600">/mes</span>
           </p>
           <ul role="list" class="mt-8 space-y-3 text-sm leading-6 text-gray-600">
-            <li class="flex gap-x-3">Búsquedas ilimitadas</li>
-            <li class="flex gap-x-3">Filtros personalizados y algoritmos de coincidencia</li>
-            <li class="flex gap-x-3">Soporte dedicado (respuesta en 1 hora)</li>
-            <li class="flex gap-x-3">Acceso a estadísticas avanzadas</li>
-            <li class="flex gap-x-3">Capacitación de uso y soporte técnico</li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              Búsquedas ilimitadas
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              Filtros personalizados y algoritmos de coincidencia
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              Soporte dedicado (respuesta en 1 hora)
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              Acceso a estadísticas avanzadas
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              Capacitación de uso y soporte técnico
+            </li>
           </ul>
         </div>
-        <a href="#" aria-describedby="tier-empresarial" class="mt-8 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300">Comprar plan</a>
+        <a href="#" aria-describedby="tier-empresarial" class="mt-8 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 transition-colors">Comprar plan</a>
       </div>
     </div>
   </div>
@@ -284,16 +345,49 @@
 
     <!-- FAQs -->
     <div class="mx-auto max-w-2xl divide-y divide-gray-900/10 px-6 pb-8 sm:pb-24 sm:pt-12 lg:max-w-7xl lg:px-8 lg:pb-32">
-      <h2 class="text-2xl font-bold leading-10 tracking-tight text-gray-900">Preguntas Frequentes</h2>
+      <h2 class="text-2xl font-bold leading-10 tracking-tight text-gray-900">Preguntas Frecuentes</h2>
       <dl class="mt-10 space-y-8 divide-y divide-gray-900/10">
         <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
-          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">Como funciona?</dt>
+          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">¿Cómo funciona Caminos de Encuentro?</dt>
           <dd class="mt-4 lg:col-span-7 lg:mt-0">
-            <p class="text-base leading-7 text-gray-600">I don&#039;t know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.</p>
+            <p class="text-base leading-7 text-gray-600">Nuestra plataforma utiliza algoritmos avanzados de coincidencia para ayudarte a encontrar a tus seres queridos. Simplemente crea un perfil con los datos de la persona que buscas, y nuestro sistema comparará esta información con nuestra base de datos para encontrar posibles coincidencias.</p>
           </dd>
         </div>
 
-        <!-- More questions... -->
+        <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
+          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">¿Es segura mi información personal?</dt>
+          <dd class="mt-4 lg:col-span-7 lg:mt-0">
+            <p class="text-base leading-7 text-gray-600">Absolutamente. Utilizamos encriptación de última generación y seguimos los más altos estándares de seguridad para proteger todos los datos. Tu información solo se utiliza para facilitar la búsqueda y nunca se comparte con terceros sin tu consentimiento explícito.</p>
+          </dd>
+        </div>
+
+        <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
+          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">¿Cuánto tiempo toma encontrar a alguien?</dt>
+          <dd class="mt-4 lg:col-span-7 lg:mt-0">
+            <p class="text-base leading-7 text-gray-600">El tiempo varía según cada caso. Algunas búsquedas pueden mostrar resultados inmediatamente si la persona ya está en nuestra base de datos, mientras que otras pueden tomar días, semanas o más tiempo. Nuestro sistema trabaja continuamente para aumentar las posibilidades de éxito.</p>
+          </dd>
+        </div>
+
+        <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
+          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">¿Qué información necesito para crear una búsqueda?</dt>
+          <dd class="mt-4 lg:col-span-7 lg:mt-0">
+            <p class="text-base leading-7 text-gray-600">Necesitas la mayor cantidad de información posible: nombre completo, fecha de nacimiento aproximada, características físicas, última ubicación conocida y cualquier otro detalle relevante. Mientras más información proporciones, más precisos serán los resultados.</p>
+          </dd>
+        </div>
+
+        <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
+          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">¿Puedo cancelar mi plan en cualquier momento?</dt>
+          <dd class="mt-4 lg:col-span-7 lg:mt-0">
+            <p class="text-base leading-7 text-gray-600">Sí, puedes cancelar tu suscripción en cualquier momento desde tu panel de usuario. No hay contratos de permanencia ni penalizaciones por cancelación temprana. Tu acceso continuará hasta el final del período de facturación actual.</p>
+          </dd>
+        </div>
+
+        <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
+          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">¿Ofrecen soporte para casos internacionales?</dt>
+          <dd class="mt-4 lg:col-span-7 lg:mt-0">
+            <p class="text-base leading-7 text-gray-600">Sí, trabajamos con una red global de organizaciones y bases de datos. Nuestro alcance se extiende más allá de las fronteras nacionales para ayudar en la búsqueda de personas que pueden haber migrado o estar en otros países.</p>
+          </dd>
+        </div>
       </dl>
     </div>
 
@@ -316,87 +410,139 @@
     </div>
   </main> %>
 
-  <%# <!-- Footer -->
-  <div class="mx-auto mt-32 max-w-7xl px-6 lg:px-8">
-    <footer aria-labelledby="footer-heading" class="relative border-t border-gray-900/10 py-24 sm:mt-56 sm:py-32">
-      <h2 id="footer-heading" class="sr-only">Footer</h2>
+  <!-- Footer -->
+  <footer class="bg-gray-900 mt-32">
+    <div class="mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-8 lg:py-32">
       <div class="xl:grid xl:grid-cols-3 xl:gap-8">
-        <img class="h-7" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="Company name">
+        <!-- Logo and description -->
+        <div class="space-y-8">
+          <div class="flex items-center">
+            <div class="h-10 w-10 bg-gradient-to-br from-indigo-600 to-purple-700 rounded-xl flex items-center justify-center mr-3">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <span class="text-xl font-bold text-white">Caminos de Encuentro</span>
+              <div class="text-sm text-gray-400 -mt-0.5">Reuniendo Familias</div>
+            </div>
+          </div>
+          <p class="text-sm leading-6 text-gray-300">
+            Utilizamos tecnología avanzada para ayudar a reunir familias separadas por migración, conflictos o tragedias. 
+            Cada búsqueda es un paso hacia el reencuentro.
+          </p>
+          <div class="flex space-x-6">
+            <a href="#" class="text-gray-400 hover:text-gray-300 transition-colors">
+              <span class="sr-only">Facebook</span>
+              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-gray-300 transition-colors">
+              <span class="sr-only">Twitter</span>
+              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-gray-300 transition-colors">
+              <span class="sr-only">Instagram</span>
+              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill-rule="evenodd" d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.621 5.367 11.988 11.988 11.988s11.987-5.367 11.987-11.988C24.004 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.321-1.297C4.198 14.553 3.662 13.407 3.662 12.017s.536-2.536 1.466-3.674C5.999 7.336 7.152 6.846 8.449 6.846s2.45.49 3.321 1.297c.93 1.138 1.466 2.284 1.466 3.674s-.536 2.536-1.466 3.674c-.871.807-2.024 1.297-3.321 1.297zm7.138 0c-1.297 0-2.449-.49-3.321-1.297-.93-1.138-1.466-2.284-1.466-3.674s.536-2.536 1.466-3.674c.872-.807 2.024-1.297 3.321-1.297s2.45.49 3.321 1.297c.93 1.138 1.466 2.284 1.466 3.674s-.536 2.536-1.466 3.674c-.871.807-2.024 1.297-3.321 1.297z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Navigation links -->
         <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
           <div class="md:grid md:grid-cols-2 md:gap-8">
             <div>
-              <h3 class="text-sm font-semibold leading-6 text-gray-900">Solutions</h3>
+              <h3 class="text-sm font-semibold leading-6 text-white">Servicios</h3>
               <ul role="list" class="mt-6 space-y-4">
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Hosting</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Búsqueda de personas</a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Data Services</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Algoritmos de coincidencia</a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Uptime Monitoring</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Seguridad de datos</a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Enterprise Services</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Red global</a>
                 </li>
               </ul>
             </div>
             <div class="mt-10 md:mt-0">
-              <h3 class="text-sm font-semibold leading-6 text-gray-900">Support</h3>
+              <h3 class="text-sm font-semibold leading-6 text-white">Soporte</h3>
               <ul role="list" class="mt-6 space-y-4">
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Pricing</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Centro de ayuda</a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Documentation</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Guías de uso</a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Guides</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Contacto</a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">API Reference</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Emergencias</a>
                 </li>
               </ul>
             </div>
           </div>
           <div class="md:grid md:grid-cols-2 md:gap-8">
             <div>
-              <h3 class="text-sm font-semibold leading-6 text-gray-900">Company</h3>
+              <h3 class="text-sm font-semibold leading-6 text-white">Recursos</h3>
               <ul role="list" class="mt-6 space-y-4">
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">About</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Blog</a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Blog</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Historias de éxito</a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Jobs</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Organizaciones aliadas</a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Press</a>
-                </li>
-                <li>
-                  <a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Partners</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Recursos legales</a>
                 </li>
               </ul>
             </div>
             <div class="mt-10 md:mt-0">
-              <h3 class="text-sm font-semibold leading-6 text-gray-900">Legal</h3>
+              <h3 class="text-sm font-semibold leading-6 text-white">Legal</h3>
               <ul role="list" class="mt-6 space-y-4">
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Claim</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Política de privacidad</a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Privacy</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Términos de servicio</a>
                 </li>
                 <li>
-                  <a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Terms</a>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Cookies</a>
+                </li>
+                <li>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Transparencia</a>
                 </li>
               </ul>
             </div>
           </div>
         </div>
       </div>
-    </footer>
-  </div>
-</div> %>
+      
+      <!-- Bottom border and copyright -->
+      <div class="mt-16 border-t border-gray-800 pt-8 sm:mt-20 lg:mt-24">
+        <div class="md:flex md:items-center md:justify-between">
+          <div class="flex space-x-6 md:order-2">
+            <a href="#" class="text-gray-400 hover:text-gray-300 text-sm transition-colors">
+              Línea de ayuda: +57 (1) 800-FAMILIAS
+            </a>
+          </div>
+          <p class="mt-8 text-xs leading-5 text-gray-400 md:order-1 md:mt-0">
+            &copy; 2024 Caminos de Encuentro. Todos los derechos reservados. Una iniciativa para reunir familias.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>

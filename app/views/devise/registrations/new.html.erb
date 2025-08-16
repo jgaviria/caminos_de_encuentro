@@ -1,52 +1,124 @@
-<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-md w-full space-y-8">
-    <div>
-      <img
-        class="mx-auto h-12 w-auto"
-        src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-        alt="Workflow"
-      />
-      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-        Crear Cuenta
-      </h2>
+<!-- Sign Up Page -->
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <!-- Logo and Title -->
+    <div class="flex justify-center mb-8">
+      <div class="flex items-center">
+        <div class="h-14 w-14 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl flex items-center justify-center shadow-lg">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+          </svg>
+        </div>
+        <div class="ml-4">
+          <h1 class="text-3xl font-bold text-gray-900">Caminos de Encuentro</h1>
+          <p class="text-sm text-gray-600 mt-1">Family Reunification Platform</p>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-      <%= render "devise/shared/error_messages", resource: resource %>
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-6 shadow-lg rounded-lg border border-gray-200 sm:px-8">
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-6" }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+        
+        <!-- Form Title -->
+        <div class="text-center">
+          <h2 class="text-3xl font-bold text-gray-900">Create Account</h2>
+          <p class="mt-2 text-sm text-gray-600">Start your journey to reconnect with family</p>
+        </div>
 
-      <div class="mt-8 space-y-6">
-        <!-- Email Field -->
-        <div class="rounded-md shadow-sm -space-y-px">
+        <!-- Form Fields -->
+        <div class="space-y-6">
+          <!-- Email Field -->
           <div>
-            <%= f.label :email, "Email address", class: "sr-only" %>
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Correo", class: "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" %>
+            <%= f.email_field :email, 
+                autofocus: true, 
+                autocomplete: "email", 
+                placeholder: "Email address",
+                class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900 placeholder-gray-500" %>
           </div>
 
           <!-- Password Field -->
           <div>
-            <%= f.label :password, "Password", class: "sr-only" %>
-            <%= f.password_field :password, autocomplete: "new-password", placeholder: "Contraseña", class: "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" %>
+            <%= f.password_field :password, 
+                autocomplete: "new-password", 
+                placeholder: "Password",
+                class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900 placeholder-gray-500" %>
             <% if @minimum_password_length %>
-              <small class="text-gray-600">(<%= @minimum_password_length %> characters minimum)</small>
+              <p class="text-xs text-gray-500 mt-1">
+                Minimum <%= @minimum_password_length %> characters
+              </p>
             <% end %>
           </div>
 
           <!-- Password Confirmation Field -->
           <div>
-            <%= f.label :password_confirmation, "Confirm password", class: "sr-only" %>
-            <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirma contraseña", class: "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" %>
+            <%= f.password_field :password_confirmation, 
+                autocomplete: "new-password", 
+                placeholder: "Confirm password",
+                class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900 placeholder-gray-500" %>
           </div>
         </div>
 
-        <!-- Sign Up Button -->
-        <div class="actions">
-          <%= f.submit "Crear", class: "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+        <!-- Terms and Privacy -->
+        <div class="text-xs text-gray-500 text-center">
+          By creating an account, you agree to our 
+          <a href="#" class="text-blue-600 hover:text-blue-500">Terms of Service</a> and 
+          <a href="#" class="text-blue-600 hover:text-blue-500">Privacy Policy</a>
+        </div>
+
+        <!-- Create Account Button -->
+        <div>
+          <%= f.submit "Create Account", class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+        </div>
+
+        <!-- Divider -->
+        <div class="mt-6">
+          <div class="relative">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t border-gray-300"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+              <span class="px-2 bg-white text-gray-500">Already have an account?</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sign In Button -->
+        <div>
+          <%= link_to "Sign In", new_session_path(resource_name), class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100" %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Footer Text -->
+    <div class="mt-8">
+      <div class="text-center">
+        <p class="text-xs text-gray-500">
+          Connecting families across borders through technology
+        </p>
+        <div class="mt-4 flex justify-center space-x-6">
+          <a href="#" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+            <span class="sr-only">About</span>
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+            </svg>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+            <span class="sr-only">Help</span>
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+            </svg>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+            <span class="sr-only">Privacy</span>
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+            </svg>
+          </a>
         </div>
       </div>
-    <% end %>
-
-    <div class="mt-6 text-center">
-      <%= link_to "Entrar", new_session_path(resource_name), class: "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
     </div>
   </div>
 </div>
