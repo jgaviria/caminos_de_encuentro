@@ -133,75 +133,120 @@
 
   <!-- Table with Integrated Filters and Actions -->
   <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-    <!-- Table Header with Filters -->
-    <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
-        <!-- Left side: Title and count -->
-        <div>
-          <h3 class="text-lg font-semibold text-gray-900">Match Results</h3>
-          <p class="text-sm text-gray-600">Found <%= @matches.count %> matches</p>
+    <!-- Table Header with Modern Layout -->
+    <div class="bg-white">
+      <!-- Top Section: Search Bar -->
+      <div class="px-6 py-4">
+        <div class="flex items-center justify-between">
+          <!-- Left side: Title -->
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900">Match Management</h3>
+          </div>
+          
+          <!-- Right side: Search -->
+          <%= form_with url: admin_matches_path, method: :get, local: true, class: "flex items-center space-x-1" do |form| %>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+              </div>
+              <%= form.text_field :search, value: params[:search],
+                  class: "pl-16 pr-4 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-72 bg-gray-50" %>
+            </div>
+            <div class="ml-2">
+              <%= form.submit "Search", class: "inline-flex items-center px-6 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors duration-200" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Separator Line -->
+      <div class="border-t border-gray-200"></div>
+
+      <!-- Bottom Section: Filters -->
+      <div class="px-6 py-4">
+        <div class="flex items-center justify-between">
+          <div></div>
+          
+          <!-- Right side: Filters -->
+          <div class="flex items-center space-x-3">
+            <!-- Status Filter Pills -->
+            <div class="flex items-center space-x-1">
+              <%= link_to admin_matches_path, 
+                  class: "inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 #{params[:verified].blank? ? 'bg-blue-100 text-blue-700 border border-blue-200' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" do %>
+                All
+              <% end %>
+              <%= link_to admin_matches_path(verified: 'true'), 
+                  class: "inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 #{params[:verified] == 'true' ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" do %>
+                Verified
+              <% end %>
+              <%= link_to admin_matches_path(verified: 'false'), 
+                  class: "inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 #{params[:verified] == 'false' ? 'bg-yellow-100 text-yellow-700 border border-yellow-200' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" do %>
+                Pending
+              <% end %>
+            </div>
+
+            <!-- Score Filter -->
+            <%= form_with url: admin_matches_path, method: :get, local: true, class: "flex items-center space-x-2" do |form| %>
+              <%= form.hidden_field :verified, value: params[:verified] if params[:verified].present? %>
+              <div class="flex items-center space-x-1">
+                <span class="text-sm font-medium text-gray-700">Min Score:</span>
+                <%= form.number_field :min_score, step: 0.1, min: 0, max: 1, value: params[:min_score], placeholder: "0.0", 
+                    class: "bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 placeholder-gray-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-20" %>
+                <%= form.submit "Apply", class: "inline-flex items-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-200" %>
+              </div>
+            <% end %>
+          </div>
         </div>
         
-        <!-- Right side: Filters -->
-        <%= form_with url: admin_matches_path, method: :get, local: true, class: "flex flex-col sm:flex-row gap-3" do |form| %>
-          <div class="flex flex-col sm:flex-row gap-3">
-            <%= form.select :verified, options_for_select([
-              ['All Matches', ''],
-              ['Verified Only', 'true'],
-              ['Pending Only', 'false']
-            ], params[:verified]), { prompt: 'Filter by status' }, { class: "px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" } %>
-            
-            <%= form.number_field :min_score, step: 0.1, min: 0, max: 1, value: params[:min_score], placeholder: "Min score", class: "px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
-            
-            <%= form.submit "Filter", class: "px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors duration-200" %>
-          </div>
-        <% end %>
+        <!-- Results count -->
+        <div class="mt-4">
+          <p class="text-sm text-gray-600">
+            <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-800 mr-2">
+              <%= @matches.count %>
+            </span>
+            matches displayed
+          </p>
+        </div>
       </div>
     </div>
 
-    <!-- Bulk Actions Bar -->
+    <!-- Modern Bulk Actions Bar -->
     <%= form_with url: bulk_verify_admin_matches_path, method: :post, local: true, id: "bulk_form" do |form| %>
-      <div class="px-6 py-3 bg-amber-50 border-b border-amber-200" id="bulk-actions-bar" style="display: none;">
+      <div class="px-6 py-3 bg-blue-50 border-b border-blue-200" id="bulk-actions-bar" style="display: none;">
         <div class="flex items-center justify-between">
           <div class="flex items-center">
-            <span class="text-sm font-medium text-amber-800">
+            <span class="text-sm font-medium text-blue-900">
               <span id="selected-count-bar">0</span> matches selected
             </span>
           </div>
-          <div class="flex items-center space-x-3">
+          <div class="flex items-center gap-3">
             <button type="submit" onclick="this.form.action='<%= bulk_verify_admin_matches_path %>'" 
-                    class="inline-flex items-center px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-md transition-colors duration-200">
-              <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors duration-200 shadow-sm">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
-              Verify
+              Verify Selected
             </button>
             
             <button type="submit" onclick="if(!confirm('Are you sure you want to reject the selected matches?')) return false; this.form.action='<%= bulk_reject_admin_matches_path %>'" 
-                    class="inline-flex items-center px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md transition-colors duration-200">
-              <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors duration-200 shadow-sm">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
               </svg>
-              Reject
+              Reject Selected
             </button>
-            
-            <%= link_to export_admin_matches_path(format: :csv), 
-                class: "inline-flex items-center px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md transition-colors duration-200" do %>
-              <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-              </svg>
-              Export
-            <% end %>
           </div>
         </div>
       </div>
     <% end %>
 
     <!-- Select All Header -->
-    <div class="px-6 py-3 border-b border-gray-200 bg-gray-50">
+    <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
       <div class="flex items-center">
-        <input type="checkbox" id="select_all" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-        <label for="select_all" class="ml-2 text-sm font-medium text-gray-700">Select All</label>
+        <input type="checkbox" id="select_all" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2">
+        <label for="select_all" class="ml-3 text-sm font-medium text-gray-700">Select All</label>
       </div>
     </div>
 
@@ -227,7 +272,7 @@
             <% @matches.each do |match| %>
               <tr class="hover:bg-gray-50 transition-colors duration-150">
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <input type="checkbox" name="match_ids[]" value="<%= match.id %>" class="match_checkbox rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                  <input type="checkbox" name="match_ids[]" value="<%= match.id %>" class="match_checkbox h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2">
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
@@ -290,19 +335,25 @@
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <%= render 'shared/status_badge', 
-                      status: match.is_verified? ? 'success' : 'pending',
-                      text: match.is_verified? ? 'Verified' : 'Pending' %>
+                  <% if match.is_verified? %>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+                      Verified
+                    </span>
+                  <% else %>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 border border-yellow-200">
+                      Pending
+                    </span>
+                  <% end %>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   <%= match.created_at.strftime("%b %d, %Y") %>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="flex space-x-2">
+                  <div class="flex items-center gap-2">
                     <!-- View Button -->
                     <%= link_to admin_match_path(match), 
-                        class: "inline-flex items-center px-3 py-1.5 bg-blue-100 hover:bg-blue-200 text-blue-700 text-xs font-medium rounded-lg transition-colors duration-200" do %>
-                      <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class: "inline-flex items-center px-3 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 text-xs font-medium rounded-lg transition-colors duration-200 shadow-sm" do %>
+                      <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                       </svg>
@@ -312,8 +363,8 @@
                     <!-- Verify Button (only for unverified) -->
                     <% unless match.is_verified? %>
                       <%= link_to verify_admin_match_path(match), method: :patch, 
-                          class: "inline-flex items-center px-3 py-1.5 bg-green-100 hover:bg-green-200 text-green-700 text-xs font-medium rounded-lg transition-colors duration-200" do %>
-                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          class: "inline-flex items-center px-3 py-2 bg-green-100 hover:bg-green-200 text-green-700 text-xs font-medium rounded-lg transition-colors duration-200 shadow-sm" do %>
+                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                         Verify
@@ -323,8 +374,8 @@
                     <!-- Reject Button -->
                     <%= link_to reject_admin_match_path(match), method: :delete, 
                         confirm: "Are you sure you want to reject this match?", 
-                        class: "inline-flex items-center px-3 py-1.5 bg-red-100 hover:bg-red-200 text-red-700 text-xs font-medium rounded-lg transition-colors duration-200" do %>
-                      <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class: "inline-flex items-center px-3 py-2 bg-red-100 hover:bg-red-200 text-red-700 text-xs font-medium rounded-lg transition-colors duration-200 shadow-sm" do %>
+                      <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                       </svg>
                       Reject
