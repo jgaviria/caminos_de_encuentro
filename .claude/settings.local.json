@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(rails test:*)",
-      "Bash(bundle exec rails:*)"
+      "Bash(bundle exec rails:*)",
+      "Bash(mv:*)"
     ],
     "deny": [],
     "ask": []

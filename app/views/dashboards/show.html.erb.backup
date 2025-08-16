@@ -1,50 +1,21 @@
 <!-- Dashboard -->
 <div class="space-y-8">
   <!-- Enhanced Welcome Header with User Context -->
-  <div class="relative bg-gradient-to-r from-blue-600 via-blue-700 to-purple-700 rounded-2xl shadow-xl overflow-hidden">
-    <!-- Background Pattern -->
-    <div class="absolute inset-0 opacity-10">
-      <svg class="h-full w-full" fill="currentColor" viewBox="0 0 100 100">
-        <defs>
-          <pattern id="hero-pattern" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
-            <circle cx="2" cy="2" r="1"/>
-          </pattern>
-        </defs>
-        <rect width="100" height="100" fill="url(#hero-pattern)"/>
-      </svg>
-    </div>
-    
+  <div class="relative bg-gradient-to-r from-purple-600 via-purple-700 to-indigo-700 rounded-2xl shadow-xl overflow-hidden">
     <div class="relative px-6 py-10 sm:px-10 sm:py-12">
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <!-- Main Welcome Content -->
         <div class="flex-1">
-          <div class="flex items-center mb-4">
-            <div class="h-16 w-16 bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-              <svg class="h-10 w-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-              </svg>
-            </div>
-            <div class="ml-6">
-              <div class="flex items-center space-x-3 mb-2">
-                <h1 class="text-3xl font-bold text-white">
-                  Welcome back<% if current_user.personal_info %>, <%= current_user.personal_info.first_name %><% end %>
-                </h1>
-                <% if current_user.admin? %>
-                  <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-500 bg-opacity-20 text-purple-100 border border-purple-300 border-opacity-30">
-                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                    </svg>
-                    Administrator
-                  </span>
-                <% end %>
-              </div>
-              <p class="text-blue-100 text-lg font-medium">Reuniting families, one search at a time</p>
-              <p class="text-blue-200 text-sm mt-1 opacity-90">
-                <% profile_completion = [(current_user.personal_info ? 1 : 0), (current_user.address ? 1 : 0)].sum %>
-                Profile <%= profile_completion == 2 ? 'Complete' : "#{(profile_completion * 50).to_i}% Complete" %> •
-                <%= pluralize(current_user.search_profiles.count, 'Search Profile') %> Created
-              </p>
-            </div>
+          <div>
+            <h1 class="text-3xl font-bold text-white mb-4">
+              Welcome back<% if current_user.personal_info %>, <%= current_user.personal_info.first_name %><% end %>
+            </h1>
+            <p class="text-purple-100 text-lg font-medium">Reuniting families, one search at a time</p>
+            <p class="text-purple-200 text-sm mt-1 opacity-90">
+              <% profile_completion = [(current_user.personal_info ? 1 : 0), (current_user.address ? 1 : 0)].sum %>
+              Profile <%= profile_completion == 2 ? 'Complete' : "#{(profile_completion * 50).to_i}% Complete" %> •
+              <%= pluralize(current_user.search_profiles.count, 'Search Profile') %> Created
+            </p>
           </div>
         </div>
         
