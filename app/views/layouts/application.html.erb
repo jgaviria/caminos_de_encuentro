@@ -33,12 +33,12 @@
               
               <!-- Desktop Navigation -->
               <div class="hidden md:flex md:items-center md:space-x-8 ml-10">
-                <%= link_to "Dashboard", dashboard_path, 
+                <%= link_to t('user.dashboard'), dashboard_path, 
                     class: "text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors duration-200 #{current_page?(dashboard_path) ? 'text-blue-600 border-b-2 border-blue-600' : ''}" %>
-                <%= link_to "Search Profiles", search_profiles_path, 
+                <%= link_to t('user.search_profiles'), search_profiles_path, 
                     class: "text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors duration-200 #{current_page?(search_profiles_path) ? 'text-blue-600 border-b-2 border-blue-600' : ''}" %>
                 <% if current_user.admin? %>
-                  <%= link_to "Admin Matches", admin_matches_path, 
+                  <%= link_to t('admin.matches'), admin_matches_path, 
                       class: "text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors duration-200 #{current_page?(admin_matches_path) ? 'text-blue-600 border-b-2 border-blue-600' : ''}" %>
                 <% end %>
               </div>

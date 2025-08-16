@@ -89,31 +89,37 @@
                 </div>
 
                 <!-- Profile Details -->
-                <div class="space-y-3 mb-6">
-                  <div class="flex items-center justify-between">
-                    <span class="text-sm text-gray-500"><%= t('user.created_on') %>:</span>
-                    <span class="text-sm font-medium text-gray-900">
-                      <% if profile.user == current_user %>
-                        <%= t('user.profile') %>
-                      <% else %>
-                        <%= profile.user.email %>
-                      <% end %>
-                    </span>
-                  </div>
-                  
-                  <div class="flex items-center justify-between">
-                    <span class="text-sm text-gray-500"><%= t('user.created_on') %>:</span>
-                    <span class="text-sm text-gray-900">
-                      <%= time_ago_in_words(profile.created_at) %> ago
-                    </span>
+                <div class="space-y-4 mb-6">
+                  <div class="grid grid-cols-2 gap-3">
+                    <div>
+                      <span class="text-xs text-gray-500 font-medium uppercase tracking-wide"><%= t('user.created_by') %></span>
+                      <p class="text-sm font-medium text-gray-900 mt-1">
+                        <% if profile.user == current_user %>
+                          <%= t('user.my_profile') %>
+                        <% else %>
+                          <% if profile.user.personal_info&.first_name.present? %>
+                            <%= profile.user.personal_info.first_name %> <%= profile.user.personal_info.last_name %>
+                          <% else %>
+                            <%= profile.user.email.split('@').first.titleize %>
+                          <% end %>
+                        <% end %>
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <span class="text-xs text-gray-500 font-medium uppercase tracking-wide"><%= t('user.created_on') %></span>
+                      <p class="text-sm text-gray-900 mt-1">
+                        <%= time_ago_in_words(profile.created_at) %>
+                      </p>
+                    </div>
                   </div>
 
                   <% if profile.address %>
-                    <div class="flex items-center justify-between">
-                      <span class="text-sm text-gray-500"><%= t('forms.address') %>:</span>
-                      <span class="text-sm text-gray-900">
+                    <div class="pt-2 border-t border-gray-100">
+                      <span class="text-xs text-gray-500 font-medium uppercase tracking-wide"><%= t('forms.address') %></span>
+                      <p class="text-sm text-gray-900 mt-1">
                         <%= [profile.address.city, profile.address.state].compact.join(", ") %>
-                      </span>
+                      </p>
                     </div>
                   <% end %>
 

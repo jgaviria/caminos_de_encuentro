@@ -133,51 +133,51 @@
               %>
               <div class="bg-gray-50 rounded-lg p-4">
                 <div class="flex items-center justify-between mb-2">
-                  <span class="text-sm font-medium text-gray-600">First Name</span>
+                  <span class="text-sm font-medium text-gray-600"><%= t('forms.first_name') %></span>
                   <% if first_name_match %>
                     <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                       <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                       </svg>
-                      Exact Match
+                      <%= t('admin.exact_match') %>
                     </span>
                   <% else %>
                     <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
                       <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                       </svg>
-                      No Match
+                      <%= t('admin.no_match') %>
                     </span>
                   <% end %>
                 </div>
                 <div class="space-y-1">
-                  <div class="text-sm"><strong>Seeker:</strong> <%= @search_profile.first_name %></div>
-                  <div class="text-sm"><strong>Found:</strong> <%= @matched_user&.personal_info&.first_name || 'N/A' %></div>
+                  <div class="text-sm"><strong><%= t('admin.seeker') %>:</strong> <%= @search_profile.first_name %></div>
+                  <div class="text-sm"><strong><%= t('admin.found') %>:</strong> <%= @matched_user&.personal_info&.first_name || 'N/A' %></div>
                 </div>
               </div>
               
               <div class="bg-gray-50 rounded-lg p-4">
                 <div class="flex items-center justify-between mb-2">
-                  <span class="text-sm font-medium text-gray-600">Last Name</span>
+                  <span class="text-sm font-medium text-gray-600"><%= t('forms.last_name') %></span>
                   <% if last_name_match %>
                     <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                       <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                       </svg>
-                      Exact Match
+                      <%= t('admin.exact_match') %>
                     </span>
                   <% else %>
                     <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
                       <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                       </svg>
-                      No Match
+                      <%= t('admin.no_match') %>
                     </span>
                   <% end %>
                 </div>
                 <div class="space-y-1">
-                  <div class="text-sm"><strong>Seeker:</strong> <%= @search_profile.last_name %></div>
-                  <div class="text-sm"><strong>Found:</strong> <%= @matched_user&.personal_info&.last_name || 'N/A' %></div>
+                  <div class="text-sm"><strong><%= t('admin.seeker') %>:</strong> <%= @search_profile.last_name %></div>
+                  <div class="text-sm"><strong><%= t('admin.found') %>:</strong> <%= @matched_user&.personal_info&.last_name || 'N/A' %></div>
                 </div>
               </div>
             </div>
@@ -209,8 +209,8 @@
                     <% end %>
                   </div>
                   <div class="space-y-1">
-                    <div class="text-sm"><strong>Seeker:</strong> <%= @search_profile.address.country %></div>
-                    <div class="text-sm"><strong>Found:</strong> <%= @matched_user.address.country %></div>
+                    <div class="text-sm"><strong><%= t('admin.seeker') %>:</strong> <%= @search_profile.address.country %></div>
+                    <div class="text-sm"><strong><%= t('admin.found') %>:</strong> <%= @matched_user.address.country %></div>
                   </div>
                 </div>
                 
@@ -224,8 +224,8 @@
                     <% end %>
                   </div>
                   <div class="space-y-1">
-                    <div class="text-sm"><strong>Seeker:</strong> <%= @search_profile.address.state %></div>
-                    <div class="text-sm"><strong>Found:</strong> <%= @matched_user.address.state %></div>
+                    <div class="text-sm"><strong><%= t('admin.seeker') %>:</strong> <%= @search_profile.address.state %></div>
+                    <div class="text-sm"><strong><%= t('admin.found') %>:</strong> <%= @matched_user.address.state %></div>
                   </div>
                 </div>
                 
@@ -239,8 +239,8 @@
                     <% end %>
                   </div>
                   <div class="space-y-1">
-                    <div class="text-sm"><strong>Seeker:</strong> <%= @search_profile.address.city %></div>
-                    <div class="text-sm"><strong>Found:</strong> <%= @matched_user.address.city %></div>
+                    <div class="text-sm"><strong><%= t('admin.seeker') %>:</strong> <%= @search_profile.address.city %></div>
+                    <div class="text-sm"><strong><%= t('admin.found') %>:</strong> <%= @matched_user.address.city %></div>
                   </div>
                 </div>
               </div>
@@ -250,7 +250,7 @@
                   <svg class="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
                   </svg>
-                  <span class="text-sm text-yellow-800">Location information not available for one or both profiles</span>
+                  <span class="text-sm text-yellow-800"><%= t('admin.location_not_available') %></span>
                 </div>
               </div>
             <% end %>
@@ -266,18 +266,18 @@
             </h4>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div class="bg-gray-50 rounded-lg p-4">
-                <div class="text-sm font-medium text-gray-600 mb-2">Account Ages</div>
+                <div class="text-sm font-medium text-gray-600 mb-2"><%= t('admin.account_ages') %></div>
                 <div class="space-y-1">
-                  <div class="text-sm"><strong>Seeker joined:</strong> <%= @search_profile.user.created_at.strftime("%B %Y") %></div>
-                  <div class="text-sm"><strong>Found joined:</strong> <%= @matched_user.created_at.strftime("%B %Y") %></div>
+                  <div class="text-sm"><strong><%= t('admin.seeker_joined') %>:</strong> <%= @search_profile.user.created_at.strftime("%B %Y") %></div>
+                  <div class="text-sm"><strong><%= t('admin.found_joined') %>:</strong> <%= @matched_user.created_at.strftime("%B %Y") %></div>
                 </div>
               </div>
               
               <div class="bg-gray-50 rounded-lg p-4">
-                <div class="text-sm font-medium text-gray-600 mb-2">Profile Completeness</div>
+                <div class="text-sm font-medium text-gray-600 mb-2"><%= t('admin.profile_completeness') %></div>
                 <div class="space-y-1">
-                  <div class="text-sm"><strong>Seeker:</strong> <%= @search_profile.address ? 'Has location' : 'Missing location' %></div>
-                  <div class="text-sm"><strong>Found:</strong> <%= @matched_user&.personal_info ? 'Has personal info' : 'Missing personal info' %></div>
+                  <div class="text-sm"><strong><%= t('admin.seeker') %>:</strong> <%= @search_profile.address ? t('admin.has_location') : t('admin.missing_location') %></div>
+                  <div class="text-sm"><strong><%= t('admin.found') %>:</strong> <%= @matched_user&.personal_info ? t('admin.has_personal_info') : t('admin.missing_personal_info') %></div>
                 </div>
               </div>
             </div>
@@ -315,20 +315,20 @@
                 <% end %>
                 <%= @search_profile.last_name %>
               </h4>
-              <p class="text-sm text-gray-600">Target of search</p>
+              <p class="text-sm text-gray-600"><%= t('admin.target_of_search') %></p>
             </div>
           </div>
 
           <div class="grid grid-cols-1 gap-4">
             <div class="bg-gray-50 rounded-lg p-4">
-              <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Seeker Information</label>
+              <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1"><%= t('admin.seeker_information') %></label>
               <p class="text-sm font-medium text-gray-900"><%= @search_profile.user.email %></p>
-              <p class="text-xs text-gray-500">Joined <%= @search_profile.user.created_at.strftime("%B %Y") %></p>
+              <p class="text-xs text-gray-500"><%= t('admin.joined') %> <%= @search_profile.user.created_at.strftime("%B %Y") %></p>
             </div>
 
             <% if @search_profile.address %>
               <div class="bg-gray-50 rounded-lg p-4">
-                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Search Location</label>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1"><%= t('admin.search_location') %></label>
                 <p class="text-sm font-medium text-gray-900">
                   <%= [@search_profile.address.city, @search_profile.address.state, @search_profile.address.country].compact.join(", ") %>
                 </p>
@@ -336,9 +336,9 @@
             <% end %>
 
             <div class="bg-gray-50 rounded-lg p-4">
-              <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Profile Created</label>
+              <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1"><%= t('admin.profile_created') %></label>
               <p class="text-sm font-medium text-gray-900"><%= @search_profile.created_at.strftime("%B %d, %Y") %></p>
-              <p class="text-xs text-gray-500"><%= time_ago_in_words(@search_profile.created_at) %> ago</p>
+              <p class="text-xs text-gray-500"><%= time_ago_in_words(@search_profile.created_at) %> <%= t('general.ago') %></p>
             </div>
           </div>
         </div>
@@ -373,36 +373,36 @@
                     <% end %>
                     <%= @matched_user.personal_info.last_name %>
                   </h4>
-                  <p class="text-sm text-gray-600">Platform user</p>
+                  <p class="text-sm text-gray-600"><%= t('admin.platform_user') %></p>
                 </div>
               </div>
 
               <div class="grid grid-cols-1 gap-4">
                 <div class="bg-gray-50 rounded-lg p-4">
-                  <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Contact Information</label>
+                  <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1"><%= t('admin.contact_information') %></label>
                   <p class="text-sm font-medium text-gray-900"><%= @matched_user.email %></p>
                   <% if @matched_user.personal_info.phone_number.present? %>
                     <p class="text-sm text-gray-900"><%= @matched_user.personal_info.phone_number %></p>
                   <% end %>
-                  <p class="text-xs text-gray-500">Joined <%= @matched_user.created_at.strftime("%B %Y") %></p>
+                  <p class="text-xs text-gray-500"><%= t('admin.joined') %> <%= @matched_user.created_at.strftime("%B %Y") %></p>
                 </div>
 
                 <% if @matched_user.address %>
                   <div class="bg-gray-50 rounded-lg p-4">
-                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Current Location</label>
+                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1"><%= t('admin.current_location') %></label>
                     <p class="text-sm font-medium text-gray-900">
                       <%= [@matched_user.address.city, @matched_user.address.state, @matched_user.address.country].compact.join(", ") %>
                     </p>
                     <% if @matched_user.address.neighborhood.present? %>
-                      <p class="text-xs text-gray-500">Neighborhood: <%= @matched_user.address.neighborhood %></p>
+                      <p class="text-xs text-gray-500"><%= t('admin.neighborhood') %>: <%= @matched_user.address.neighborhood %></p>
                     <% end %>
                   </div>
                 <% end %>
 
                 <div class="bg-gray-50 rounded-lg p-4">
-                  <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Profile Created</label>
+                  <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1"><%= t('admin.profile_created') %></label>
                   <p class="text-sm font-medium text-gray-900"><%= @matched_user.personal_info.created_at.strftime("%B %d, %Y") %></p>
-                  <p class="text-xs text-gray-500"><%= time_ago_in_words(@matched_user.personal_info.created_at) %> ago</p>
+                  <p class="text-xs text-gray-500"><%= time_ago_in_words(@matched_user.personal_info.created_at) %> <%= t('general.ago') %></p>
                 </div>
               </div>
             </div>
@@ -431,55 +431,55 @@
           <h3 class="text-xl font-semibold text-gray-900 mb-4"><%= t('admin.review_guidelines') %></h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h4 class="text-sm font-semibold text-blue-800 uppercase tracking-wide mb-3">Primary Criteria</h4>
+              <h4 class="text-sm font-semibold text-blue-800 uppercase tracking-wide mb-3"><%= t('admin.primary_criteria') %></h4>
               <ul class="space-y-2 text-sm text-gray-700">
                 <li class="flex items-start">
                   <svg class="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                   </svg>
-                  <span><strong>Name matching:</strong> Exact or very similar names (consider nicknames, abbreviations)</span>
+                  <span><strong><%= t('admin.name_matching') %>:</strong> <%= t('admin.name_matching_description') %></span>
                 </li>
                 <li class="flex items-start">
                   <svg class="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                   </svg>
-                  <span><strong>Location compatibility:</strong> Same city/region or reasonable migration pattern</span>
+                  <span><strong><%= t('admin.location_compatibility') %>:</strong> <%= t('admin.location_compatibility_description') %></span>
                 </li>
                 <li class="flex items-start">
                   <svg class="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                   </svg>
-                  <span><strong>Timeline logic:</strong> Profile creation dates make sense</span>
+                  <span><strong><%= t('admin.timeline_logic') %>:</strong> <%= t('admin.timeline_logic_description') %></span>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 class="text-sm font-semibold text-blue-800 uppercase tracking-wide mb-3">Decision Framework</h4>
+              <h4 class="text-sm font-semibold text-blue-800 uppercase tracking-wide mb-3"><%= t('admin.decision_framework') %></h4>
               <ul class="space-y-2 text-sm text-gray-700">
                 <li class="flex items-start">
                   <svg class="w-4 h-4 text-yellow-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
                   </svg>
-                  <span><strong>High confidence (80%+):</strong> Verify immediately</span>
+                  <span><strong><%= t('admin.high_confidence_threshold') %>:</strong> <%= t('admin.high_confidence_action') %></span>
                 </li>
                 <li class="flex items-start">
                   <svg class="w-4 h-4 text-yellow-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
                   </svg>
-                  <span><strong>Medium confidence (60-80%):</strong> Review carefully, lean towards approval</span>
+                  <span><strong><%= t('admin.medium_confidence_threshold') %>:</strong> <%= t('admin.medium_confidence_action') %></span>
                 </li>
                 <li class="flex items-start">
                   <svg class="w-4 h-4 text-red-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                   </svg>
-                  <span><strong>Low confidence (<60%):</strong> Reject unless compelling evidence</span>
+                  <span><strong><%= t('admin.low_confidence_threshold') %>:</strong> <%= t('admin.low_confidence_action') %></span>
                 </li>
               </ul>
             </div>
           </div>
           <div class="mt-6 p-4 bg-blue-100 rounded-lg">
             <p class="text-sm text-blue-800">
-              <strong>Remember:</strong> When in doubt, approve the match. Users can verify the connection themselves, and false positives are better than missed reunifications.
+              <strong><%= t('admin.remember') %>:</strong> <%= t('admin.approval_guidance') %>
             </p>
           </div>
         </div>
