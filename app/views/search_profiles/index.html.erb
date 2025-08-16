@@ -1,11 +1,23 @@
 <!-- Search Profiles Index -->
-<div class="space-y-6">
-  <!-- Page Header -->
-  <%= render 'shared/page_header', 
-      title: 'Search Profiles', 
-      description: 'Manage and create search profiles for people you are looking for',
-      action_text: 'Create New Profile',
-      action_url: new_search_profile_path %>
+<div class="space-y-8">
+  <!-- Enhanced Page Header -->
+  <div class="rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+    <div class="bg-gradient-to-r from-green-600 to-emerald-700 relative px-6 py-10 sm:px-10 sm:py-12">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex-1">
+          <div>
+            <h1 class="text-3xl font-bold text-white mb-4">
+              Search Profiles
+            </h1>
+            <p class="text-white text-lg font-medium">Manage and create search profiles for people you are looking for</p>
+            <p class="text-white text-sm mt-1 opacity-90">
+              Create detailed profiles to help find missing family members
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Statistics Cards -->
   <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -44,33 +56,33 @@
 
   <!-- Search Profiles Grid -->
   <% if @search_profiles.any? %>
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-      <div class="px-6 py-4 border-b border-gray-200">
-        <h3 class="text-lg font-medium text-gray-900">All Search Profiles</h3>
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+      <div class="px-6 py-5 border-b border-gray-200">
+        <h3 class="text-xl font-semibold text-gray-900">All Search Profiles</h3>
         <p class="text-sm text-gray-600 mt-1">Browse and manage search profiles</p>
       </div>
       
       <div class="p-6">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <% @search_profiles.each do |profile| %>
-            <div class="bg-gray-50 rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-200">
+            <div class="bg-white rounded-xl border border-gray-200 hover:shadow-lg hover:border-green-300 transition-all duration-300 overflow-hidden group">
               <div class="p-6">
                 <!-- Profile Header -->
-                <div class="flex items-center mb-4">
-                  <div class="h-12 w-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                    <span class="text-white font-medium text-lg">
+                <div class="flex flex-col items-center text-center mb-6">
+                  <div class="h-16 w-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mb-3">
+                    <span class="text-white font-bold text-xl">
                       <%= profile.first_name.first.upcase %>
                     </span>
                   </div>
-                  <div class="ml-4">
-                    <h4 class="text-lg font-medium text-gray-900">
+                  <div>
+                    <h4 class="text-xl font-semibold text-gray-900 mb-1">
                       <%= profile.first_name %>
                       <% if profile.middle_name.present? %>
                         <%= profile.middle_name %>
                       <% end %>
                       <%= profile.last_name %>
                     </h4>
-                    <p class="text-sm text-gray-500">
+                    <p class="text-sm text-gray-600">
                       Search Profile
                     </p>
                   </div>
@@ -105,28 +117,35 @@
                     </div>
                   <% end %>
 
-                  <!-- Ownership indicator -->
-                  <% if profile.user == current_user %>
-                    <%= render 'shared/status_badge', status: 'success', text: 'Your Profile' %>
-                  <% elsif current_user.admin? %>
-                    <%= render 'shared/status_badge', status: 'info', text: 'User Profile' %>
-                  <% end %>
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="flex space-x-3">
+                <div class="flex flex-col gap-3">
                   <% if profile.user == current_user %>
-                    <%= link_to "Edit", edit_search_profile_path(profile), 
-                        class: "flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium text-center transition-colors duration-200" %>
+                    <%= link_to edit_search_profile_path(profile), 
+                        class: "action-button action-button-primary w-full justify-center" do %>
+                      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                      </svg>
+                      <span class="font-semibold">Edit Profile</span>
+                    <% end %>
                   <% end %>
                   
                   <% if current_user.admin? %>
-                    <%= button_to "Run Match", match_search_profile_path(profile), method: :post,
+                    <%= button_to match_search_profile_path(profile), method: :post,
                         confirm: "This will start the matching process for #{profile.first_name} #{profile.last_name}. Continue?",
-                        class: "flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200" %>
+                        class: "action-button action-button-green w-full justify-center" do %>
+                      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                      </svg>
+                      <span class="font-semibold">Run Match</span>
+                    <% end %>
                   <% else %>
-                    <div class="flex-1 bg-gray-300 text-gray-500 px-4 py-2 rounded-lg text-sm font-medium text-center cursor-not-allowed">
-                      Admin Only
+                    <div class="inline-flex items-center justify-center gap-2 font-semibold rounded-full text-sm py-2 px-5 transition-all duration-200 ease-in-out border-2 bg-transparent opacity-50 cursor-not-allowed text-gray-500 border-gray-300">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                      </svg>
+                      <span class="font-semibold">Admin Only</span>
                     </div>
                   <% end %>
                 </div>
