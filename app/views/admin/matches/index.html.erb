@@ -141,7 +141,7 @@
           <div>
             <h3 class="text-lg font-semibold text-gray-900">Match Management</h3>
             <p class="text-sm text-gray-600 mt-1">
-              <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800 mr-2">
+              <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800 mr-2 matches-count">
                 <%= @matches.count %>
               </span>
               matches displayed
@@ -149,18 +149,20 @@
           </div>
           
           <!-- Search Form -->
-          <%= form_with url: admin_matches_path, method: :get, local: true, class: "flex items-center gap-2" do |form| %>
+          <form id="search-form" class="flex items-center gap-2">
             <div class="relative">
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
               </div>
-              <%= form.text_field :search, value: params[:search], placeholder: "Search matches...",
-                  class: "pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-64 bg-white shadow-sm" %>
+              <input type="text" id="search" name="search" value="<%= params[:search] %>" placeholder="Search matches..."
+                     class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-64 bg-white shadow-sm">
             </div>
-            <%= form.submit "Search", class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200 shadow-sm" %>
-          <% end %>
+            <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200 shadow-sm">
+              Search
+            </button>
+          </form>
         </div>
         
         <!-- Bottom Row: Filters -->
@@ -169,30 +171,30 @@
           <div class="flex items-center gap-2">
             <span class="text-sm font-medium text-gray-700 mr-2">Status:</span>
             <div class="flex items-center gap-2">
-              <%= link_to admin_matches_path, 
-                  class: "inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full transition-colors duration-200 #{params[:verified].blank? ? 'bg-blue-600 text-white shadow-sm' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" do %>
+              <button type="button" data-filter="verified" data-value="" 
+                      class="filter-button inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full transition-colors duration-200 #{params[:verified].blank? ? 'bg-blue-600 text-white shadow-sm' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}">
                 All
-              <% end %>
-              <%= link_to admin_matches_path(verified: 'true'), 
-                  class: "inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full transition-colors duration-200 #{params[:verified] == 'true' ? 'bg-green-600 text-white shadow-sm' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" do %>
+              </button>
+              <button type="button" data-filter="verified" data-value="true" 
+                      class="filter-button inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full transition-colors duration-200 #{params[:verified] == 'true' ? 'bg-green-600 text-white shadow-sm' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}">
                 Verified
-              <% end %>
-              <%= link_to admin_matches_path(verified: 'false'), 
-                  class: "inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full transition-colors duration-200 #{params[:verified] == 'false' ? 'bg-yellow-600 text-white shadow-sm' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" do %>
+              </button>
+              <button type="button" data-filter="verified" data-value="false" 
+                      class="filter-button inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full transition-colors duration-200 #{params[:verified] == 'false' ? 'bg-yellow-600 text-white shadow-sm' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}">
                 Pending
-              <% end %>
+              </button>
             </div>
           </div>
 
           <!-- Score Filter -->
-          <%= form_with url: admin_matches_path, method: :get, local: true, class: "flex items-center gap-2" do |form| %>
-            <%= form.hidden_field :verified, value: params[:verified] if params[:verified].present? %>
-            <%= form.hidden_field :search, value: params[:search] if params[:search].present? %>
+          <form id="score-filter-form" class="flex items-center gap-2">
             <span class="text-sm font-medium text-gray-700">Min Score:</span>
-            <%= form.number_field :min_score, step: 0.1, min: 0, max: 1, value: params[:min_score], placeholder: "0.0", 
-                class: "border border-gray-300 rounded-lg px-3 py-1.5 text-sm text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-20 bg-white shadow-sm" %>
-            <%= form.submit "Apply", class: "inline-flex items-center px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors duration-200 shadow-sm" %>
-          <% end %>
+            <input type="number" id="min_score" name="min_score" step="0.1" min="0" max="1" value="<%= params[:min_score] %>" placeholder="0.0" 
+                   class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-20 bg-white shadow-sm">
+            <button type="submit" class="inline-flex items-center px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors duration-200 shadow-sm">
+              Apply
+            </button>
+          </form>
         </div>
       </div>
     </div>
@@ -235,7 +237,19 @@
       </div>
     </div>
 
-    <!-- Table Content -->
+    <!-- Loading Indicator -->
+    <div id="loading-indicator" class="hidden px-6 py-8 text-center">
+      <div class="inline-flex items-center">
+        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span class="text-sm text-gray-600">Loading matches...</span>
+      </div>
+    </div>
+
+    <!-- Table Content Container -->
+    <div id="table-content">
     <% if @matches.any? %>
       <div class="overflow-hidden">
         <table class="min-w-full divide-y divide-gray-200">
@@ -363,10 +377,18 @@
             class: "inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200" %>
       </div>
     <% end %>
+    </div> <!-- End table-content -->
   </div>
 </div>
 
 <script>
+  // Global filter state
+  let currentFilters = {
+    search: '<%= params[:search] %>',
+    verified: '<%= params[:verified] %>',
+    min_score: '<%= params[:min_score] %>'
+  };
+
   // Enhanced checkbox handling with bulk actions bar
   function updateSelectionCounter() {
     const checkboxes = document.querySelectorAll('.match_checkbox');
@@ -403,20 +425,146 @@
     }
   }
 
-  // Handle select all checkbox
-  document.getElementById('select_all')?.addEventListener('change', function() {
-    const checkboxes = document.querySelectorAll('.match_checkbox');
-    checkboxes.forEach(checkbox => {
-      checkbox.checked = this.checked;
+  // Show loading indicator
+  function showLoading() {
+    document.getElementById('loading-indicator').classList.remove('hidden');
+    document.getElementById('table-content').style.opacity = '0.5';
+  }
+
+  // Hide loading indicator
+  function hideLoading() {
+    document.getElementById('loading-indicator').classList.add('hidden');
+    document.getElementById('table-content').style.opacity = '1';
+  }
+
+  // Update filter button states
+  function updateFilterButtonStates() {
+    document.querySelectorAll('.filter-button').forEach(button => {
+      const filterType = button.dataset.filter;
+      const filterValue = button.dataset.value;
+      
+      if (filterType === 'verified') {
+        const isActive = (currentFilters.verified === filterValue) || 
+                        (currentFilters.verified === '' && filterValue === '');
+        
+        // Reset button to base classes
+        button.className = 'filter-button inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full transition-colors duration-200';
+        
+        if (isActive) {
+          button.className += ' bg-blue-600 text-white shadow-sm';
+        } else {
+          button.className += ' bg-white text-gray-700 border border-gray-300 hover:bg-gray-50';
+        }
+      }
     });
+  }
+
+  // Update URL without page refresh
+  function updateURL() {
+    const params = new URLSearchParams();
+    if (currentFilters.search) params.set('search', currentFilters.search);
+    if (currentFilters.verified) params.set('verified', currentFilters.verified);
+    if (currentFilters.min_score) params.set('min_score', currentFilters.min_score);
+    
+    const newURL = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+    window.history.pushState({}, '', newURL);
+  }
+
+  // Fetch filtered data
+  async function fetchFilteredData() {
+    showLoading();
+    
+    try {
+      const params = new URLSearchParams();
+      if (currentFilters.search) params.set('search', currentFilters.search);
+      if (currentFilters.verified) params.set('verified', currentFilters.verified);
+      if (currentFilters.min_score) params.set('min_score', currentFilters.min_score);
+      params.set('format', 'json');
+      
+      const response = await fetch(`<%= admin_matches_path %>?${params.toString()}`, {
+        headers: {
+          'Accept': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      });
+      
+      if (!response.ok) throw new Error('Network response was not ok');
+      
+      const data = await response.json();
+      updateTableContent(data);
+      updateURL();
+      updateFilterButtonStates();
+      
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // Show error message or fallback
+    } finally {
+      hideLoading();
+    }
+  }
+
+  // Update table content with new data
+  function updateTableContent(data) {
+    document.getElementById('table-content').innerHTML = data.html;
+    
+    // Update results count
+    const countElement = document.querySelector('.matches-count');
+    if (countElement) {
+      countElement.textContent = data.count;
+    }
+    
+    // Re-attach event listeners for new checkboxes
+    document.querySelectorAll('.match_checkbox').forEach(checkbox => {
+      checkbox.addEventListener('change', updateSelectionCounter);
+    });
+    
+    // Update selection counter
     updateSelectionCounter();
+  }
+
+  // Handle filter button clicks
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('filter-button')) {
+      e.preventDefault();
+      const filterType = e.target.dataset.filter;
+      const filterValue = e.target.dataset.value;
+      
+      currentFilters[filterType] = filterValue;
+      fetchFilteredData();
+    }
   });
 
-  // Handle individual checkboxes
-  document.querySelectorAll('.match_checkbox').forEach(checkbox => {
-    checkbox.addEventListener('change', updateSelectionCounter);
+  // Handle search form submission
+  document.getElementById('search-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    currentFilters.search = document.getElementById('search').value;
+    fetchFilteredData();
   });
 
-  // Initialize counter on page load
-  document.addEventListener('DOMContentLoaded', updateSelectionCounter);
+  // Handle score filter form submission
+  document.getElementById('score-filter-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    currentFilters.min_score = document.getElementById('min_score').value;
+    fetchFilteredData();
+  });
+
+  // Handle select all checkbox
+  document.addEventListener('change', function(e) {
+    if (e.target.id === 'select_all') {
+      const checkboxes = document.querySelectorAll('.match_checkbox');
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = e.target.checked;
+      });
+      updateSelectionCounter();
+    }
+  });
+
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    updateSelectionCounter();
+    updateFilterButtonStates();
+    
+    // Load initial table content
+    fetchFilteredData();
+  });
 </script>

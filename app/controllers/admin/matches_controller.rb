@@ -10,6 +10,15 @@ class Admin::MatchesController < ApplicationController
     @matches = @matches.where(is_verified: params[:verified]) if params[:verified].present?
     @matches = @matches.where('similarity_score >= ?', params[:min_score]) if params[:min_score].present?
     
+    # Add search functionality
+    if params[:search].present?
+      search_term = "%#{params[:search]}%"
+      @matches = @matches.joins(:search_profile, search_profile: :user)
+                        .joins("LEFT JOIN personal_infos ON personal_infos.user_id = matches.user_id")
+                        .where("search_profiles.first_name ILIKE ? OR search_profiles.last_name ILIKE ? OR users.email ILIKE ? OR personal_infos.first_name ILIKE ? OR personal_infos.last_name ILIKE ?", 
+                               search_term, search_term, search_term, search_term, search_term)
+    end
+    
     @matches = @matches.page(params[:page]).per(20)
     
     # Statistics for dashboard
@@ -20,6 +29,17 @@ class Admin::MatchesController < ApplicationController
       high_confidence_matches: Match.where('similarity_score >= 0.8').count,
       recent_matches: Match.where('created_at >= ?', 1.week.ago).count
     }
+    
+    # Handle JSON requests for AJAX
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: {
+          html: render_to_string(partial: 'admin/matches/table_content', locals: { matches: @matches }, formats: [:html]),
+          count: @matches.total_count
+        }
+      end
+    end
   end
   
   def show
