@@ -1,5 +1,6 @@
 <% if matches.any? %>
-  <div class="overflow-hidden">
+  <!-- Desktop Table View (hidden on mobile) -->
+  <div class="hidden md:block overflow-hidden">
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
@@ -98,6 +99,105 @@
         <% end %>
       </tbody>
     </table>
+  </div>
+
+  <!-- Mobile Card View (shown on mobile) -->
+  <div class="md:hidden space-y-4 p-4">
+    <% matches.each do |match| %>
+      <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+        <!-- Card Header -->
+        <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <input type="checkbox" name="match_ids[]" value="<%= match.id %>" class="match_checkbox h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2">
+            <span class="text-xs font-medium text-gray-500"><%= match.created_at.strftime("%b %d, %Y") %></span>
+          </div>
+          <div class="flex items-center gap-2">
+            <% if match.is_verified? %>
+              <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                Verified
+              </span>
+            <% else %>
+              <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                Pending
+              </span>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Card Content -->
+        <div class="p-4 space-y-4">
+          <!-- Seeker -->
+          <div>
+            <div class="text-xs font-medium text-gray-500 mb-1">SEEKER</div>
+            <div class="flex items-center">
+              <div class="h-8 w-8 bg-green-500 rounded-full flex items-center justify-center">
+                <span class="text-white text-xs font-medium">
+                  <%= match.search_profile.first_name.first.upcase %>
+                </span>
+              </div>
+              <div class="ml-3">
+                <div class="text-sm font-medium text-gray-900">
+                  <%= match.search_profile.first_name %> <%= match.search_profile.last_name %>
+                </div>
+                <div class="text-xs text-gray-500"><%= match.search_profile.user.email %></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Found Person -->
+          <div>
+            <div class="text-xs font-medium text-gray-500 mb-1">FOUND PERSON</div>
+            <% if match.user&.personal_info %>
+              <div class="flex items-center">
+                <div class="h-8 w-8 bg-purple-500 rounded-full flex items-center justify-center">
+                  <span class="text-white text-xs font-medium">
+                    <%= match.user.personal_info.first_name.first.upcase %>
+                  </span>
+                </div>
+                <div class="ml-3">
+                  <div class="text-sm font-medium text-gray-900">
+                    <%= match.user.personal_info.first_name %> <%= match.user.personal_info.last_name %>
+                  </div>
+                  <div class="text-xs text-gray-500"><%= match.user.email %></div>
+                </div>
+              </div>
+            <% else %>
+              <div class="flex items-center">
+                <div class="h-8 w-8 bg-gray-300 rounded-full flex items-center justify-center">
+                  <span class="text-gray-500 text-xs">?</span>
+                </div>
+                <div class="ml-3">
+                  <span class="text-sm text-gray-400">No personal info</span>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+          <!-- Similarity Score -->
+          <div>
+            <div class="text-xs font-medium text-gray-500 mb-2">SIMILARITY SCORE</div>
+            <div class="flex items-center">
+              <div class="flex-1 bg-gray-200 rounded-full h-2 mr-3">
+                <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300" style="width: <%= (match.similarity_score * 100).round(1) %>%"></div>
+              </div>
+              <span class="text-sm font-medium text-gray-900"><%= (match.similarity_score * 100).round(1) %>%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card Footer -->
+        <div class="px-4 py-3 bg-gray-50 border-t border-gray-200 flex justify-center">
+          <%= link_to admin_match_path(match), 
+              class: "inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-colors duration-200" do %>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+            </svg>
+            <span>View Details</span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 
   <!-- Pagination -->
