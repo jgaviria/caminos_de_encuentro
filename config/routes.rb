@@ -50,6 +50,12 @@ Rails.application.routes.draw do
     end
     member do
       post "match"
+      get 'edit_step1'   # Edit step 1
+      patch 'edit_step1'
+      get 'edit_step2'   # Edit step 2
+      patch 'edit_step2'  
+      get 'edit_step3'   # Edit step 3
+      patch 'edit_step3'
     end
   end
 

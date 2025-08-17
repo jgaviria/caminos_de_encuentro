@@ -2,8 +2,8 @@
 class SearchProfilesController < ApplicationController
   before_action :authenticate_user!
   before_action :initialize_search_profile_session, only: [:step1, :step2, :step3]
-  before_action :set_search_profile, only: [:show, :edit, :update, :destroy, :match]
-  before_action :authorize_search_profile_access, only: [:show, :edit, :update, :destroy]
+  before_action :set_search_profile, only: [:show, :edit, :edit_step1, :edit_step2, :edit_step3, :update, :destroy, :match]
+  before_action :authorize_search_profile_access, only: [:show, :edit, :edit_step1, :edit_step2, :edit_step3, :update, :destroy]
 
   def index
     if current_user.admin?
@@ -91,16 +91,74 @@ class SearchProfilesController < ApplicationController
   end
 
   def edit
+    # Redirect to edit step 1 for the multi-step flow
+    redirect_to edit_step1_search_profile_path(@search_profile, locale: I18n.locale)
+  end
+
+  # Edit Step 1: Basic Information
+  def edit_step1
+    if request.patch?
+      # Handle form submission from edit step 1 (basic info)
+      Rails.logger.debug "Edit Step 1 PATCH params: #{params.inspect}"
+      Rails.logger.debug "step1_params: #{step1_params.inspect}"
+      
+      if step1_params.present?
+        @search_profile.update!(step1_params)
+        redirect_to edit_step2_search_profile_path(@search_profile, locale: I18n.locale)
+      else
+        @search_profile_data = build_edit_data
+        @progress_percentage = 33
+        flash.now[:alert] = "Please fill in the required fields."
+        render :edit_step1
+      end
+    else
+      # Display edit step 1 form
+      @search_profile_data = {
+        'first_name' => @search_profile.first_name,
+        'middle_name' => @search_profile.middle_name,
+        'last_name' => @search_profile.last_name
+      }
+      @progress_percentage = 33
+    end
+  end
+
+  # Edit Step 2: Location Information  
+  def edit_step2
+    if request.patch?
+      # Handle form submission from edit step 2 (location data)
+      Rails.logger.debug "Edit Step 2 PATCH params: #{params.inspect}"
+      Rails.logger.debug "step2_params: #{step2_params.inspect}"
+      
+      if step2_params.present?
+        if @search_profile.address
+          @search_profile.address.update!(step2_params)
+        else
+          @search_profile.create_address!(step2_params)
+        end
+        redirect_to edit_step3_search_profile_path(@search_profile, locale: I18n.locale)
+      else
+        @search_profile_data = build_edit_data
+        @progress_percentage = 67
+        flash.now[:alert] = "Please fill in the required fields."
+        render :edit_step2
+      end
+    else
+      # Display edit step 2 form
+      @search_profile_data = build_edit_data
+      @progress_percentage = 67
+    end
+  end
+
+  # Edit Step 3: Review and Update
+  def edit_step3
+    # Always display step 3 (review page)
+    @search_profile_data = build_edit_data
     @progress_percentage = 100
   end
 
   def update
-    if @search_profile.update(search_profile_params)
-      redirect_to search_profiles_path(locale: I18n.locale), notice: "Search profile updated successfully."
-    else
-      @progress_percentage = 100
-      render :edit
-    end
+    # Final update from edit step 3
+    redirect_to search_profiles_path(locale: I18n.locale), notice: "Search profile updated successfully."
   end
 
   def destroy
@@ -136,6 +194,27 @@ class SearchProfilesController < ApplicationController
 
   def initialize_search_profile_session
     session[:search_profile_data] ||= {}
+  end
+
+  def build_edit_data
+    data = {
+      'first_name' => @search_profile.first_name,
+      'middle_name' => @search_profile.middle_name,
+      'last_name' => @search_profile.last_name
+    }
+    
+    if @search_profile.address
+      data.merge!(
+        'country' => @search_profile.address.country,
+        'state' => @search_profile.address.state,
+        'city' => @search_profile.address.city,
+        'neighborhood' => @search_profile.address.neighborhood,
+        'street_address' => @search_profile.address.street_address,
+        'postal_code' => @search_profile.address.postal_code
+      )
+    end
+    
+    data
   end
 
   def step1_params
