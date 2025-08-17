@@ -17,6 +17,12 @@ Rails.application.configure do
   # Enable server timing.
   config.server_timing = true
 
+  # Allow ngrok tunneling for development
+  config.hosts << "d2723dd71ca2.ngrok-free.app"
+  # Also allow any ngrok subdomain for future sessions
+  config.hosts << /[a-z0-9\-]+\.ngrok-free\.app/
+  config.hosts << /[a-z0-9\-]+\.ngrok\.io/
+
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?

@@ -10,19 +10,19 @@ class SearchProfilesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "requires authentication for all actions" do
-    get search_profiles_path
-    assert_redirected_to new_user_session_path
+    get search_profiles_path(locale: I18n.default_locale)
+    assert_redirected_to new_user_session_path(locale: I18n.default_locale)
     
-    get new_search_profile_path
-    assert_redirected_to new_user_session_path
+    get new_search_profile_path(locale: I18n.default_locale)
+    assert_redirected_to new_user_session_path(locale: I18n.default_locale)
     
-    post match_search_profile_path(@search_profile)
-    assert_redirected_to new_user_session_path
+    post match_search_profile_path(@search_profile, locale: I18n.default_locale)
+    assert_redirected_to new_user_session_path(locale: I18n.default_locale)
   end
 
   test "index shows all search profiles" do
     sign_in @user
-    get search_profiles_path
+    get search_profiles_path(locale: I18n.default_locale)
     
     assert_response :success
     assert_includes assigns(:search_profiles), @search_profile
@@ -30,7 +30,7 @@ class SearchProfilesControllerTest < ActionDispatch::IntegrationTest
 
   test "new initializes search profile for current user" do
     sign_in @user
-    get new_search_profile_path
+    get new_search_profile_path(locale: I18n.default_locale)
     
     assert_response :success
     assert_equal @user, assigns(:search_profile).user
@@ -41,7 +41,7 @@ class SearchProfilesControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
     
     assert_difference "SearchProfile.count", 1 do
-      post search_profiles_path, params: {
+      post search_profiles_path(locale: I18n.default_locale), params: {
         search_profile: {
           first_name: "John",
           last_name: "Doe"
@@ -49,7 +49,7 @@ class SearchProfilesControllerTest < ActionDispatch::IntegrationTest
       }
     end
     
-    assert_redirected_to dashboard_path
+    assert_redirected_to dashboard_path(locale: I18n.default_locale)
     assert_equal "Search profile saved successfully.", flash[:notice]
   end
 
@@ -57,7 +57,7 @@ class SearchProfilesControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
     
     assert_no_difference "SearchProfile.count" do
-      post search_profiles_path, params: {
+      post search_profiles_path(locale: I18n.default_locale), params: {
         search_profile: {
           first_name: "", # Invalid - required field
           last_name: "Doe"
@@ -74,7 +74,7 @@ class SearchProfilesControllerTest < ActionDispatch::IntegrationTest
     # Mock current_user.search_profile since it's a singular association
     @user.stubs(:search_profile).returns(@search_profile)
     
-    get edit_search_profile_path(@search_profile)
+    get edit_search_profile_path(@search_profile, locale: I18n.default_locale)
     
     assert_response :success
     assert_equal @search_profile, assigns(:search_profile)
@@ -85,7 +85,7 @@ class SearchProfilesControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
     @user.stubs(:search_profile).returns(@search_profile)
     
-    patch search_profile_path(@search_profile), params: {
+    patch search_profile_path(@search_profile, locale: I18n.default_locale), params: {
       search_profile: {
         first_name: "Updated Name",
         last_name: @search_profile.last_name
@@ -94,7 +94,7 @@ class SearchProfilesControllerTest < ActionDispatch::IntegrationTest
     
     @search_profile.reload
     assert_equal "Updated Name", @search_profile.first_name
-    assert_redirected_to dashboard_path
+    assert_redirected_to dashboard_path(locale: I18n.default_locale)
     assert_equal "Search profile updated successfully.", flash[:notice]
   end
 
@@ -103,7 +103,7 @@ class SearchProfilesControllerTest < ActionDispatch::IntegrationTest
     @user.stubs(:search_profile).returns(@search_profile)
     original_name = @search_profile.first_name
     
-    patch search_profile_path(@search_profile), params: {
+    patch search_profile_path(@search_profile, locale: I18n.default_locale), params: {
       search_profile: {
         first_name: "", # Invalid
         last_name: @search_profile.last_name
@@ -117,20 +117,22 @@ class SearchProfilesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "match action enqueues background job" do
+    @user.stubs(:admin?).returns(true)
     sign_in @user
     
     assert_enqueued_with(job: MatchingJob, args: [@search_profile.id]) do
-      post match_search_profile_path(@search_profile)
+      post match_search_profile_path(@search_profile, locale: I18n.default_locale)
     end
     
-    assert_redirected_to matches_path
-    assert_equal "Matching process started. Results will be available shortly.", flash[:notice]
+    assert_redirected_to admin_matches_path(locale: I18n.default_locale)
+    assert_match /Matching process started for/, flash[:notice]
   end
 
   test "match action finds search profile" do
+    @user.stubs(:admin?).returns(true)
     sign_in @user
     
-    post match_search_profile_path(@search_profile)
+    post match_search_profile_path(@search_profile, locale: I18n.default_locale)
     
     assert_equal @search_profile, assigns(:profile)
   end
@@ -140,7 +142,7 @@ class SearchProfilesControllerTest < ActionDispatch::IntegrationTest
   test "search profile params are filtered correctly" do
     sign_in @user
     
-    post search_profiles_path, params: {
+    post search_profiles_path(locale: I18n.default_locale), params: {
       search_profile: {
         first_name: "John",
         middle_name: "Robert",

@@ -22,5 +22,19 @@ module ActiveSupport
       @request.env["devise.mapping"] = Devise.mappings[:user]
       sign_in user
     end
+
+    # Set default locale for tests to ensure routes work
+    def default_url_options
+      { locale: I18n.default_locale }
+    end
+  end
+end
+
+module ActionController
+  class TestCase
+    # Set default locale for controller tests
+    def default_url_options
+      { locale: I18n.default_locale }
+    end
   end
 end

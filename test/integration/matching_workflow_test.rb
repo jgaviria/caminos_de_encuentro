@@ -40,16 +40,16 @@ class MatchingWorkflowTest < ActionDispatch::IntegrationTest
     sign_in @seeker
     
     # Step 1: User creates a search profile
-    get new_search_profile_path
+    get new_search_profile_path(locale: I18n.default_locale)
     assert_response :success
     
-    post search_profiles_path, params: {
+    post search_profiles_path(locale: I18n.default_locale), params: {
       search_profile: {
         first_name: "Carlos",
         last_name: "Mendez"
       }
     }
-    assert_redirected_to dashboard_path
+    assert_redirected_to dashboard_path(locale: I18n.default_locale)
     
     new_profile = SearchProfile.last
     assert_equal "Carlos", new_profile.first_name
@@ -57,17 +57,17 @@ class MatchingWorkflowTest < ActionDispatch::IntegrationTest
     
     # Step 2: User initiates matching process
     assert_enqueued_with(job: MatchingJob, args: [new_profile.id]) do
-      post match_search_profile_path(new_profile)
+      post match_search_profile_path(new_profile, locale: I18n.default_locale)
     end
     
-    assert_redirected_to matches_path
+    assert_redirected_to matches_path(locale: I18n.default_locale)
     assert_equal "Matching process started. Results will be available shortly.", flash[:notice]
     
     # Step 3: Background job processes the match
     perform_enqueued_jobs
     
     # Step 4: User views their matches
-    get matches_path
+    get matches_path(locale: I18n.default_locale)
     assert_response :success
     
     # Should find any existing matches for this profile
@@ -84,7 +84,7 @@ class MatchingWorkflowTest < ActionDispatch::IntegrationTest
     end
     
     # View matches index
-    get matches_path
+    get matches_path(locale: I18n.default_locale)
     assert_response :success
     
     matches = assigns(:matches)
@@ -93,13 +93,13 @@ class MatchingWorkflowTest < ActionDispatch::IntegrationTest
       match = matches.first
       
       # View individual match
-      get match_path(match)
+      get match_path(match, locale: I18n.default_locale)
       assert_response :success
       
       # Verify match (if user owns the search profile)
       if match.search_profile.user == @seeker
-        patch verify_match_path(match)
-        assert_redirected_to match_path(match)
+        patch verify_match_path(match, locale: I18n.default_locale)
+        assert_redirected_to match_path(match, locale: I18n.default_locale)
         
         match.reload
         assert match.is_verified
@@ -222,7 +222,7 @@ class MatchingWorkflowTest < ActionDispatch::IntegrationTest
     sign_in admin
     
     # Admin views all matches
-    get admin_matches_path
+    get admin_matches_path(locale: I18n.default_locale)
     assert_response :success
     
     matches = assigns(:matches)
@@ -234,12 +234,12 @@ class MatchingWorkflowTest < ActionDispatch::IntegrationTest
       match = matches.first
       
       # Admin views match details
-      get admin_match_path(match)
+      get admin_match_path(match, locale: I18n.default_locale)
       assert_response :success
       
       # Admin verifies match
-      patch verify_admin_match_path(match)
-      assert_redirected_to admin_match_path(match)
+      patch verify_admin_match_path(match, locale: I18n.default_locale)
+      assert_redirected_to admin_match_path(match, locale: I18n.default_locale)
       
       match.reload
       assert match.is_verified
@@ -254,13 +254,13 @@ class MatchingWorkflowTest < ActionDispatch::IntegrationTest
     sign_in @seeker
     
     # Should not be able to view other user's match
-    get match_path(other_match)
-    assert_redirected_to matches_path
+    get match_path(other_match, locale: I18n.default_locale)
+    assert_redirected_to matches_path(locale: I18n.default_locale)
     assert_equal "You don't have permission to view this match.", flash[:alert]
     
     # Should not be able to verify other user's match
-    patch verify_match_path(other_match)
-    assert_redirected_to matches_path
+    patch verify_match_path(other_match, locale: I18n.default_locale)
+    assert_redirected_to matches_path(locale: I18n.default_locale)
     assert_equal "You don't have permission to verify this match.", flash[:alert]
   end
 
