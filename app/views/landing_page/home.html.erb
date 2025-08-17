@@ -40,10 +40,12 @@
       <div class="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-x-4">
         <!-- Language Toggle -->
         <div class="flex items-center space-x-2 bg-gray-100 rounded-lg p-1">
-          <%= link_to url_for(locale: :es), class: "px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200 #{'bg-white text-gray-900 shadow-sm' if I18n.locale == :es} #{'text-gray-500 hover:text-gray-700' if I18n.locale != :es}" do %>
+          <%= link_to url_for(locale: :es), class: "flex items-center px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200 #{'bg-white text-gray-900 shadow-sm' if I18n.locale == :es} #{'text-gray-500 hover:text-gray-700' if I18n.locale != :es}" do %>
+            <span class="text-sm mr-1">🇪🇸</span>
             ES
           <% end %>
-          <%= link_to url_for(locale: :en), class: "px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200 #{'bg-white text-gray-900 shadow-sm' if I18n.locale == :en} #{'text-gray-500 hover:text-gray-700' if I18n.locale != :en}" do %>
+          <%= link_to url_for(locale: :en), class: "flex items-center px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200 #{'bg-white text-gray-900 shadow-sm' if I18n.locale == :en} #{'text-gray-500 hover:text-gray-700' if I18n.locale != :en}" do %>
+            <span class="text-sm mr-1">🇺🇸</span>
             EN
           <% end %>
         </div>
@@ -57,72 +59,49 @@
       </div>
     </nav>
     <!-- Mobile menu, show/hide based on menu open state. -->
-    <div id="mobile-menu" class="lg:hidden hidden" role="dialog" aria-modal="true">
+    <div id="mobile-menu" class="hidden" role="dialog" aria-modal="true">
       <!-- Background backdrop, show/hide based on slide-over state. -->
       <div class="fixed inset-0 z-50 bg-gray-600/50" onclick="toggleMobileMenu()"></div>
-      <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 shadow-xl">
-        <div class="flex items-center justify-between">
-          <a href="#" class="-m-1.5 p-1.5 flex items-center">
-            <div class="h-8 w-8 bg-gradient-to-br from-indigo-600 to-purple-700 rounded-lg flex items-center justify-center mr-2">
-              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-              </svg>
-            </div>
-            <span class="text-lg font-bold text-gray-900"><%= t('nav.title') %></span>
+      <div class="fixed top-0 right-0 z-50 w-full h-auto bg-white px-3 py-2 sm:max-w-sm shadow-xl">
+        <div class="flex items-center justify-between mb-2">
+          <a href="#" class="flex items-center">
+            <span class="text-sm font-bold text-gray-900"><%= t('nav.title') %></span>
           </a>
-          <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700 hover:bg-gray-100 transition-colors" onclick="toggleMobileMenu()">
-            <span class="sr-only">Close menu</span>
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          <button type="button" class="p-1.5 text-gray-700 hover:bg-gray-100 rounded transition-colors" onclick="toggleMobileMenu()">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
-        <div class="mt-6 flow-root">
-          <div class="-my-6 divide-y divide-gray-500/10">
-            <div class="space-y-2 py-6">
-              <a href="#servicios" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-indigo-50 hover:text-indigo-600 transition-colors" onclick="toggleMobileMenu()"><%= t('nav.services') %></a>
-              <a href="#testimonios" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-indigo-50 hover:text-indigo-600 transition-colors" onclick="toggleMobileMenu()"><%= t('nav.testimonials') %></a>
-              <a href="#ayuda" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-indigo-50 hover:text-indigo-600 transition-colors" onclick="toggleMobileMenu()"><%= t('nav.help') %></a>
-            </div>
-            <div class="py-6 space-y-3">
-              <!-- Mobile Language Toggle -->
-              <div class="flex items-center justify-center space-x-2 bg-gray-100 rounded-lg p-1 mx-3 mb-4">
-                <%= link_to url_for(locale: :es), class: "flex-1 px-3 py-2 text-sm font-medium rounded-md text-center transition-all duration-200 #{'bg-white text-gray-900 shadow-sm' if I18n.locale == :es} #{'text-gray-500 hover:text-gray-700' if I18n.locale != :es}" do %>
-                  Español
-                <% end %>
-                <%= link_to url_for(locale: :en), class: "flex-1 px-3 py-2 text-sm font-medium rounded-md text-center transition-all duration-200 #{'bg-white text-gray-900 shadow-sm' if I18n.locale == :en} #{'text-gray-500 hover:text-gray-700' if I18n.locale != :en}" do %>
-                  English
-                <% end %>
-              </div>
-              
-              <%= link_to new_user_session_path, class: "-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 transition-colors" do %>
-                <%= t('nav.login') %> →
+        
+        <!-- Compact Menu Content -->
+        <div class="space-y-1">
+          <a href="#servicios" class="block px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded" onclick="toggleMobileMenu()"><%= t('nav.services') %></a>
+          <a href="#testimonios" class="block px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded" onclick="toggleMobileMenu()"><%= t('nav.testimonials') %></a>
+          <a href="#ayuda" class="block px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded" onclick="toggleMobileMenu()"><%= t('nav.help') %></a>
+          
+          <div class="py-1 border-t border-gray-200">
+            <div class="flex gap-1 mb-2">
+              <%= link_to url_for(locale: :es), class: "flex-1 flex items-center justify-center px-2 py-1 text-xs rounded #{'bg-gray-200' if I18n.locale == :es} #{'hover:bg-gray-100' if I18n.locale != :es}" do %>
+                🇪🇸 ES
               <% end %>
-              <%= link_to new_user_registration_path, class: "block rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-3 py-2.5 text-center text-base font-semibold text-white shadow-lg" do %>
-                <%= t('nav.start_search') %>
+              <%= link_to url_for(locale: :en), class: "flex-1 flex items-center justify-center px-2 py-1 text-xs rounded #{'bg-gray-200' if I18n.locale == :en} #{'hover:bg-gray-100' if I18n.locale != :en}" do %>
+                🇺🇸 EN
               <% end %>
             </div>
+            
+            <%= link_to new_user_session_path, class: "block px-2 py-1 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded text-center mb-1" do %>
+              <%= t('nav.login') %>
+            <% end %>
+            
+            <%= link_to new_user_registration_path, class: "block px-2 py-1 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded text-center" do %>
+              <%= t('nav.start_search') %>
+            <% end %>
           </div>
         </div>
       </div>
     </div>
     
-    <script>
-      function toggleMobileMenu() {
-        const menu = document.getElementById('mobile-menu');
-        menu.classList.toggle('hidden');
-      }
-      
-      // Close mobile menu when clicking on navigation links
-      document.addEventListener('DOMContentLoaded', function() {
-        const mobileLinks = document.querySelectorAll('#mobile-menu a[href^="#"]');
-        mobileLinks.forEach(link => {
-          link.addEventListener('click', function() {
-            setTimeout(() => toggleMobileMenu(), 100);
-          });
-        });
-      });
-    </script>
   </header>
 
   <main class="isolate">
@@ -565,3 +544,59 @@
     </div>
   </footer>
 </div>
+
+<script>
+  // Wait for DOM to be fully loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get the mobile menu element
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (!mobileMenu) {
+      console.error('Mobile menu element not found!');
+      return;
+    }
+    
+    // Function to toggle mobile menu
+    window.toggleMobileMenu = function() {
+      if (mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.remove('hidden');
+        // Prevent body scroll when menu is open
+        document.body.style.overflow = 'hidden';
+      } else {
+        mobileMenu.classList.add('hidden');
+        // Re-enable body scroll
+        document.body.style.overflow = '';
+      }
+    };
+    
+    // Find all elements that should toggle the menu
+    const toggleElements = document.querySelectorAll('[onclick*="toggleMobileMenu"]');
+    
+    // Add event listeners to each element
+    toggleElements.forEach((element) => {
+      // Remove the onclick attribute
+      element.removeAttribute('onclick');
+      // Add event listener
+      element.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.toggleMobileMenu();
+      });
+    });
+    
+    // Close mobile menu when clicking on navigation links
+    const mobileLinks = document.querySelectorAll('#mobile-menu a[href^="#"]');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        setTimeout(() => window.toggleMobileMenu(), 100);
+      });
+    });
+    
+    // Close menu when pressing Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+        window.toggleMobileMenu();
+      }
+    });
+  });
+</script>
