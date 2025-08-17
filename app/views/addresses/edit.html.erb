@@ -7,7 +7,7 @@
     <div class="bg-blue-600 h-2.5 rounded-full" style="width: <%= @progress_percentage %>%;"></div>
   </div>
 
-  <%= form_with(model: @address, local: true) do |form| %>
+  <%= form_with(model: @address, url: address_path, method: :patch, local: true) do |form| %>
     <div class="mb-4">
       <%= form.label :country, class: 'block text-sm font-medium text-gray-700' %>
       <%= form.text_field :country, class: 'mt-1 block w-full border-gray-300 rounded-md shadow-sm', value: 'Colombia', readonly: true %>

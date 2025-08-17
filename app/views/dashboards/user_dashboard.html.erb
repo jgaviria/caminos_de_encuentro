@@ -201,10 +201,10 @@
             </div>
           </div>
           <% if current_user.personal_info %>
-            <%= link_to t('general.edit'), edit_personal_info_path(current_user.personal_info), 
+            <%= link_to t('general.edit'), edit_personal_info_path(locale: I18n.locale), 
                 class: "text-blue-600 hover:text-blue-700 text-sm font-medium" %>
           <% else %>
-            <%= link_to t('general.complete'), new_personal_info_path, 
+            <%= link_to t('general.complete'), new_personal_info_path(locale: I18n.locale), 
                 class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200" %>
           <% end %>
         </div>
@@ -238,10 +238,10 @@
             </div>
           </div>
           <% if current_user.address %>
-            <%= link_to t('general.edit'), edit_address_path(current_user.address), 
+            <%= link_to t('general.edit'), edit_address_path(locale: I18n.locale), 
                 class: "text-blue-600 hover:text-blue-700 text-sm font-medium" %>
           <% else %>
-            <%= link_to "Complete", new_address_path, 
+            <%= link_to "Complete", new_address_path(locale: I18n.locale), 
                 class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200" %>
           <% end %>
         </div>

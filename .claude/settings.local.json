@@ -3,7 +3,10 @@
     "allow": [
       "Bash(rails test:*)",
       "Bash(bundle exec rails:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(rm:*)",
+      "Bash(yarn cache:*)",
+      "Bash(yarn build:*)"
     ],
     "deny": [],
     "ask": []

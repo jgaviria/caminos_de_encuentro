@@ -42,6 +42,6 @@ class AddressesControllerTest < ActionDispatch::IntegrationTest
         country: "Updated Country" 
       } 
     }
-    assert_redirected_to edit_search_profile_path(locale: I18n.default_locale)
+    assert_redirected_to dashboard_path(locale: I18n.default_locale)
   end
 end

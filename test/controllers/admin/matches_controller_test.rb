@@ -177,7 +177,8 @@ class Admin::MatchesControllerTest < ActionDispatch::IntegrationTest
     # Clear any existing data to ensure clean test
     Match.destroy_all
     
-    post bulk_verify_admin_matches_path(locale: I18n.default_locale), params: { match_ids: [] }
+    # Test with no match_ids parameter
+    post bulk_verify_admin_matches_path(locale: I18n.default_locale), params: {}
     
     assert_redirected_to admin_matches_path(locale: I18n.default_locale)
     assert_equal "0 matches verified.", flash[:notice]

@@ -44,7 +44,16 @@ Rails.application.routes.draw do
   # Resourceful routes for personal information, addresses, and search profiles
   resource :personal_info, only: [ :new, :create, :edit, :update ]
   resource :address, only: [ :new, :create, :edit, :update ]
-  resources :search_profiles, only: [ :new, :create, :edit, :update ]
+  resources :search_profiles, only: [ :new, :create, :edit, :update ] do
+    collection do
+      get 'step1'  # Basic info step
+      post 'step1'
+      get 'step2'  # Location info step  
+      post 'step2'
+      get 'step3'  # Review and create step
+      post 'step3'
+    end
+  end
 
   # Health check route
   get "up", to: "rails/health#show", as: :rails_health_check
