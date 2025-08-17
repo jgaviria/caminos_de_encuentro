@@ -5,11 +5,11 @@ class MatchingService
   
   # Weights for different matching criteria
   WEIGHTS = {
-    exact_name: 0.4,
+    exact_name: 0.35,
     fuzzy_name: 0.25,
-    location: 0.2,
-    phone: 0.1,
-    temporal: 0.05
+    location: 0.3,  # Increased from 0.2 to 0.3 (location is very important)
+    phone: 0.08,
+    temporal: 0.02
   }.freeze
 
   def initialize(search_profile)
@@ -136,17 +136,21 @@ class MatchingService
     
     score = 0.0
     
-    # Country match (highest weight)
-    score += 0.4 if same_location?(@search_address.country, user_address.country)
+    # Country match (highest weight) - use fuzzy matching
+    country_similarity = location_fuzzy_similarity(@search_address.country, user_address.country)
+    score += 0.4 * country_similarity
     
-    # State match
-    score += 0.3 if same_location?(@search_address.state, user_address.state)
+    # State match - use fuzzy matching
+    state_similarity = location_fuzzy_similarity(@search_address.state, user_address.state)
+    score += 0.3 * state_similarity
     
-    # City match
-    score += 0.2 if same_location?(@search_address.city, user_address.city)
+    # City match - use fuzzy matching (this handles Medellin vs Medellín)
+    city_similarity = location_fuzzy_similarity(@search_address.city, user_address.city)
+    score += 0.2 * city_similarity
     
-    # Neighborhood match
-    score += 0.1 if same_location?(@search_address.neighborhood, user_address.neighborhood)
+    # Neighborhood match - use fuzzy matching
+    neighborhood_similarity = location_fuzzy_similarity(@search_address.neighborhood, user_address.neighborhood)
+    score += 0.1 * neighborhood_similarity
     
     score
   end
@@ -198,9 +202,49 @@ class MatchingService
     matrix[str1.length][str2.length]
   end
 
+  def location_fuzzy_similarity(loc1, loc2)
+    return 0.0 if loc1.blank? || loc2.blank?
+    
+    # Normalize locations: remove accents, downcase, strip whitespace
+    normalized_loc1 = normalize_location_string(loc1)
+    normalized_loc2 = normalize_location_string(loc2)
+    
+    # First check exact match after normalization
+    return 1.0 if normalized_loc1 == normalized_loc2
+    
+    # Use string similarity with normalized strings
+    similarity = string_similarity(normalized_loc1, normalized_loc2)
+    
+    # Give high scores for very close matches (like Medellin vs Medellín)
+    # If similarity is > 0.8, consider it a very good match
+    similarity >= 0.8 ? [similarity, 0.95].min : similarity
+  end
+
+  def normalize_location_string(location)
+    return "" if location.blank?
+    
+    # Remove accents and normalize common variations
+    normalized = location.downcase.strip
+    
+    # Remove common accents in Spanish location names
+    normalized = normalized.tr("áéíóúüñ", "aeiouun")
+    
+    # Handle common variations
+    location_variations = {
+      "bogota" => "bogota",
+      "medellin" => "medellin", 
+      "cali" => "cali",
+      "barranquilla" => "barranquilla",
+      "cartagena" => "cartagena"
+    }
+    
+    # Check if it's a known variation
+    location_variations[normalized] || normalized
+  end
+
   def same_location?(loc1, loc2)
-    return false if loc1.blank? || loc2.blank?
-    loc1.downcase.strip == loc2.downcase.strip
+    # Keep this method for backward compatibility, but use fuzzy similarity
+    location_fuzzy_similarity(loc1, loc2) >= 0.95
   end
 
   def create_match_records(qualified_matches)

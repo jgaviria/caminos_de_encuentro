@@ -15,11 +15,6 @@ Rails.application.routes.draw do
 
   get "dashboard", to: "dashboards#show", as: :dashboard
 
-  resources :search_profiles, only: [ :index ] do
-    member do
-      post "match"
-    end
-  end
 
   resources :matches, only: [:index, :show, :destroy] do
     member do
@@ -44,7 +39,7 @@ Rails.application.routes.draw do
   # Resourceful routes for personal information, addresses, and search profiles
   resource :personal_info, only: [ :new, :create, :edit, :update ]
   resource :address, only: [ :new, :create, :edit, :update ]
-  resources :search_profiles, only: [ :new, :create, :edit, :update ] do
+  resources :search_profiles, only: [ :index, :show, :new, :create, :edit, :update, :destroy ] do
     collection do
       get 'step1'  # Basic info step
       post 'step1'
@@ -52,6 +47,9 @@ Rails.application.routes.draw do
       post 'step2'
       get 'step3'  # Review and create step
       post 'step3'
+    end
+    member do
+      post "match"
     end
   end
 

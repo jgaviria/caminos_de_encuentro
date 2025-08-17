@@ -2,9 +2,15 @@
 class SearchProfilesController < ApplicationController
   before_action :authenticate_user!
   before_action :initialize_search_profile_session, only: [:step1, :step2, :step3]
+  before_action :set_search_profile, only: [:show, :edit, :update, :destroy, :match]
+  before_action :authorize_search_profile_access, only: [:show, :edit, :update, :destroy]
 
   def index
-    @search_profiles = SearchProfile.all
+    if current_user.admin?
+      @search_profiles = SearchProfile.all.includes(:user, :address)
+    else
+      @search_profiles = current_user.search_profiles.includes(:address)
+    end
   end
   
   def new
@@ -80,38 +86,53 @@ class SearchProfilesController < ApplicationController
       render :step3
     end
   end
+  def show
+    # Display individual search profile
+  end
+
   def edit
-    @search_profile = current_user.search_profile
     @progress_percentage = 100
   end
 
   def update
-    @search_profile = current_user.search_profile
     if @search_profile.update(search_profile_params)
-      redirect_to dashboard_path, notice: "Search profile updated successfully."
+      redirect_to search_profiles_path(locale: I18n.locale), notice: "Search profile updated successfully."
     else
       @progress_percentage = 100
       render :edit
     end
   end
 
+  def destroy
+    @search_profile.destroy
+    redirect_to search_profiles_path(locale: I18n.locale), notice: "Search profile deleted successfully."
+  end
+
   def match
     # Only admins can trigger matches
     unless current_user.admin?
-      redirect_to search_profiles_path, alert: "Only administrators can run matching processes."
+      redirect_to search_profiles_path(locale: I18n.locale), alert: "Only administrators can run matching processes."
       return
     end
     
-    @profile = SearchProfile.find(params[:id])
-    
     # Start background matching job for better performance
-    MatchingJob.perform_later(@profile.id)
+    MatchingJob.perform_later(@search_profile.id)
     
-    redirect_to admin_matches_path, notice: "Matching process started for #{@profile.first_name} #{@profile.last_name}. Results will be available shortly."
+    redirect_to admin_matches_path(locale: I18n.locale), notice: "Matching process started for #{@search_profile.first_name} #{@search_profile.last_name}. Results will be available shortly."
   end
   
 
   private
+
+  def set_search_profile
+    @search_profile = SearchProfile.find(params[:id])
+  end
+
+  def authorize_search_profile_access
+    unless current_user.admin? || @search_profile.user == current_user
+      redirect_to search_profiles_path(locale: I18n.locale), alert: "You don't have permission to access this search profile."
+    end
+  end
 
   def initialize_search_profile_session
     session[:search_profile_data] ||= {}

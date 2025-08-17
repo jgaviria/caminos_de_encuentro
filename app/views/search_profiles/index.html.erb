@@ -21,31 +21,49 @@
 
   <!-- Statistics Cards -->
   <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-    <%= render 'shared/stat_card', 
-        title: t('user.search_profiles'), 
-        value: @search_profiles.count, 
-        icon: 'users', 
-        color: 'blue' %>
-    
-    <%= render 'shared/stat_card', 
-        title: t('user.my_searches'), 
-        value: @search_profiles.where(user: current_user).count, 
-        icon: 'heart', 
-        color: 'green' %>
-    
-    <%= render 'shared/stat_card', 
-        title: t('user.recent_matches'), 
-        value: @search_profiles.where('created_at >= ?', 1.week.ago).count, 
-        icon: 'calendar', 
-        color: 'purple' %>
-    
     <% if current_user.admin? %>
+      <%= render 'shared/stat_card', 
+          title: t('user.search_profiles'), 
+          value: @search_profiles.count, 
+          icon: 'users', 
+          color: 'blue' %>
+      
       <%= render 'shared/stat_card', 
           title: t('admin.total_matches'), 
           value: Match.count, 
           icon: 'target', 
           color: 'indigo' %>
+      
+      <%= render 'shared/stat_card', 
+          title: t('user.recent_matches'), 
+          value: SearchProfile.where('created_at >= ?', 1.week.ago).count, 
+          icon: 'calendar', 
+          color: 'purple' %>
+      
+      <%= render 'shared/stat_card', 
+          title: 'Active Users', 
+          value: User.where('created_at >= ?', 1.month.ago).count, 
+          icon: 'check', 
+          color: 'green' %>
     <% else %>
+      <%= render 'shared/stat_card', 
+          title: t('user.my_searches'), 
+          value: @search_profiles.count, 
+          icon: 'heart', 
+          color: 'green' %>
+      
+      <%= render 'shared/stat_card', 
+          title: t('user.recent_matches'), 
+          value: @search_profiles.where('created_at >= ?', 1.week.ago).count, 
+          icon: 'calendar', 
+          color: 'purple' %>
+      
+      <%= render 'shared/stat_card', 
+          title: 'My Matches', 
+          value: Match.joins(:search_profile).where(search_profiles: { user: current_user }).count, 
+          icon: 'target', 
+          color: 'blue' %>
+      
       <%= render 'shared/stat_card', 
           title: t('forms.personal_info'), 
           value: (current_user.personal_info && current_user.address) ? t('general.yes') : t('general.no'), 
@@ -96,12 +114,14 @@
                       <p class="text-sm font-medium text-gray-900 mt-1">
                         <% if profile.user == current_user %>
                           <%= t('user.my_profile') %>
-                        <% else %>
+                        <% elsif current_user.admin? %>
                           <% if profile.user.personal_info&.first_name.present? %>
                             <%= profile.user.personal_info.first_name %> <%= profile.user.personal_info.last_name %>
                           <% else %>
                             <%= profile.user.email.split('@').first.titleize %>
                           <% end %>
+                        <% else %>
+                          <%= t('user.my_profile') %>
                         <% end %>
                       </p>
                     </div>
@@ -126,33 +146,37 @@
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="flex flex-col gap-3">
-                  <% if profile.user == current_user %>
-                    <%= link_to edit_search_profile_path(profile), 
-                        class: "action-button action-button-primary w-full justify-center" do %>
-                      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                      </svg>
-                      <span class="font-semibold"><%= t('user.edit_profile') %></span>
-                    <% end %>
+                <div class="flex flex-col gap-2">
+                  <% if profile.user == current_user || current_user.admin? %>
+                    <div class="flex gap-2">
+                      <%= link_to edit_search_profile_path(profile), 
+                          class: "flex-1 inline-flex items-center justify-center px-3 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors duration-200" do %>
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                        </svg>
+                        <%= t('general.edit') %>
+                      <% end %>
+                      
+                      <%= link_to search_profile_path(profile), method: :delete,
+                          confirm: "Are you sure you want to delete this search profile for #{profile.first_name} #{profile.last_name}?",
+                          class: "flex-1 inline-flex items-center justify-center px-3 py-2 border border-red-300 text-sm font-medium rounded-md text-red-700 bg-red-50 hover:bg-red-100 transition-colors duration-200" do %>
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                        <%= t('general.delete') %>
+                      <% end %>
+                    </div>
                   <% end %>
                   
                   <% if current_user.admin? %>
                     <%= button_to match_search_profile_path(profile), method: :post,
-                        confirm: "#{t('admin.match_details')} #{profile.first_name} #{profile.last_name}. #{t('general.confirm')}?",
-                        class: "action-button action-button-green w-full justify-center" do %>
+                        confirm: "Run matching for #{profile.first_name} #{profile.last_name}?",
+                        class: "w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 transition-colors duration-200" do %>
                       <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                       </svg>
-                      <span class="font-semibold"><%= t('admin.verify_match') %></span>
+                      <%= t('admin.verify_match') %>
                     <% end %>
-                  <% else %>
-                    <div class="inline-flex items-center justify-center gap-2 font-semibold rounded-full text-sm py-2 px-5 transition-all duration-200 ease-in-out border-2 bg-transparent opacity-50 cursor-not-allowed text-gray-500 border-gray-300">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                      </svg>
-                      <span class="font-semibold"><%= t('admin.title') %></span>
-                    </div>
                   <% end %>
                 </div>
               </div>
