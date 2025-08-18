@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_16_023241) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_17_220158) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -70,9 +70,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_16_023241) do
     t.string "last_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "match_status", default: 0, null: false
+    t.integer "match_count", default: 0, null: false
+    t.datetime "last_matched_at"
     t.index "lower((first_name)::text), lower((last_name)::text)", name: "index_search_profiles_on_lower_names"
     t.index ["first_name"], name: "index_search_profiles_on_first_name", opclass: :gin_trgm_ops, using: :gin
+    t.index ["last_matched_at"], name: "index_search_profiles_on_last_matched_at"
     t.index ["last_name"], name: "index_search_profiles_on_last_name", opclass: :gin_trgm_ops, using: :gin
+    t.index ["match_status"], name: "index_search_profiles_on_match_status"
     t.index ["user_id"], name: "index_search_profiles_on_user_id"
   end
 

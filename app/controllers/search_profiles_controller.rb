@@ -99,9 +99,6 @@ class SearchProfilesController < ApplicationController
   def edit_step1
     if request.patch?
       # Handle form submission from edit step 1 (basic info)
-      Rails.logger.debug "Edit Step 1 PATCH params: #{params.inspect}"
-      Rails.logger.debug "step1_params: #{step1_params.inspect}"
-      
       if step1_params.present?
         @search_profile.update!(step1_params)
         redirect_to edit_step2_search_profile_path(@search_profile, locale: I18n.locale)
@@ -126,9 +123,6 @@ class SearchProfilesController < ApplicationController
   def edit_step2
     if request.patch?
       # Handle form submission from edit step 2 (location data)
-      Rails.logger.debug "Edit Step 2 PATCH params: #{params.inspect}"
-      Rails.logger.debug "step2_params: #{step2_params.inspect}"
-      
       if step2_params.present?
         if @search_profile.address
           @search_profile.address.update!(step2_params)
