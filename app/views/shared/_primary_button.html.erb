@@ -1,0 +1,68 @@
+<%
+  # Primary button component
+  # Usage: render 'shared/primary_button', text: 'Save', url: path_helper, method: :post
+  # or: render 'shared/primary_button', text: 'Delete', url: path_helper, method: :delete, variant: 'danger'
+  # or: render 'shared/primary_button', text: 'Submit', type: 'submit', variant: 'primary'
+  
+  text = local_assigns.fetch(:text, 'Button')
+  url = local_assigns.fetch(:url, nil)
+  variant = local_assigns.fetch(:variant, 'primary')
+  method = local_assigns.fetch(:method, :get)
+  size = local_assigns.fetch(:size, 'medium')
+  icon = local_assigns.fetch(:icon, nil)
+  type = local_assigns.fetch(:type, nil)
+  disabled = local_assigns.fetch(:disabled, false)
+  onclick = local_assigns.fetch(:onclick, nil)
+  
+  base_classes = "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2"
+  
+  size_classes = case size
+  when 'small'
+    'px-3 py-1.5 text-sm'
+  when 'large'
+    'px-6 py-3 text-base'
+  else # medium
+    'px-4 py-2 text-sm'
+  end
+  
+  variant_classes = case variant
+  when 'primary'
+    'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 border border-blue-600'
+  when 'secondary'
+    'bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-gray-500 border border-gray-300'
+  when 'success'
+    'bg-green-600 text-white hover:bg-green-700 focus:ring-green-500 border border-green-600'
+  when 'danger'
+    'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 border border-red-600'
+  when 'warning'
+    'bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-yellow-500 border border-yellow-500'
+  when 'outline'
+    'bg-transparent text-blue-600 hover:bg-blue-50 focus:ring-blue-500 border border-blue-600'
+  else
+    'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 border border-blue-600'
+  end
+  
+  disabled_classes = disabled ? 'opacity-50 cursor-not-allowed' : ''
+  
+  button_classes = "#{base_classes} #{size_classes} #{variant_classes} #{disabled_classes}".strip
+%>
+
+<% if url %>
+  <%= link_to url, method: method, class: button_classes, disabled: disabled do %>
+    <% if icon %>
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <%= icon.html_safe %>
+      </svg>
+    <% end %>
+    <%= text %>
+  <% end %>
+<% else %>
+  <button type="<%= type || 'button' %>" class="<%= button_classes %>" <%= 'disabled' if disabled %> <%= "onclick=\"#{onclick}\"".html_safe if onclick %>>
+    <% if icon %>
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <%= icon.html_safe %>
+      </svg>
+    <% end %>
+    <%= text %>
+  </button>
+<% end %>

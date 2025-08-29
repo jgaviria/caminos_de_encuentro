@@ -1,0 +1,187 @@
+/* Navigation Components */
+
+/* Main navigation */
+.main-nav {
+  @apply bg-white border-b border-gray-200 sticky top-0 z-50;
+}
+
+.nav-container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.nav-content {
+  @apply flex justify-between h-16;
+}
+
+/* Logo section */
+.nav-logo {
+  @apply flex items-center;
+}
+
+.nav-logo-link {
+  @apply flex items-center space-x-3;
+}
+
+.nav-logo-icon {
+  @apply h-8 w-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center;
+}
+
+.nav-logo-text {
+  @apply text-xl font-semibold text-gray-900;
+}
+
+/* Desktop navigation */
+.nav-desktop {
+  @apply hidden md:flex md:items-center md:space-x-8 ml-10;
+}
+
+.nav-link {
+  @apply text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors duration-200;
+}
+
+.nav-link-active {
+  @apply text-blue-600 border-b-2 border-blue-600;
+}
+
+/* User menu */
+.nav-user-menu {
+  @apply flex items-center space-x-4;
+}
+
+.nav-user-info {
+  @apply hidden md:flex md:items-center md:space-x-3;
+}
+
+.nav-user-email {
+  @apply text-sm font-medium text-gray-700;
+}
+
+.nav-admin-badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800;
+}
+
+/* User avatar */
+.nav-avatar-container {
+  @apply relative;
+}
+
+.nav-avatar-button {
+  @apply flex items-center p-1 rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+}
+
+.nav-avatar {
+  @apply h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center;
+}
+
+.nav-avatar-text {
+  @apply text-white text-sm font-medium;
+}
+
+/* Dropdown menu */
+.nav-dropdown {
+  @apply absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5;
+}
+
+.nav-dropdown-link {
+  @apply block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100;
+}
+
+.nav-dropdown-button {
+  @apply w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-none bg-transparent;
+}
+
+/* Mobile menu */
+.nav-mobile-button {
+  @apply md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500;
+}
+
+.nav-mobile-menu {
+  @apply md:hidden;
+}
+
+.nav-mobile-content {
+  @apply px-2 pt-2 pb-3 space-y-1 bg-gray-50;
+}
+
+.nav-mobile-link {
+  @apply block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100 rounded-md;
+}
+
+.nav-mobile-link-active {
+  @apply text-blue-600 bg-blue-50;
+}
+
+.nav-mobile-user {
+  @apply border-t border-gray-200 pt-3 mt-3;
+}
+
+.nav-mobile-user-info {
+  @apply px-3 py-2;
+}
+
+.nav-mobile-user-email {
+  @apply text-sm font-medium text-gray-500;
+}
+
+/* Breadcrumb navigation */
+.breadcrumb {
+  @apply flex items-center space-x-2 text-sm text-gray-500;
+}
+
+.breadcrumb-item {
+  @apply hover:text-gray-700;
+}
+
+.breadcrumb-separator {
+  @apply text-gray-300;
+}
+
+.breadcrumb-current {
+  @apply text-gray-900 font-medium;
+}
+
+/* Side navigation */
+.side-nav {
+  @apply fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out;
+}
+
+.side-nav-hidden {
+  @apply -translate-x-full;
+}
+
+.side-nav-header {
+  @apply flex items-center justify-between p-4 border-b border-gray-200;
+}
+
+.side-nav-content {
+  @apply p-4 space-y-2;
+}
+
+.side-nav-item {
+  @apply flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100;
+}
+
+.side-nav-item-active {
+  @apply bg-blue-50 text-blue-700;
+}
+
+.side-nav-icon {
+  @apply w-5 h-5 mr-3;
+}
+
+/* Tab navigation */
+.tab-nav {
+  @apply border-b border-gray-200;
+}
+
+.tab-list {
+  @apply flex space-x-8;
+}
+
+.tab-button {
+  @apply py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300;
+}
+
+.tab-button-active {
+  @apply border-blue-500 text-blue-600;
+}

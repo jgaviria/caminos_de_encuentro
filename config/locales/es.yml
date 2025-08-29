@@ -1,0 +1,557 @@
+es:
+  # Rails datetime translations
+  datetime:
+    distance_in_words:
+      half_a_minute: "medio minuto"
+      less_than_x_seconds:
+        one: "menos de 1 segundo"
+        other: "menos de %{count} segundos"
+      x_seconds:
+        one: "1 segundo"
+        other: "%{count} segundos"
+      less_than_x_minutes:
+        one: "menos de 1 minuto"
+        other: "menos de %{count} minutos"
+      x_minutes:
+        one: "1 minuto"
+        other: "%{count} minutos"
+      about_x_hours:
+        one: "alrededor de 1 hora"
+        other: "alrededor de %{count} horas"
+      x_days:
+        one: "1 día"
+        other: "%{count} días"
+      about_x_months:
+        one: "alrededor de 1 mes"
+        other: "alrededor de %{count} meses"
+      x_months:
+        one: "1 mes"
+        other: "%{count} meses"
+      about_x_years:
+        one: "alrededor de 1 año"
+        other: "alrededor de %{count} años"
+      over_x_years:
+        one: "más de 1 año"
+        other: "más de %{count} años"
+      almost_x_years:
+        one: "casi 1 año"
+        other: "casi %{count} años"
+
+  # Date and time formats
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      short: "%d de %b"
+      long: "%d de %B de %Y"
+    day_names:
+      - domingo
+      - lunes
+      - martes
+      - miércoles
+      - jueves
+      - viernes
+      - sábado
+    abbr_day_names:
+      - dom
+      - lun
+      - mar
+      - mié
+      - jue
+      - vie
+      - sáb
+    month_names:
+      - ~
+      - enero
+      - febrero
+      - marzo
+      - abril
+      - mayo
+      - junio
+      - julio
+      - agosto
+      - septiembre
+      - octubre
+      - noviembre
+      - diciembre
+    abbr_month_names:
+      - ~
+      - ene
+      - feb
+      - mar
+      - abr
+      - may
+      - jun
+      - jul
+      - ago
+      - sep
+      - oct
+      - nov
+      - dic
+
+  time:
+    formats:
+      default: "%a, %d de %B de %Y %H:%M:%S %z"
+      short: "%d de %B %H:%M"
+      long: "%d de %B de %Y %H:%M"
+    am: "am"
+    pm: "pm"
+
+  # Navigation
+  nav:
+    title: "Caminos de Encuentro"
+    subtitle: "Reuniendo Familias"
+    services: "Servicios"
+    testimonials: "Testimonios"
+    help: "Ayuda"
+    login: "Entrar"
+    start_search: "Empezar Búsqueda"
+
+  # Landing Page
+  landing:
+    features:
+      title: "Encuentra a tus seres queridos"
+      heading: "Tecnología avanzada para ayudarte en la búsqueda"
+      description: "Utilizamos algoritmos de coincidencia, filtrado avanzado y protección de datos para ayudarte a reconectar con tus seres queridos desaparecidos."
+      
+      algorithm:
+        title: "Algoritmo de coincidencia avanzada"
+        description: "Nuestro sistema analiza atributos físicos, fechas y ubicaciones para identificar coincidencias de alta precisión, agilizando la búsqueda de manera inteligente."
+      
+      filter:
+        title: "Filtro detallado de atributos"
+        description: "Define criterios específicos como color de ojos, estatura o lugar de desaparición para obtener resultados más precisos."
+      
+      community:
+        title: "Conexión con comunidades de búsqueda"
+        description: "Accede a redes de ayuda y grupos de apoyo que trabajan en la búsqueda de personas desaparecidas, fortaleciendo tus esfuerzos con el respaldo de una comunidad."
+      
+      security:
+        title: "Seguridad de datos avanzada"
+        description: "Protegemos tus datos con encriptación de última generación, garantizando que la información compartida sea segura y esté bien resguardada."
+
+    testimonial:
+      quote: "Aunque los años se desvanezcan como arena entre los dedos, la esperanza de un reencuentro sigue siendo el fuego que ilumina nuestros pasos en la oscuridad."
+      author: "Pablo Neruda"
+      title: "Poeta y Premio Nobel de Literatura"
+
+    pricing:
+      title: "Planes de precios"
+      heading: "Opciones para cada tipo de búsqueda"
+      description: "Explora los planes que mejor se ajusten a tus necesidades para ayudar a encontrar a tus seres queridos."
+      
+      individual:
+        title: "Individual"
+        description: "Ideal para personas que buscan un ser querido con acceso básico."
+        price: "$15"
+        period: "/mes"
+        feature1: "5 búsquedas por mes"
+        feature2: "Filtros básicos de atributos"
+        feature3: "Soporte estándar (48 horas de respuesta)"
+        cta: "Comprar plan"
+      
+      family:
+        title: "Familiar"
+        badge: "Más popular"
+        description: "Diseñado para familias que buscan apoyo en búsquedas múltiples."
+        price: "$30"
+        period: "/mes"
+        feature1: "20 búsquedas por mes"
+        feature2: "Filtros avanzados de atributos"
+        feature3: "Soporte prioritario (24 horas de respuesta)"
+        feature4: "Historial de búsquedas"
+        cta: "Comprar plan"
+      
+      corporate:
+        title: "Corporativo"
+        description: "Para organizaciones dedicadas a la búsqueda y apoyo de varias personas."
+        price: "$50"
+        period: "/mes"
+        feature1: "Búsquedas ilimitadas"
+        feature2: "Filtros personalizados y algoritmos de coincidencia"
+        feature3: "Soporte dedicado (respuesta en 1 hora)"
+        feature4: "Acceso a estadísticas avanzadas"
+        feature5: "Capacitación de uso y soporte técnico"
+        cta: "Comprar plan"
+
+    faq:
+      title: "Preguntas Frecuentes"
+      
+      how_it_works:
+        question: "¿Cómo funciona Caminos de Encuentro?"
+        answer: "Nuestra plataforma utiliza algoritmos avanzados de coincidencia para ayudarte a encontrar a tus seres queridos. Simplemente crea un perfil con los datos de la persona que buscas, y nuestro sistema comparará esta información con nuestra base de datos para encontrar posibles coincidencias."
+      
+      security:
+        question: "¿Es segura mi información personal?"
+        answer: "Absolutamente. Utilizamos encriptación de última generación y seguimos los más altos estándares de seguridad para proteger todos los datos. Tu información solo se utiliza para facilitar la búsqueda y nunca se comparte con terceros sin tu consentimiento explícito."
+      
+      time:
+        question: "¿Cuánto tiempo toma encontrar a alguien?"
+        answer: "El tiempo varía según cada caso. Algunas búsquedas pueden mostrar resultados inmediatamente si la persona ya está en nuestra base de datos, mientras que otras pueden tomar días, semanas o más tiempo. Nuestro sistema trabaja continuamente para aumentar las posibilidades de éxito."
+      
+      information:
+        question: "¿Qué información necesito para crear una búsqueda?"
+        answer: "Necesitas la mayor cantidad de información posible: nombre completo, fecha de nacimiento aproximada, características físicas, última ubicación conocida y cualquier otro detalle relevante. Mientras más información proporciones, más precisos serán los resultados."
+      
+      cancellation:
+        question: "¿Puedo cancelar mi plan en cualquier momento?"
+        answer: "Sí, puedes cancelar tu suscripción en cualquier momento desde tu panel de usuario. No hay contratos de permanencia ni penalizaciones por cancelación temprana. Tu acceso continuará hasta el final del período de facturación actual."
+      
+      international:
+        question: "¿Ofrecen soporte para casos internacionales?"
+        answer: "Sí, trabajamos con una red global de organizaciones y bases de datos. Nuestro alcance se extiende más allá de las fronteras nacionales para ayudar en la búsqueda de personas que pueden haber migrado o estar en otros países."
+
+  # Footer
+  footer:
+    description: "Utilizamos tecnología avanzada para ayudar a reunir familias separadas por migración, conflictos o tragedias. Cada búsqueda es un paso hacia el reencuentro."
+    
+    services:
+      title: "Servicios"
+      search: "Búsqueda de personas"
+      algorithms: "Algoritmos de coincidencia"
+      security: "Seguridad de datos"
+      network: "Red global"
+    
+    support:
+      title: "Soporte"
+      help_center: "Centro de ayuda"
+      guides: "Guías de uso"
+      contact: "Contacto"
+      emergency: "Emergencias"
+    
+    resources:
+      title: "Recursos"
+      blog: "Blog"
+      success_stories: "Historias de éxito"
+      partners: "Organizaciones aliadas"
+      legal_resources: "Recursos legales"
+    
+    legal:
+      title: "Legal"
+      privacy: "Política de privacidad"
+      terms: "Términos de servicio"
+      cookies: "Cookies"
+      transparency: "Transparencia"
+    
+    help_line: "Línea de ayuda: +57 (1) 800-FAMILIAS"
+    copyright: "© 2024 Caminos de Encuentro. Todos los derechos reservados. Una iniciativa para reunir familias."
+
+  # Admin Portal
+  admin:
+    title: "Panel de Administración"
+    dashboard: "Dashboard"
+    matches: "Coincidencias"
+    users: "Usuarios"
+    settings: "Configuración"
+    logout: "Cerrar Sesión"
+    profile: "Perfil"
+    
+    # Dashboard
+    dashboard_title: "Dashboard de Administrador"
+    total_users: "Total de Usuarios"
+    active_searches: "Búsquedas Activas"
+    total_matches: "Total de Coincidencias"
+    verified_matches: "Coincidencias Verificadas"
+    recent_activity: "Actividad Reciente"
+    view_all: "Ver Todo"
+    
+    # Matches
+    matches_title: "Gestión de Coincidencias"
+    match_details: "Detalles de la Coincidencia"
+    verify_match: "Verificar Coincidencia"
+    reject_match: "Rechazar Coincidencia"
+    run_matching: "Ejecutar Coincidencia"
+    confirm_run_matching: "¿Ejecutar coincidencia para %{name}?"
+    bulk_actions: "Acciones en Lote"
+    bulk_verify: "Verificar Seleccionadas"
+    bulk_reject: "Rechazar Seleccionadas"
+    export_data: "Exportar Datos"
+    
+    # Match Table
+    searcher: "Buscador"
+    target: "Objetivo"
+    similarity: "Similitud"
+    status: "Estado"
+    date_created: "Fecha de Creación"
+    actions: "Acciones"
+    
+    # Status
+    verified: "Verificado"
+    pending: "Pendiente"
+    rejected: "Rechazado"
+    
+    # Admin Matches
+    review_manage_matches: "Revisar y gestionar todas las coincidencias en el sistema"
+    pending_review: "Revisión Pendiente"
+    system_overview: "Resumen del Sistema"
+    key_metrics: "Métricas clave e indicadores de rendimiento"
+    last_updated: "Última actualización"
+    needs_review: "Necesita Revisión"
+    high_confidence: "Alta Confianza"
+    recent_7_days: "Reciente (7 días)"
+    matches_displayed: "coincidencias mostradas"
+    search_matches: "Buscar coincidencias"
+    status: "Estado"
+    min_score: "Puntuación Mínima"
+    matches_selected: "coincidencias seleccionadas"
+    verify_selected: "Verificar Seleccionadas"
+    confirm_reject_selected: "¿Estás seguro de que quieres rechazar las coincidencias seleccionadas?"
+    reject_selected: "Rechazar Seleccionadas"
+    select_all: "Seleccionar Todo"
+    loading_matches: "Cargando coincidencias"
+    date: "Fecha"
+    seeker: "Buscador"
+    found_person: "Persona Encontrada"
+    no_personal_info: "Sin información personal"
+    showing_matches_page: "Mostrando coincidencias para esta página"
+    no_matches_found: "No se Encontraron Coincidencias"
+    no_matches_description: "Aún no se han generado coincidencias. Crea perfiles de búsqueda y ejecuta el algoritmo de coincidencias para encontrar conexiones potenciales."
+    view_search_profiles: "Ver Perfiles de Búsqueda"
+    
+    # Admin Match Show
+    back_to_matches: "Volver a Coincidencias de Admin"
+    match_analysis: "Análisis de Coincidencia"
+    comprehensive_evaluation: "Evaluación integral de criterios de coincidencia"
+    review_quality: "Revisar la calidad de la coincidencia y tomar decisiones de verificación"
+    similarity_score: "Puntuación de Similitud"
+    verified_match: "Coincidencia Verificada"
+    created: "Creado"
+    confirm_reject_match: "¿Estás seguro de que quieres rechazar esta coincidencia?"
+    reject_match: "Rechazar Coincidencia"
+    overall_match_confidence: "Confianza General de Coincidencia"
+    high: "Alta"
+    medium: "Media"
+    low: "Baja"
+    confidence: "Confianza"
+    strong_match: "Coincidencia fuerte - probablemente la misma persona"
+    moderate_match: "Coincidencia moderada - necesita revisión"
+    low_match: "Coincidencia baja - puede ser diferente persona"
+    matching_criteria_breakdown: "Desglose de Criterios de Coincidencia"
+    name_comparison: "Comparación de Nombres"
+    location_comparison: "Comparación de Ubicación"
+    additional_factors: "Factores Adicionales"
+    exact_match: "Coincidencia Exacta"
+    no_match: "Sin Coincidencia"
+    found: "Encontrado"
+    search_profile_seeker: "Perfil de Búsqueda (Buscador)"
+    person_searched_for: "Persona que se busca"
+    found_person: "Persona Encontrada"
+    potential_match: "Coincidencia potencial de la base de datos"
+    no_personal_information: "Sin Información Personal"
+    profile_not_completed: "Este usuario aún no ha completado su perfil personal"
+    review_guidelines: "Pautas de Revisión de Admin"
+    location_not_available: "Información de ubicación no disponible para uno o ambos perfiles"
+    account_ages: "Antigüedad de Cuentas"
+    seeker_joined: "Buscador se unió"
+    found_joined: "Encontrado se unió"
+    profile_completeness: "Completitud del Perfil"
+    has_location: "Tiene ubicación"
+    missing_location: "Falta ubicación"
+    has_personal_info: "Tiene información personal"
+    missing_personal_info: "Falta información personal"
+    seeker_information: "Información del Buscador"
+    joined: "Se unió"
+    search_location: "Ubicación de Búsqueda"
+    profile_created: "Perfil Creado"
+    target_of_search: "Objetivo de la búsqueda"
+    contact_information: "Información de Contacto"
+    current_location: "Ubicación Actual"
+    neighborhood: "Barrio"
+    platform_user: "Usuario de la plataforma"
+    primary_criteria: "Criterios Primarios"
+    name_matching: "Coincidencia de nombres"
+    name_matching_description: "Nombres exactos o muy similares (considerar apodos, abreviaciones)"
+    location_compatibility: "Compatibilidad de ubicación"
+    location_compatibility_description: "Misma ciudad/región o patrón de migración razonable"
+    timeline_logic: "Lógica temporal"
+    timeline_logic_description: "Las fechas de creación de perfiles tienen sentido"
+    decision_framework: "Marco de Decisión"
+    high_confidence_threshold: "Alta confianza (80%+)"
+    high_confidence_action: "Verificar inmediatamente"
+    medium_confidence_threshold: "Confianza media (60-80%)"
+    medium_confidence_action: "Revisar cuidadosamente, inclinarse hacia la aprobación"
+    low_confidence_threshold: "Baja confianza (<60%)"
+    low_confidence_action: "Rechazar a menos que haya evidencia convincente"
+    remember: "Recuerda"
+    approval_guidance: "Cuando tengas dudas, aprueba la coincidencia. Los usuarios pueden verificar la conexión por sí mismos, y los falsos positivos son mejores que las reunificaciones perdidas."
+
+  # User Portal
+  user:
+    dashboard: "Dashboard"
+    search_profiles: "Perfiles de Búsqueda"
+    matches: "Mis Coincidencias"
+    profile: "Mi Perfil"
+    my_profile: "Mi perfil"
+    
+    # Dashboard
+    dashboard_title: "Mi Dashboard"
+    welcome: "Bienvenido"
+    my_searches: "Mis Búsquedas"
+    recent_matches: "Coincidencias Recientes"
+    create_search: "Crear Nueva Búsqueda"
+    view_matches: "Ver Coincidencias"
+    new_search_profile: "Nuevo Perfil de Búsqueda"
+    complete_profile: "Completar Perfil"
+    add_address: "Agregar Dirección"
+    track_progress: "Rastrea tu progreso y actividad"
+    profile_status: "Estado del Perfil"
+    address_info: "Información de Dirección"
+    my_matches: "Mis Coincidencias"
+    complete_your_profile: "Completa Tu Perfil"
+    setup_account: "Configura la información de tu cuenta para comenzar"
+    required_for_search: "Requerido para perfiles de búsqueda"
+    location_matching: "Ayuda con coincidencias basadas en ubicación"
+    create_manage_profiles: "Crea y gestiona perfiles para personas que estás buscando"
+    created: "Creado"
+    no_search_profiles: "Aún no hay perfiles de búsqueda"
+    create_first_profile: "Crea tu primer perfil de búsqueda para comenzar."
+    create_new_profile: "Crear Nuevo Perfil"
+    view_all: "Ver Todos"
+    
+    # Search Profiles
+    search_profiles_title: "Mis Perfiles de Búsqueda"
+    create_profile: "Crear Perfil"
+    edit_profile: "Editar Perfil"
+    delete_profile: "Eliminar Perfil"
+    search_for: "Buscando a"
+    created_on: "Creado el"
+    created_by: "Creado por"
+    last_updated: "Última actualización"
+    confirm_delete_search_profile: "¿Estás seguro de que quieres eliminar este perfil de búsqueda de %{name}?"
+    
+    # Match Tracking
+    match_status: "Estado de Coincidencia"
+    last_matched: "Última Coincidencia"
+    pending_match: "Coincidencia Pendiente"
+    processing_match: "Procesando..."
+    matches_found: "coincidencias encontradas"
+    match_found: "coincidencia encontrada"
+    no_matches_found_status: "No se encontraron coincidencias"
+    match_failed: "Coincidencia falló"
+    never_matched: "Nunca"
+    profiles_with_matches: "Perfiles con Coincidencias"
+    pending_matches: "Coincidencias Pendientes"
+    total_matches_found: "Total de Coincidencias Encontradas"
+    my_matches_found: "Mis Coincidencias Encontradas"
+    
+    # Matches
+    matches_title: "Mis Coincidencias"
+    match_score: "Puntuación de Coincidencia"
+    contact_info: "Información de Contacto"
+    view_details: "Ver Detalles"
+    matched_profile: "Perfil Coincidente"
+    created_by: "Creado por"
+    no_personal_info: "No hay información personal disponible"
+    match_information: "Información de Coincidencia"
+    similarity_score: "Puntuación de Similitud"
+    remove_match: "Eliminar Coincidencia"
+    confirm_remove_match: "¿Estás seguro de que quieres eliminar esta coincidencia"
+    back_to_matches: "Volver a Coincidencias"
+
+  # Forms
+  forms:
+    # Personal Info
+    personal_info: "Información Personal"
+    first_name: "Nombre"
+    middle_name: "Segundo Nombre"
+    last_name: "Apellido"
+    phone_number: "Número de Teléfono"
+    profession: "Profesión"
+    occupation: "Ocupación"
+    personal_story: "Historia Personal"
+    
+    # Address
+    address: "Dirección"
+    country: "País"
+    state: "Estado/Provincia"
+    city: "Ciudad"
+    neighborhood: "Barrio"
+    
+    # Search Profile
+    search_profile: "Perfil de Búsqueda"
+    person_searching_for: "Persona que busco"
+    additional_info: "Información Adicional"
+    
+    # Actions
+    save: "Guardar"
+    cancel: "Cancelar"
+    submit: "Enviar"
+    update: "Actualizar"
+    delete: "Eliminar"
+    edit: "Editar"
+    create: "Crear"
+    back: "Volver"
+    
+    # Validation
+    required: "Requerido"
+    optional: "Opcional"
+    
+    # Form Steps
+    next: "Siguiente"
+    step_1_of_3: "Paso 1 de 3"
+    step_2_of_3: "Paso 2 de 3"
+    step_3_of_3: "Paso 3 de 3"
+    street_address: "Dirección"
+    postal_code: "Código Postal"
+    
+  # Authentication
+  auth:
+    sign_in: "Iniciar Sesión"
+    sign_up: "Registrarse"
+    sign_out: "Cerrar Sesión"
+    email: "Correo Electrónico"
+    password: "Contraseña"
+    password_confirmation: "Confirmar Contraseña"
+    remember_me: "Recordarme"
+    forgot_password: "¿Olvidaste tu contraseña?"
+    create_account: "Crear Cuenta"
+    have_account: "¿Ya tienes una cuenta?"
+    no_account: "¿No tienes una cuenta?"
+    start_journey: "Comienza tu viaje para reconectar con la familia"
+    minimum_characters: "Mínimo %{count} caracteres"
+    agree_terms: "Al crear una cuenta, aceptas nuestros"
+    terms_service: "Términos de Servicio"
+    privacy_policy: "Política de Privacidad"
+    connecting_families: "Conectando familias a través de las fronteras mediante tecnología"
+    access_account: "Accede a tu cuenta para continuar"
+    create_new_account: "Crear nueva cuenta"
+    
+  # Messages
+  messages:
+    created_successfully: "Creado exitosamente"
+    updated_successfully: "Actualizado exitosamente"
+    deleted_successfully: "Eliminado exitosamente"
+    error_occurred: "Ocurrió un error"
+    access_denied: "Acceso denegado"
+    not_found: "No encontrado"
+    please_sign_in: "Por favor inicia sesión"
+    
+  # General
+  general:
+    loading: "Cargando..."
+    search: "Buscar"
+    filter: "Filtrar"
+    sort: "Ordenar"
+    show: "Mostrar"
+    hide: "Ocultar"
+    yes: "Sí"
+    no: "No"
+    none: "Ninguno"
+    all: "Todos"
+    active: "Activo"
+    complete: "Completo"
+    incomplete: "Incompleto"
+    needed: "Necesario"
+    found: "Encontrado"
+    ago: "hace"
+    and: "y"
+    more: "más"
+    edit: "Editar"
+    delete: "Eliminar"
+    select: "Seleccionar"
+    apply: "Aplicar"
+    view: "Ver"
+    close: "Cerrar"
+    open: "Abrir"
+    confirm: "Confirmar"
+    are_you_sure: "¿Estás seguro?"
+    or: "O"

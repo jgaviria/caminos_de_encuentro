@@ -1,0 +1,36 @@
+<!-- app/views/personal_infos/new.html.erb -->
+
+<!-- Progress bar component -->
+<div class="w-full bg-gray-200 rounded-full h-2.5 mb-5">
+  <div class="bg-blue-600 h-2.5 rounded-full" style="width: <%= @progress_percentage %>%;"></div>
+</div>
+
+<!-- Full-page container with light gray background -->
+<div class="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+  <!-- Form container with white background -->
+  <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold mb-5 text-center"><%= t('forms.personal_info') %></h2>
+    <%= form_with(model: @personal_info, url: personal_info_path, local: true) do |form| %>
+      <div class="mb-4">
+        <%= form.label :first_name, t('forms.first_name'), class: 'block text-sm font-medium text-gray-700' %>
+        <%= form.text_field :first_name, class: 'mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500' %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :middle_name, t('forms.middle_name'), class: 'block text-sm font-medium text-gray-700' %>
+        <%= form.text_field :middle_name, class: 'mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500' %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :last_name, t('forms.last_name'), class: 'block text-sm font-medium text-gray-700' %>
+        <%= form.text_field :last_name, class: 'mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500' %>
+      </div>
+      <div class="mb-4">
+        <%= form.label :phone_number, t('forms.phone_number'), class: 'block text-sm font-medium text-gray-700' %>
+        <%= form.text_field :phone_number, class: 'mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500' %>
+      </div>
+      <div class="flex justify-between items-center">
+        <%= form.submit t('forms.next'), class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500' %>
+        <div class="text-sm text-gray-600"><%= t('forms.step_1_of_3') %></div>
+      </div>
+    <% end %>
+  </div>
+</div>

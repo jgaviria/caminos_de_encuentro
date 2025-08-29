@@ -1,0 +1,128 @@
+/* Card Components */
+
+/* Base card */
+.card {
+  @apply bg-white rounded-lg shadow-sm border border-gray-200;
+}
+
+.card-hover {
+  @apply hover:shadow-md transition-shadow duration-200;
+}
+
+.card-elevated {
+  @apply shadow-lg;
+}
+
+/* Card sections */
+.card-header {
+  @apply px-6 py-4 border-b border-gray-200;
+}
+
+.card-body {
+  @apply p-6;
+}
+
+.card-footer {
+  @apply px-6 py-4 border-t border-gray-200 bg-gray-50;
+}
+
+/* Stat card */
+.stat-card {
+  @apply bg-white overflow-hidden shadow rounded-lg;
+}
+
+.stat-card-content {
+  @apply p-5;
+}
+
+.stat-card-icon {
+  @apply w-8 h-8 rounded-full flex items-center justify-center;
+}
+
+.stat-card-icon-blue {
+  @apply bg-blue-500;
+}
+
+.stat-card-icon-green {
+  @apply bg-green-500;
+}
+
+.stat-card-icon-yellow {
+  @apply bg-yellow-500;
+}
+
+.stat-card-icon-purple {
+  @apply bg-purple-500;
+}
+
+.stat-card-icon-red {
+  @apply bg-red-500;
+}
+
+.stat-card-icon-indigo {
+  @apply bg-indigo-500;
+}
+
+/* Profile card */
+.profile-card {
+  @apply bg-gray-50 rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-200 p-6;
+}
+
+.profile-card-avatar {
+  @apply h-12 w-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center;
+}
+
+.profile-card-details {
+  @apply space-y-3;
+}
+
+/* Dashboard card */
+.dashboard-card {
+  @apply bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden;
+}
+
+.dashboard-card-header {
+  @apply px-6 py-4 border-b border-gray-200;
+}
+
+.dashboard-card-body {
+  @apply px-6 py-4;
+}
+
+/* Match card */
+.match-card {
+  @apply bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow duration-200;
+}
+
+.match-card-header {
+  @apply flex items-center justify-between mb-4;
+}
+
+.match-card-avatar {
+  @apply h-10 w-10 rounded-full flex items-center justify-center text-white font-medium;
+}
+
+.match-card-similarity {
+  @apply flex items-center space-x-2;
+}
+
+.match-card-progress {
+  @apply w-20 bg-gray-200 rounded-full h-2;
+}
+
+.match-card-progress-bar {
+  @apply bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300;
+}
+
+/* Welcome card (gradient header) */
+.welcome-card {
+  @apply bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg shadow-lg;
+}
+
+.welcome-card-content {
+  @apply px-6 py-8 sm:px-8;
+}
+
+.welcome-card-icon {
+  @apply h-12 w-12 bg-white bg-opacity-20 rounded-lg flex items-center justify-center;
+}

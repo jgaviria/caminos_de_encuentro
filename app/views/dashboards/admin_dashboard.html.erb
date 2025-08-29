@@ -1,0 +1,278 @@
+<!-- Admin Dashboard -->
+<div class="space-y-8">
+  <!-- Enhanced Welcome Header -->
+  <div class="relative bg-gradient-to-r from-purple-600 via-purple-700 to-indigo-700 rounded-2xl shadow-xl overflow-hidden">
+    <div class="relative px-6 py-10 sm:px-10 sm:py-12">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <!-- Main Welcome Content -->
+        <div class="flex-1">
+          <div>
+            <h1 class="text-3xl font-bold text-white mb-4">
+              <%= t('admin.dashboard_title') %>
+            </h1>
+            <p class="text-purple-100 text-lg font-medium"><%= t('admin.matches_title') %></p>
+            <p class="text-purple-200 text-sm mt-1 opacity-90">
+              <%= t('admin.view_all') %>
+            </p>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Statistics Section -->
+  <div class="space-y-6">
+    <!-- Section Header -->
+    <div class="flex items-center justify-between">
+      <div>
+        <h2 class="text-2xl font-bold text-gray-900"><%= t('admin.dashboard_title') %></h2>
+        <p class="text-gray-600 mt-1"><%= t('admin.recent_activity') %></p>
+      </div>
+      <div class="text-sm text-gray-500">
+        Last updated <%= Time.current.strftime("%B %d, %Y at %I:%M %p") %>
+      </div>
+    </div>
+
+    <!-- Enhanced Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Total Matches -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-200">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="ml-4 flex-1">
+            <p class="text-sm font-medium text-gray-600"><%= t('admin.total_matches') %></p>
+            <div class="flex items-baseline">
+              <p class="text-2xl font-bold text-gray-900"><%= Match.count %></p>
+              <p class="ml-2 text-sm text-blue-600"><%= t('general.all') %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Total Users -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-200">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m3 5.197H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="ml-4 flex-1">
+            <p class="text-sm font-medium text-gray-600"><%= t('admin.total_users') %></p>
+            <div class="flex items-baseline">
+              <p class="text-2xl font-bold text-gray-900"><%= User.count %></p>
+              <p class="ml-2 text-sm text-green-600"><%= t('auth.sign_up') %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Profiles -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-200">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="ml-4 flex-1">
+            <p class="text-sm font-medium text-gray-600"><%= t('user.search_profiles') %></p>
+            <div class="flex items-baseline">
+              <p class="text-2xl font-bold text-gray-900"><%= SearchProfile.count %></p>
+              <p class="ml-2 text-sm text-purple-600"><%= t('admin.active_searches') %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Verified Matches -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-200">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="ml-4 flex-1">
+            <p class="text-sm font-medium text-gray-600"><%= t('admin.verified_matches') %></p>
+            <div class="flex items-baseline">
+              <p class="text-2xl font-bold text-gray-900"><%= Match.where(is_verified: true).count %></p>
+              <p class="ml-2 text-sm text-yellow-600"><%= t('admin.verified') %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Administrative Tools Section -->
+  <div class="space-y-6">
+    <!-- Section Header -->
+    <div class="flex items-center justify-between">
+      <div>
+        <h2 class="text-2xl font-bold text-gray-900"><%= t('admin.title') %></h2>
+        <p class="text-gray-600 mt-1"><%= t('admin.view_all') %></p>
+      </div>
+    </div>
+
+    <!-- Primary Admin Actions -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Match Management Card -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-200 hover:shadow-lg hover:border-blue-400 transition-all duration-300 overflow-hidden group">
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center">
+              <div class="h-12 w-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                </svg>
+              </div>
+              <div class="ml-4">
+                <h3 class="text-lg font-semibold text-gray-900"><%= t('admin.matches_title') %></h3>
+                <p class="text-sm text-gray-600"><%= t('admin.match_details') %></p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Quick Stats -->
+          <div class="grid grid-cols-3 gap-4 pt-4 border-t border-gray-100">
+            <div class="text-center">
+              <div class="text-lg font-semibold text-green-600"><%= Match.where(is_verified: true).count %></div>
+              <div class="text-xs text-gray-500"><%= t('admin.verified') %></div>
+            </div>
+            <div class="text-center">
+              <div class="text-lg font-semibold text-yellow-600"><%= Match.where(is_verified: false).count %></div>
+              <div class="text-xs text-gray-500"><%= t('admin.pending') %></div>
+            </div>
+            <div class="text-center">
+              <div class="text-lg font-semibold text-blue-600"><%= Match.where('similarity_score > 0.8').count %></div>
+              <div class="text-xs text-gray-500"><%= t('admin.similarity') %></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Action Footer -->
+        <div class="px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-t border-blue-100">
+          <div class="flex justify-center">
+            <%= link_to admin_matches_path, class: "action-button action-button-blue group" do %>
+              <svg class="w-5 h-5 transition-transform duration-200 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+              </svg>
+              <span class="font-semibold"><%= t('admin.matches_title') %></span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- User & Profile Management Card -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-200 hover:shadow-lg hover:border-green-400 transition-all duration-300 overflow-hidden group">
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center">
+              <div class="h-12 w-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+              </div>
+              <div class="ml-4">
+                <h3 class="text-lg font-semibold text-gray-900"><%= t('user.search_profiles_title') %></h3>
+                <p class="text-sm text-gray-600"><%= t('user.view_details') %></p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Quick Stats -->
+          <div class="grid grid-cols-3 gap-4 pt-4 border-t border-gray-100">
+            <div class="text-center">
+              <div class="text-lg font-semibold text-blue-600"><%= User.count %></div>
+              <div class="text-xs text-gray-500"><%= t('admin.total_users') %></div>
+            </div>
+            <div class="text-center">
+              <div class="text-lg font-semibold text-green-600"><%= User.joins(:personal_info).count %></div>
+              <div class="text-xs text-gray-500"><%= t('user.search_profiles') %></div>
+            </div>
+            <div class="text-center">
+              <div class="text-lg font-semibold text-purple-600"><%= SearchProfile.joins(:matches).distinct.count %></div>
+              <div class="text-xs text-gray-500"><%= t('user.matches') %></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Action Footer -->
+        <div class="px-6 py-4 bg-gradient-to-r from-green-50 to-emerald-50 border-t border-green-100">
+          <div class="flex justify-center">
+            <%= link_to search_profiles_path, class: "action-button action-button-green group" do %>
+              <svg class="w-5 h-5 transition-transform duration-200 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 21h7a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v11m0 5l4.879-4.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242z"></path>
+              </svg>
+              <span class="font-semibold"><%= t('user.search_profiles_title') %></span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary Admin Actions -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h3 class="text-lg font-semibold text-gray-900"><%= t('admin.bulk_actions') %></h3>
+        <p class="text-sm text-gray-600 mt-1"><%= t('admin.view_all') %></p>
+      </div>
+      <div class="p-6">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <!-- Export Data -->
+          <%= link_to export_admin_matches_path(format: :csv), class: "flex items-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors duration-200 group" do %>
+            <div class="h-10 w-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+            </div>
+            <div class="ml-3">
+              <h4 class="text-sm font-medium text-gray-900 group-hover:text-purple-600"><%= t('admin.export_data') %></h4>
+              <p class="text-xs text-gray-500"><%= t('admin.export_data') %></p>
+            </div>
+          <% end %>
+
+          <!-- System Stats -->
+          <div class="flex items-center p-4 bg-gray-50 rounded-xl">
+            <div class="h-10 w-10 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+              </svg>
+            </div>
+            <div class="ml-3">
+              <h4 class="text-sm font-medium text-gray-900"><%= t('admin.dashboard_title') %></h4>
+              <p class="text-xs text-green-600"><%= t('general.all') %></p>
+            </div>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="flex items-center p-4 bg-gray-50 rounded-xl">
+            <div class="h-10 w-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div class="ml-3">
+              <h4 class="text-sm font-medium text-gray-900"><%= t('admin.recent_activity') %></h4>
+              <p class="text-xs text-gray-500"><%= t('admin.view_all') %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

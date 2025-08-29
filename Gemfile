@@ -35,6 +35,15 @@ gem "bootsnap", require: false
 
 gem "devise"
 
+gem "cssbundling-rails"
+
+gem "sidekiq"
+
+gem "kaminari" # for pagination
+
+# CSV processing
+gem "csv"
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
@@ -47,6 +56,19 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Factory Bot for test data generation
+  gem "factory_bot_rails"
+
+  # Mocha for mocking and stubbing
+  gem "mocha"
+
+  # Rails controller testing helpers
+  gem "rails-controller-testing"
+
+  gem "rails-i18n"
+
+  gem "i18n-tasks" # helpful for managing translations
 end
 
 group :development do

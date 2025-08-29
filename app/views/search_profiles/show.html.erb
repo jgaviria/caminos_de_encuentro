@@ -1,0 +1,189 @@
+<!-- Search Profile Show -->
+<div class="max-w-4xl mx-auto">
+  <!-- Header -->
+  <div class="mb-8">
+    <%= link_to search_profiles_path(locale: I18n.locale), class: "inline-flex items-center text-blue-600 hover:text-blue-700 mb-4" do %>
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      Back to Search Profiles
+    <% end %>
+    
+    <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg shadow-lg">
+      <div class="px-6 py-8 sm:px-8">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <div class="h-16 w-16 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                <span class="text-white font-bold text-2xl">
+                  <%= @search_profile.first_name.first.upcase %>
+                </span>
+              </div>
+            </div>
+            <div class="ml-6">
+              <h1 class="text-3xl font-bold text-white">
+                <%= [@search_profile.first_name, @search_profile.middle_name, @search_profile.last_name].compact.join(' ') %>
+              </h1>
+              <p class="text-blue-100 mt-1">Search Profile Details</p>
+            </div>
+          </div>
+          
+          <% if @search_profile.user == current_user || current_user.admin? %>
+            <div class="flex space-x-3">
+              <%= link_to edit_search_profile_path(@search_profile), 
+                  class: "inline-flex items-center px-4 py-2 border border-white border-opacity-30 text-sm font-medium rounded-md text-white bg-white bg-opacity-10 hover:bg-opacity-20 transition-colors duration-200" do %>
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                </svg>
+                Edit Profile
+              <% end %>
+              
+              <%= button_to search_profile_path(@search_profile), method: :delete,
+                  confirm: "Are you sure you want to delete this search profile for #{@search_profile.first_name} #{@search_profile.last_name}? This action cannot be undone.",
+                  class: "inline-flex items-center px-4 py-2 border border-white border-opacity-30 text-sm font-medium rounded-md text-white bg-red-600 bg-opacity-80 hover:bg-opacity-100 transition-colors duration-200" do %>
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
+                Delete Profile
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Information -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Basic Information -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h3 class="text-lg font-medium text-gray-900">Personal Information</h3>
+      </div>
+      <div class="p-6 space-y-4">
+        <div>
+          <span class="text-sm font-medium text-gray-500">First Name</span>
+          <p class="text-base text-gray-900 mt-1"><%= @search_profile.first_name %></p>
+        </div>
+        <% if @search_profile.middle_name.present? %>
+          <div>
+            <span class="text-sm font-medium text-gray-500">Middle Name</span>
+            <p class="text-base text-gray-900 mt-1"><%= @search_profile.middle_name %></p>
+          </div>
+        <% end %>
+        <div>
+          <span class="text-sm font-medium text-gray-500">Last Name</span>
+          <p class="text-base text-gray-900 mt-1"><%= @search_profile.last_name %></p>
+        </div>
+        <div>
+          <span class="text-sm font-medium text-gray-500">Created</span>
+          <p class="text-base text-gray-900 mt-1"><%= @search_profile.created_at.strftime("%B %d, %Y") %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Location Information -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h3 class="text-lg font-medium text-gray-900">Location Information</h3>
+      </div>
+      <div class="p-6 space-y-4">
+        <% if @search_profile.address %>
+          <% if @search_profile.address.country.present? %>
+            <div>
+              <span class="text-sm font-medium text-gray-500">Country</span>
+              <p class="text-base text-gray-900 mt-1"><%= @search_profile.address.country %></p>
+            </div>
+          <% end %>
+          <% if @search_profile.address.state.present? %>
+            <div>
+              <span class="text-sm font-medium text-gray-500">State/Department</span>
+              <p class="text-base text-gray-900 mt-1"><%= @search_profile.address.state %></p>
+            </div>
+          <% end %>
+          <% if @search_profile.address.city.present? %>
+            <div>
+              <span class="text-sm font-medium text-gray-500">City</span>
+              <p class="text-base text-gray-900 mt-1"><%= @search_profile.address.city %></p>
+            </div>
+          <% end %>
+          <% if @search_profile.address.neighborhood.present? %>
+            <div>
+              <span class="text-sm font-medium text-gray-500">Neighborhood</span>
+              <p class="text-base text-gray-900 mt-1"><%= @search_profile.address.neighborhood %></p>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="text-center py-8">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+            </svg>
+            <p class="text-gray-500 mt-2">No location information provided</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Matches Section -->
+  <div class="mt-8 bg-white rounded-lg shadow-sm border border-gray-200">
+    <div class="px-6 py-4 border-b border-gray-200">
+      <h3 class="text-lg font-medium text-gray-900">Matches Found</h3>
+      <p class="text-sm text-gray-600 mt-1">Potential matches for this search profile</p>
+    </div>
+    <div class="p-6">
+      <% matches = @search_profile.matches.includes(:user) %>
+      <% if matches.any? %>
+        <div class="space-y-4">
+          <% matches.each do |match| %>
+            <div class="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors duration-200">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h4 class="font-medium text-gray-900">
+                    <%= match.user.personal_info&.first_name || 'Unknown' %>
+                    <%= match.user.personal_info&.last_name || 'User' %>
+                  </h4>
+                  <p class="text-sm text-gray-600">
+                    Similarity: <%= (match.similarity_score * 100).round(1) %>%
+                    <% if match.is_verified %>
+                      <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        Verified
+                      </span>
+                    <% else %>
+                      <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                        Pending
+                      </span>
+                    <% end %>
+                  </p>
+                </div>
+                <%= link_to match_path(match, locale: I18n.locale), 
+                    class: "text-blue-600 hover:text-blue-700 text-sm font-medium" do %>
+                  View Details
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="text-center py-8">
+          <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <p class="text-gray-500 mt-2">No matches found yet</p>
+          <% if current_user.admin? %>
+            <div class="mt-4">
+              <%= button_to match_search_profile_path(@search_profile), method: :post,
+                  confirm: "Run matching for #{@search_profile.first_name} #{@search_profile.last_name}?",
+                  class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700" do %>
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                Run Matching
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,602 @@
+<div class="bg-white">
+  <!-- Header -->
+  <header class="fixed inset-x-0 top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm">
+    <nav class="flex items-center justify-between p-6 lg:px-8 max-w-7xl mx-auto" aria-label="Global">
+      <div class="flex lg:flex-1">
+        <a href="#" class="-m-1.5 p-1.5 flex items-center group">
+          <div class="h-10 w-10 bg-gradient-to-br from-indigo-600 to-purple-700 rounded-xl flex items-center justify-center mr-3 group-hover:scale-105 transition-transform duration-200">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </div>
+          <div>
+            <span class="text-xl font-bold text-gray-900 group-hover:text-indigo-600 transition-colors duration-200"><%= t('nav.title') %></span>
+            <div class="text-xs text-gray-500 -mt-0.5"><%= t('nav.subtitle') %></div>
+          </div>
+        </a>
+      </div>
+      <div class="flex lg:hidden">
+        <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 hover:bg-gray-100 transition-colors" onclick="toggleMobileMenu()">
+          <span class="sr-only">Open main menu</span>
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+      </div>
+      <div class="hidden lg:flex lg:gap-x-8">
+        <a href="#servicios" class="relative text-sm font-semibold leading-6 text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md transition-all duration-200 group">
+          <%= t('nav.services') %>
+          <span class="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-indigo-500/0 via-indigo-500/40 to-indigo-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
+        </a>
+        <a href="#testimonios" class="relative text-sm font-semibold leading-6 text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md transition-all duration-200 group">
+          <%= t('nav.testimonials') %>
+          <span class="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-indigo-500/0 via-indigo-500/40 to-indigo-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
+        </a>
+        <a href="#ayuda" class="relative text-sm font-semibold leading-6 text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md transition-all duration-200 group">
+          <%= t('nav.help') %>
+          <span class="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-indigo-500/0 via-indigo-500/40 to-indigo-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
+        </a>
+      </div>
+      <div class="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-x-4">
+        <!-- Language Toggle -->
+        <div class="flex items-center space-x-2 bg-gray-100 rounded-lg p-1">
+          <%= link_to url_for(locale: :es), class: "flex items-center px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200 #{'bg-white text-gray-900 shadow-sm' if I18n.locale == :es} #{'text-gray-500 hover:text-gray-700' if I18n.locale != :es}" do %>
+            <span class="text-sm mr-1">🇪🇸</span>
+            ES
+          <% end %>
+          <%= link_to url_for(locale: :en), class: "flex items-center px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200 #{'bg-white text-gray-900 shadow-sm' if I18n.locale == :en} #{'text-gray-500 hover:text-gray-700' if I18n.locale != :en}" do %>
+            <span class="text-sm mr-1">🇺🇸</span>
+            EN
+          <% end %>
+        </div>
+        
+        <%= link_to new_user_session_path, class: "text-sm font-semibold leading-6 text-gray-700 hover:text-indigo-600 px-4 py-2 rounded-lg transition-all duration-200 hover:bg-gray-50" do %>
+          <%= t('nav.login') %> <span aria-hidden="true">→</span>
+        <% end %>
+        <%= link_to new_user_registration_path, class: "bg-indigo-600 text-white px-6 py-2.5 rounded-xl text-sm font-semibold shadow-lg hover:bg-indigo-700 transition-all duration-200" do %>
+          <%= t('nav.start_search') %>
+        <% end %>
+      </div>
+    </nav>
+    <!-- Mobile menu, show/hide based on menu open state. -->
+    <div id="mobile-menu" class="hidden" role="dialog" aria-modal="true">
+      <!-- Background backdrop, show/hide based on slide-over state. -->
+      <div class="fixed inset-0 z-50 bg-gray-600/50" onclick="toggleMobileMenu()"></div>
+      <div class="fixed top-0 right-0 z-50 w-full h-auto bg-white px-3 py-2 sm:max-w-sm shadow-xl">
+        <div class="flex items-center justify-between mb-2">
+          <a href="#" class="flex items-center">
+            <span class="text-sm font-bold text-gray-900"><%= t('nav.title') %></span>
+          </a>
+          <button type="button" class="p-1.5 text-gray-700 hover:bg-gray-100 rounded transition-colors" onclick="toggleMobileMenu()">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Compact Menu Content -->
+        <div class="space-y-1">
+          <a href="#servicios" class="block px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded" onclick="toggleMobileMenu()"><%= t('nav.services') %></a>
+          <a href="#testimonios" class="block px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded" onclick="toggleMobileMenu()"><%= t('nav.testimonials') %></a>
+          <a href="#ayuda" class="block px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded" onclick="toggleMobileMenu()"><%= t('nav.help') %></a>
+          
+          <div class="py-1 border-t border-gray-200">
+            <div class="flex gap-1 mb-2">
+              <%= link_to url_for(locale: :es), class: "flex-1 flex items-center justify-center px-2 py-1 text-xs rounded #{'bg-gray-200' if I18n.locale == :es} #{'hover:bg-gray-100' if I18n.locale != :es}" do %>
+                🇪🇸 ES
+              <% end %>
+              <%= link_to url_for(locale: :en), class: "flex-1 flex items-center justify-center px-2 py-1 text-xs rounded #{'bg-gray-200' if I18n.locale == :en} #{'hover:bg-gray-100' if I18n.locale != :en}" do %>
+                🇺🇸 EN
+              <% end %>
+            </div>
+            
+            <%= link_to new_user_session_path, class: "block px-2 py-1 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded text-center mb-1" do %>
+              <%= t('nav.login') %>
+            <% end %>
+            
+            <%= link_to new_user_registration_path, class: "block px-2 py-1 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded text-center" do %>
+              <%= t('nav.start_search') %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </header>
+
+  <main class="isolate">
+
+    <!-- Feature section -->
+<div class="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8">
+  <div class="mx-auto max-w-2xl lg:text-center">
+    <h2 class="text-base font-semibold leading-7 text-indigo-600"><%= t('landing.features.title') %></h2>
+    <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"><%= t('landing.features.heading') %></p>
+    <p class="mt-6 text-lg leading-8 text-gray-600"><%= t('landing.features.description') %></p>
+  </div>
+  <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
+    <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
+      
+      <!-- Algoritmo de coincidencia avanzada -->
+      <div class="relative pl-16">
+        <dt class="text-base font-semibold leading-7 text-gray-900">
+          <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+            <!-- Icon -->
+            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" />
+            </svg>
+          </div>
+          <%= t('landing.features.algorithm.title') %>
+        </dt>
+        <dd class="mt-2 text-base leading-7 text-gray-600"><%= t('landing.features.algorithm.description') %></dd>
+      </div>
+      
+      <!-- Filtro detallado de atributos -->
+      <div class="relative pl-16">
+        <dt class="text-base font-semibold leading-7 text-gray-900">
+          <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+            <!-- Icon -->
+            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+            </svg>
+          </div>
+          <%= t('landing.features.filter.title') %>
+        </dt>
+        <dd class="mt-2 text-base leading-7 text-gray-600"><%= t('landing.features.filter.description') %></dd>
+      </div>
+
+      <!-- Conexión con comunidades de búsqueda -->
+      <div class="relative pl-16">
+        <dt class="text-base font-semibold leading-7 text-gray-900">
+          <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+            <!-- Icon -->
+            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+            </svg>
+          </div>
+          <%= t('landing.features.community.title') %>
+        </dt>
+        <dd class="mt-2 text-base leading-7 text-gray-600"><%= t('landing.features.community.description') %></dd>
+      </div>
+
+      <!-- Seguridad de datos avanzada -->
+      <div class="relative pl-16">
+        <dt class="text-base font-semibold leading-7 text-gray-900">
+          <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+            <!-- Icon -->
+            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.864 4.243A7.5 7.5 0 0 1 19.5 10.5c0 2.92-.556 5.709-1.568 8.268M5.742 6.364A7.465 7.465 0 0 0 4.5 10.5a7.464 7.464 0 0 1-1.15 3.993m1.989 3.559A11.209 11.209 0 0 0 8.25 10.5a3.75 3.75 0 1 1 7.5 0c0 .527-.021 1.049-.064 1.565M12 10.5a14.94 14.94 0 0 1-3.6 9.75m6.633-4.596a18.666 18.666 0 0 1-2.485 5.33" />
+            </svg>
+          </div>
+          <%= t('landing.features.security.title') %>
+        </dt>
+        <dd class="mt-2 text-base leading-7 text-gray-600"><%= t('landing.features.security.description') %></dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+    <!-- Sección de Testimonios -->
+<div class="mx-auto mt-32 max-w-4xl sm:mt-56 sm:px-6 lg:px-8">
+  <div class="relative overflow-hidden bg-gray-900 px-6 py-20 shadow-xl sm:rounded-3xl sm:px-10 sm:py-24 md:px-12 lg:px-16">
+    <img class="absolute inset-0 h-full w-full object-cover brightness-150 saturate-0" src="https://images.unsplash.com/photo-1601381718415-a05fb0a261f3?ixid=MXwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8ODl8fHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1216&q=80" alt="">
+    <div class="absolute inset-0 bg-gray-900/90 mix-blend-multiply"></div>
+    <div class="absolute -left-80 -top-56 transform-gpu blur-3xl" aria-hidden="true">
+      <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-r from-[#ff4694] to-[#776fff] opacity-[0.45]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+    </div>
+    <div class="hidden md:absolute md:bottom-16 md:left-[50rem] md:block md:transform-gpu md:blur-3xl" aria-hidden="true">
+      <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-r from-[#ff4694] to-[#776fff] opacity-25" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+    </div>
+    <div class="relative mx-auto max-w-2xl lg:mx-0">
+      <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="">
+      <figure>
+        <blockquote class="mt-6 text-lg font-light text-white sm:text-xl sm:leading-8 italic">
+          <p>"<%= t('landing.testimonial.quote') %>"</p>
+        </blockquote>
+        <figcaption class="mt-6 text-base text-white">
+          <div class="font-semibold">— <%= t('landing.testimonial.author') %></div>
+          <div class="mt-1"><%= t('landing.testimonial.title') %></div>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</div>
+
+    <!-- Sección de precios -->
+<div class="py-24 sm:pt-48">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="mx-auto max-w-4xl text-center">
+      <h2 class="text-base font-semibold leading-7 text-indigo-600"><%= t('landing.pricing.title') %></h2>
+      <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl"><%= t('landing.pricing.heading') %></p>
+    </div>
+    <p class="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600"><%= t('landing.pricing.description') %></p>
+    
+    <div class="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-8">
+      
+      <!-- Plan Individual -->
+      <div class="flex flex-col h-full rounded-3xl bg-white p-8 ring-1 ring-gray-200 xl:p-10">
+        <div class="flex-1">
+          <div class="flex items-center justify-between gap-x-4">
+            <h3 id="tier-individual" class="text-lg font-semibold leading-8 text-gray-900"><%= t('landing.pricing.individual.title') %></h3>
+          </div>
+          <p class="mt-4 text-sm leading-6 text-gray-600"><%= t('landing.pricing.individual.description') %></p>
+          <p class="mt-6 flex items-baseline gap-x-1">
+            <span class="text-4xl font-bold tracking-tight text-gray-900"><%= t('landing.pricing.individual.price') %></span>
+            <span class="text-sm font-semibold leading-6 text-gray-600"><%= t('landing.pricing.individual.period') %></span>
+          </p>
+          <ul role="list" class="mt-8 space-y-3 text-sm leading-6 text-gray-600">
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              <%= t('landing.pricing.individual.feature1') %>
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              <%= t('landing.pricing.individual.feature2') %>
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              <%= t('landing.pricing.individual.feature3') %>
+            </li>
+          </ul>
+        </div>
+        <a href="#" aria-describedby="tier-individual" class="mt-8 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 transition-colors"><%= t('landing.pricing.individual.cta') %></a>
+      </div>
+      
+      <!-- Plan Familiar -->
+      <div class="flex flex-col h-full rounded-3xl bg-white p-8 ring-1 ring-gray-200 lg:z-10 xl:p-10 relative">
+        <div class="absolute -top-5 left-1/2 transform -translate-x-1/2">
+          <span class="inline-flex items-center rounded-full bg-indigo-600 px-3 py-1 text-xs font-semibold text-white"><%= t('landing.pricing.family.badge') %></span>
+        </div>
+        <div class="flex-1">
+          <div class="flex items-center justify-between gap-x-4">
+            <h3 id="tier-familiar" class="text-lg font-semibold leading-8 text-indigo-600"><%= t('landing.pricing.family.title') %></h3>
+          </div>
+          <p class="mt-4 text-sm leading-6 text-gray-600"><%= t('landing.pricing.family.description') %></p>
+          <p class="mt-6 flex items-baseline gap-x-1">
+            <span class="text-4xl font-bold tracking-tight text-gray-900"><%= t('landing.pricing.family.price') %></span>
+            <span class="text-sm font-semibold leading-6 text-gray-600"><%= t('landing.pricing.family.period') %></span>
+          </p>
+          <ul role="list" class="mt-8 space-y-3 text-sm leading-6 text-gray-600">
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              <%= t('landing.pricing.family.feature1') %>
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              <%= t('landing.pricing.family.feature2') %>
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              <%= t('landing.pricing.family.feature3') %>
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              <%= t('landing.pricing.family.feature4') %>
+            </li>
+          </ul>
+        </div>
+        <a href="#" aria-describedby="tier-familiar" class="mt-8 block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 transition-colors"><%= t('landing.pricing.family.cta') %></a>
+      </div>
+      
+      <!-- Plan Corporativo -->
+      <div class="flex flex-col h-full rounded-3xl bg-white p-8 ring-1 ring-gray-200 xl:p-10">
+        <div class="flex-1">
+          <div class="flex items-center justify-between gap-x-4">
+            <h3 id="tier-empresarial" class="text-lg font-semibold leading-8 text-gray-900"><%= t('landing.pricing.corporate.title') %></h3>
+          </div>
+          <p class="mt-4 text-sm leading-6 text-gray-600"><%= t('landing.pricing.corporate.description') %></p>
+          <p class="mt-6 flex items-baseline gap-x-1">
+            <span class="text-4xl font-bold tracking-tight text-gray-900"><%= t('landing.pricing.corporate.price') %></span>
+            <span class="text-sm font-semibold leading-6 text-gray-600"><%= t('landing.pricing.corporate.period') %></span>
+          </p>
+          <ul role="list" class="mt-8 space-y-3 text-sm leading-6 text-gray-600">
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              <%= t('landing.pricing.corporate.feature1') %>
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              <%= t('landing.pricing.corporate.feature2') %>
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              <%= t('landing.pricing.corporate.feature3') %>
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              <%= t('landing.pricing.corporate.feature4') %>
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              <%= t('landing.pricing.corporate.feature5') %>
+            </li>
+          </ul>
+        </div>
+        <a href="#" aria-describedby="tier-empresarial" class="mt-8 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 transition-colors"><%= t('landing.pricing.corporate.cta') %></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- FAQs -->
+    <div class="mx-auto max-w-2xl divide-y divide-gray-900/10 px-6 pb-8 sm:pb-24 sm:pt-12 lg:max-w-7xl lg:px-8 lg:pb-32">
+      <h2 class="text-2xl font-bold leading-10 tracking-tight text-gray-900"><%= t('landing.faq.title') %></h2>
+      <dl class="mt-10 space-y-8 divide-y divide-gray-900/10">
+        <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
+          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5"><%= t('landing.faq.how_it_works.question') %></dt>
+          <dd class="mt-4 lg:col-span-7 lg:mt-0">
+            <p class="text-base leading-7 text-gray-600"><%= t('landing.faq.how_it_works.answer') %></p>
+          </dd>
+        </div>
+
+        <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
+          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5"><%= t('landing.faq.security.question') %></dt>
+          <dd class="mt-4 lg:col-span-7 lg:mt-0">
+            <p class="text-base leading-7 text-gray-600"><%= t('landing.faq.security.answer') %></p>
+          </dd>
+        </div>
+
+        <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
+          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5"><%= t('landing.faq.time.question') %></dt>
+          <dd class="mt-4 lg:col-span-7 lg:mt-0">
+            <p class="text-base leading-7 text-gray-600"><%= t('landing.faq.time.answer') %></p>
+          </dd>
+        </div>
+
+        <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
+          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5"><%= t('landing.faq.information.question') %></dt>
+          <dd class="mt-4 lg:col-span-7 lg:mt-0">
+            <p class="text-base leading-7 text-gray-600"><%= t('landing.faq.information.answer') %></p>
+          </dd>
+        </div>
+
+        <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
+          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5"><%= t('landing.faq.cancellation.question') %></dt>
+          <dd class="mt-4 lg:col-span-7 lg:mt-0">
+            <p class="text-base leading-7 text-gray-600"><%= t('landing.faq.cancellation.answer') %></p>
+          </dd>
+        </div>
+
+        <div class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
+          <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5"><%= t('landing.faq.international.question') %></dt>
+          <dd class="mt-4 lg:col-span-7 lg:mt-0">
+            <p class="text-base leading-7 text-gray-600"><%= t('landing.faq.international.answer') %></p>
+          </dd>
+        </div>
+      </dl>
+    </div>
+
+    <%# <!-- CTA section -->
+    <div class="relative -z-10 mt-32 px-6 lg:px-8">
+      <div class="absolute inset-x-0 top-1/2 -z-10 flex -translate-y-1/2 transform-gpu justify-center overflow-hidden blur-3xl sm:bottom-0 sm:right-[calc(50%-6rem)] sm:top-auto sm:translate-y-0 sm:transform-gpu sm:justify-end" aria-hidden="true">
+        <div class="aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-25" style="clip-path: polygon(73.6% 48.6%, 91.7% 88.5%, 100% 53.9%, 97.4% 18.1%, 92.5% 15.4%, 75.7% 36.3%, 55.3% 52.8%, 46.5% 50.9%, 45% 37.4%, 50.3% 13.1%, 21.3% 36.2%, 0.1% 0.1%, 5.4% 49.1%, 21.4% 36.4%, 58.9% 100%, 73.6% 48.6%)"></div>
+      </div>
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Boost your productivity.<br>Start using our app today.</h2>
+        <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-600">Incididunt sint fugiat pariatur cupidatat consectetur sit cillum anim id veniam aliqua proident excepteur commodo do ea.</p>
+        <div class="mt-10 flex items-center justify-center gap-x-6">
+          <a href="#" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get started</a>
+          <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Learn more <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="absolute left-1/2 right-0 top-full -z-10 hidden -translate-y-1/2 transform-gpu overflow-hidden blur-3xl sm:block" aria-hidden="true">
+        <div class="aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+      </div>
+    </div>
+  </main> %>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 mt-32">
+    <div class="mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-8 lg:py-32">
+      <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+        <!-- Logo and description -->
+        <div class="space-y-8">
+          <div class="flex items-center">
+            <div class="h-10 w-10 bg-gradient-to-br from-indigo-600 to-purple-700 rounded-xl flex items-center justify-center mr-3">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <span class="text-xl font-bold text-white"><%= t('nav.title') %></span>
+              <div class="text-sm text-gray-400 -mt-0.5"><%= t('nav.subtitle') %></div>
+            </div>
+          </div>
+          <p class="text-sm leading-6 text-gray-300">
+            <%= t('footer.description') %>
+          </p>
+          <div class="flex space-x-6">
+            <a href="#" class="text-gray-400 hover:text-gray-300 transition-colors">
+              <span class="sr-only">Facebook</span>
+              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-gray-300 transition-colors">
+              <span class="sr-only">Twitter</span>
+              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-gray-300 transition-colors">
+              <span class="sr-only">Instagram</span>
+              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill-rule="evenodd" d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.621 5.367 11.988 11.988 11.988s11.987-5.367 11.987-11.988C24.004 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.321-1.297C4.198 14.553 3.662 13.407 3.662 12.017s.536-2.536 1.466-3.674C5.999 7.336 7.152 6.846 8.449 6.846s2.45.49 3.321 1.297c.93 1.138 1.466 2.284 1.466 3.674s-.536 2.536-1.466 3.674c-.871.807-2.024 1.297-3.321 1.297zm7.138 0c-1.297 0-2.449-.49-3.321-1.297-.93-1.138-1.466-2.284-1.466-3.674s.536-2.536 1.466-3.674c.872-.807 2.024-1.297 3.321-1.297s2.45.49 3.321 1.297c.93 1.138 1.466 2.284 1.466 3.674s-.536 2.536-1.466 3.674c-.871.807-2.024 1.297-3.321 1.297z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Navigation links -->
+        <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
+          <div class="md:grid md:grid-cols-2 md:gap-8">
+            <div>
+              <h3 class="text-sm font-semibold leading-6 text-white"><%= t('footer.services.title') %></h3>
+              <ul role="list" class="mt-6 space-y-4">
+                <li>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.services.search') %></a>
+                </li>
+                <li>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.services.algorithms') %></a>
+                </li>
+                <li>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.services.security') %></a>
+                </li>
+                <li>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.services.network') %></a>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-10 md:mt-0">
+              <h3 class="text-sm font-semibold leading-6 text-white"><%= t('footer.support.title') %></h3>
+              <ul role="list" class="mt-6 space-y-4">
+                <li>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.support.help_center') %></a>
+                </li>
+                <li>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.support.guides') %></a>
+                </li>
+                <li>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.support.contact') %></a>
+                </li>
+                <li>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.support.emergency') %></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="md:grid md:grid-cols-2 md:gap-8">
+            <div>
+              <h3 class="text-sm font-semibold leading-6 text-white"><%= t('footer.resources.title') %></h3>
+              <ul role="list" class="mt-6 space-y-4">
+                <li>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.resources.blog') %></a>
+                </li>
+                <li>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.resources.success_stories') %></a>
+                </li>
+                <li>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.resources.partners') %></a>
+                </li>
+                <li>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.resources.legal_resources') %></a>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-10 md:mt-0">
+              <h3 class="text-sm font-semibold leading-6 text-white"><%= t('footer.legal.title') %></h3>
+              <ul role="list" class="mt-6 space-y-4">
+                <li>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.legal.privacy') %></a>
+                </li>
+                <li>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.legal.terms') %></a>
+                </li>
+                <li>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.legal.cookies') %></a>
+                </li>
+                <li>
+                  <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors"><%= t('footer.legal.transparency') %></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Bottom border and copyright -->
+      <div class="mt-16 border-t border-gray-800 pt-8 sm:mt-20 lg:mt-24">
+        <div class="md:flex md:items-center md:justify-between">
+          <div class="flex space-x-6 md:order-2">
+            <a href="#" class="text-gray-400 hover:text-gray-300 text-sm transition-colors">
+              <%= t('footer.help_line') %>
+            </a>
+          </div>
+          <p class="mt-8 text-xs leading-5 text-gray-400 md:order-1 md:mt-0">
+            <%= t('footer.copyright') %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // Wait for DOM to be fully loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get the mobile menu element
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (!mobileMenu) {
+      console.error('Mobile menu element not found!');
+      return;
+    }
+    
+    // Function to toggle mobile menu
+    window.toggleMobileMenu = function() {
+      if (mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.remove('hidden');
+        // Prevent body scroll when menu is open
+        document.body.style.overflow = 'hidden';
+      } else {
+        mobileMenu.classList.add('hidden');
+        // Re-enable body scroll
+        document.body.style.overflow = '';
+      }
+    };
+    
+    // Find all elements that should toggle the menu
+    const toggleElements = document.querySelectorAll('[onclick*="toggleMobileMenu"]');
+    
+    // Add event listeners to each element
+    toggleElements.forEach((element) => {
+      // Remove the onclick attribute
+      element.removeAttribute('onclick');
+      // Add event listener
+      element.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.toggleMobileMenu();
+      });
+    });
+    
+    // Close mobile menu when clicking on navigation links
+    const mobileLinks = document.querySelectorAll('#mobile-menu a[href^="#"]');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        setTimeout(() => window.toggleMobileMenu(), 100);
+      });
+    });
+    
+    // Close menu when pressing Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+        window.toggleMobileMenu();
+      }
+    });
+  });
+</script>

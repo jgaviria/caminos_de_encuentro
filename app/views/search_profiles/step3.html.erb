@@ -1,0 +1,161 @@
+<!-- Step 3: Review and Create -->
+<div class="max-w-2xl mx-auto">
+  <!-- Header -->
+  <div class="mb-8">
+    <%= link_to step2_search_profiles_path(locale: I18n.locale), class: "inline-flex items-center text-blue-600 hover:text-blue-700 mb-4" do %>
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      Back to Location Information
+    <% end %>
+    
+    <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg shadow-lg">
+      <div class="px-6 py-8 sm:px-8">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="h-12 w-12 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+              <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="ml-6">
+            <h1 class="text-2xl font-bold text-white">Create Search Profile</h1>
+            <p class="text-blue-100 mt-1">Step 3 of 3: Review and Create</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="mb-8">
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm font-medium text-gray-900">Profile Setup Progress</span>
+        <span class="text-sm text-gray-500"><%= @progress_percentage %>% Complete</span>
+      </div>
+      <div class="w-full bg-gray-200 rounded-full h-2">
+        <div class="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full transition-all duration-300" style="width: <%= @progress_percentage %>%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Review Information -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+    <div class="px-6 py-4 border-b border-gray-200">
+      <h3 class="text-lg font-medium text-gray-900">Review Your Search Profile</h3>
+      <p class="text-sm text-gray-600 mt-1">Please review the information below before creating your search profile</p>
+    </div>
+    
+    <div class="p-6 space-y-6">
+      <!-- Basic Information -->
+      <div>
+        <h4 class="text-md font-medium text-gray-900 mb-3">Personal Information</h4>
+        <div class="bg-gray-50 rounded-lg p-4 space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm font-medium text-gray-700">First Name:</span>
+            <span class="text-sm text-gray-900"><%= @search_profile_data['first_name'] || 'Not provided' %></span>
+          </div>
+          <% if @search_profile_data['middle_name'].present? %>
+            <div class="flex justify-between">
+              <span class="text-sm font-medium text-gray-700">Middle Name:</span>
+              <span class="text-sm text-gray-900"><%= @search_profile_data['middle_name'] %></span>
+            </div>
+          <% end %>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium text-gray-700">Last Name:</span>
+            <span class="text-sm text-gray-900"><%= @search_profile_data['last_name'] || 'Not provided' %></span>
+          </div>
+        </div>
+        <div class="mt-2">
+          <%= link_to "Edit", step1_search_profiles_path(locale: I18n.locale), 
+              class: "text-blue-600 hover:text-blue-700 text-sm font-medium" %>
+        </div>
+      </div>
+
+      <!-- Location Information -->
+      <div>
+        <h4 class="text-md font-medium text-gray-900 mb-3">Location Information</h4>
+        <div class="bg-gray-50 rounded-lg p-4 space-y-2">
+          <% if @search_profile_data['country'].present? %>
+            <div class="flex justify-between">
+              <span class="text-sm font-medium text-gray-700">Country:</span>
+              <span class="text-sm text-gray-900"><%= @search_profile_data['country'] %></span>
+            </div>
+          <% end %>
+          <% if @search_profile_data['state'].present? %>
+            <div class="flex justify-between">
+              <span class="text-sm font-medium text-gray-700">State/Department:</span>
+              <span class="text-sm text-gray-900"><%= @search_profile_data['state'] %></span>
+            </div>
+          <% end %>
+          <% if @search_profile_data['city'].present? %>
+            <div class="flex justify-between">
+              <span class="text-sm font-medium text-gray-700">City:</span>
+              <span class="text-sm text-gray-900"><%= @search_profile_data['city'] %></span>
+            </div>
+          <% end %>
+          <% if @search_profile_data['neighborhood'].present? %>
+            <div class="flex justify-between">
+              <span class="text-sm font-medium text-gray-700">Neighborhood:</span>
+              <span class="text-sm text-gray-900"><%= @search_profile_data['neighborhood'] %></span>
+            </div>
+          <% end %>
+          <% unless [@search_profile_data['country'], @search_profile_data['state'], @search_profile_data['city'], @search_profile_data['neighborhood']].any?(&:present?) %>
+            <div class="text-sm text-gray-500 italic">No location information provided</div>
+          <% end %>
+        </div>
+        <div class="mt-2">
+          <%= link_to "Edit", step2_search_profiles_path(locale: I18n.locale), 
+              class: "text-blue-600 hover:text-blue-700 text-sm font-medium" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Important Information -->
+  <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <svg class="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+      </div>
+      <div class="ml-3">
+        <h3 class="text-sm font-medium text-blue-900">What happens next?</h3>
+        <div class="mt-2 text-sm text-blue-800">
+          <ul class="list-disc list-inside space-y-1">
+            <li>Your search profile will be saved to your account</li>
+            <li><% if current_user.admin? %>As an admin, you can immediately run matching algorithms<% else %>Our system will periodically search for potential matches<% end %></li>
+            <li>You'll be notified if any potential matches are found</li>
+            <li>You can create multiple search profiles for different people</li>
+            <li>All information is kept confidential and secure</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Profile Form -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+    <div class="p-6">
+      <%= form_with url: search_profiles_path(locale: I18n.locale), method: :post, local: true do |form| %>
+        <!-- Form Actions -->
+        <div class="flex items-center justify-between">
+          <div class="text-sm text-gray-500">
+            Step 3 of 3 - Final Step
+          </div>
+          
+          <div class="flex space-x-3">
+            <%= link_to "Back", step2_search_profiles_path(locale: I18n.locale), 
+                class: "px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors duration-200" %>
+            
+            <%= form.submit "Create Search Profile", 
+                class: "px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
