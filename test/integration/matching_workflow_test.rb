@@ -40,16 +40,25 @@ class MatchingWorkflowTest < ActionDispatch::IntegrationTest
     @seeker.update!(admin: true)
     sign_in @seeker
 
-    # Step 1: User creates a search profile
+    # Step 1: User creates a search profile through multi-step flow
     get new_search_profile_path(locale: I18n.default_locale)
-    assert_response :success
-
-    post search_profiles_path(locale: I18n.default_locale), params: {
+    assert_redirected_to step1_search_profiles_path(locale: I18n.default_locale)
+    
+    # Complete the multi-step flow
+    post step1_search_profiles_path(locale: I18n.default_locale), params: {
       search_profile: {
         first_name: "Carlos",
         last_name: "Mendez"
       }
     }
+    assert_redirected_to step2_search_profiles_path(locale: I18n.default_locale)
+    
+    post step2_search_profiles_path(locale: I18n.default_locale), params: {
+      address: {}
+    }
+    assert_redirected_to step3_search_profiles_path(locale: I18n.default_locale)
+    
+    post search_profiles_path(locale: I18n.default_locale)
     assert_redirected_to dashboard_path(locale: I18n.default_locale)
 
     new_profile = SearchProfile.last

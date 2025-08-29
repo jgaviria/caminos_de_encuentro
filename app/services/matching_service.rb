@@ -5,10 +5,10 @@ class MatchingService
 
   # Weights for different matching criteria
   WEIGHTS = {
-    exact_name: 0.35,
+    exact_name: 0.45,  # Increased for better exact match scoring
     fuzzy_name: 0.25,
-    location: 0.3,  # Increased from 0.2 to 0.3 (location is very important)
-    phone: 0.08,
+    location: 0.25,    # Adjusted to balance total
+    phone: 0.03,
     temporal: 0.02
   }.freeze
 
