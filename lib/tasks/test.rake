@@ -7,10 +7,10 @@ end
 if Rake::Task.task_defined?("css:build")
   Rake::Task["test:prepare"].prerequisites.delete("css:build")
   Rake::Task["test"].prerequisites.delete("css:build")
-  
+
   # Override css:build to be a no-op in test
   Rake::Task["css:build"].clear
-  
+
   namespace :css do
     task :build do
       if Rails.env.test?

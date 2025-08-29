@@ -37,7 +37,7 @@ class SearchProfilesControllerTest < ActionDispatch::IntegrationTest
 
   test "create saves valid search profile" do
     sign_in @user
-    
+
     # Simulate the multi-step flow
     # Step 1
     post step1_search_profiles_path(locale: I18n.default_locale), params: {
@@ -48,17 +48,17 @@ class SearchProfilesControllerTest < ActionDispatch::IntegrationTest
       }
     }
     assert_redirected_to step2_search_profiles_path(locale: I18n.default_locale)
-    
+
     # Step 2
     post step2_search_profiles_path(locale: I18n.default_locale), params: {
       address: {
         country: "USA",
-        state: "CA", 
+        state: "CA",
         city: "San Francisco"
       }
     }
     assert_redirected_to step3_search_profiles_path(locale: I18n.default_locale)
-    
+
     # Step 3 - Final creation
     assert_difference "SearchProfile.count", 1 do
       post search_profiles_path(locale: I18n.default_locale)
@@ -70,7 +70,7 @@ class SearchProfilesControllerTest < ActionDispatch::IntegrationTest
 
   test "create fails with invalid data" do
     sign_in @user
-    
+
     # Simulate the multi-step flow with invalid data
     # Step 1
     post step1_search_profiles_path(locale: I18n.default_locale), params: {
@@ -80,13 +80,13 @@ class SearchProfilesControllerTest < ActionDispatch::IntegrationTest
       }
     }
     assert_redirected_to step2_search_profiles_path(locale: I18n.default_locale)
-    
+
     # Step 2
     post step2_search_profiles_path(locale: I18n.default_locale), params: {
       address: {}
     }
     assert_redirected_to step3_search_profiles_path(locale: I18n.default_locale)
-    
+
     # Step 3 - Final creation should fail
     assert_no_difference "SearchProfile.count" do
       post search_profiles_path(locale: I18n.default_locale)
@@ -142,7 +142,7 @@ class SearchProfilesControllerTest < ActionDispatch::IntegrationTest
 
   test "search profile params are filtered correctly" do
     sign_in @user
-    
+
     # Simulate the multi-step flow
     # Step 1 with unauthorized param
     post step1_search_profiles_path(locale: I18n.default_locale), params: {
@@ -154,13 +154,13 @@ class SearchProfilesControllerTest < ActionDispatch::IntegrationTest
       }
     }
     assert_redirected_to step2_search_profiles_path(locale: I18n.default_locale)
-    
+
     # Step 2
     post step2_search_profiles_path(locale: I18n.default_locale), params: {
       address: {}
     }
     assert_redirected_to step3_search_profiles_path(locale: I18n.default_locale)
-    
+
     # Step 3 - Final creation
     post search_profiles_path(locale: I18n.default_locale)
 
