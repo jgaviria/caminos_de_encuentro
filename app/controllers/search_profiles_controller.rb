@@ -1,9 +1,9 @@
 # app/controllers/search_profiles_controller.rb
 class SearchProfilesController < ApplicationController
   before_action :authenticate_user!
-  before_action :initialize_search_profile_session, only: [:step1, :step2, :step3]
-  before_action :set_search_profile, only: [:show, :edit, :edit_step1, :edit_step2, :edit_step3, :update, :destroy, :match]
-  before_action :authorize_search_profile_access, only: [:show, :edit, :edit_step1, :edit_step2, :edit_step3, :update, :destroy]
+  before_action :initialize_search_profile_session, only: [ :step1, :step2, :step3 ]
+  before_action :set_search_profile, only: [ :show, :edit, :edit_step1, :edit_step2, :edit_step3, :update, :destroy, :match ]
+  before_action :authorize_search_profile_access, only: [ :show, :edit, :edit_step1, :edit_step2, :edit_step3, :update, :destroy ]
 
   def index
     if current_user.admin?
@@ -12,7 +12,7 @@ class SearchProfilesController < ApplicationController
       @search_profiles = current_user.search_profiles.includes(:address)
     end
   end
-  
+
   def new
     # Redirect to step 1 for new multi-step flow
     redirect_to step1_search_profiles_path(locale: I18n.locale)
@@ -39,7 +39,7 @@ class SearchProfilesController < ApplicationController
     end
   end
 
-  # Step 2: Location Information  
+  # Step 2: Location Information
   def step2
     if request.post?
       # Handle form submission from step 2
@@ -65,19 +65,19 @@ class SearchProfilesController < ApplicationController
   def create
     # Final creation from step 3
     all_data = session[:search_profile_data] || {}
-    
+
     # Split data into search_profile and address parts
-    search_profile_data = all_data.slice('first_name', 'middle_name', 'last_name')
-    address_data = all_data.slice('country', 'state', 'city', 'neighborhood', 'street_address', 'postal_code')
-    
+    search_profile_data = all_data.slice("first_name", "middle_name", "last_name")
+    address_data = all_data.slice("country", "state", "city", "neighborhood", "street_address", "postal_code")
+
     @search_profile = current_user.search_profiles.build(search_profile_data)
-    
+
     if @search_profile.save
       # Create associated address if address data exists
       if address_data.any? { |k, v| v.present? }
         @search_profile.create_address(address_data)
       end
-      
+
       session[:search_profile_data] = nil # Clear session data
       redirect_to dashboard_path(locale: I18n.locale), notice: "Search profile created successfully."
     else
@@ -111,15 +111,15 @@ class SearchProfilesController < ApplicationController
     else
       # Display edit step 1 form
       @search_profile_data = {
-        'first_name' => @search_profile.first_name,
-        'middle_name' => @search_profile.middle_name,
-        'last_name' => @search_profile.last_name
+        "first_name" => @search_profile.first_name,
+        "middle_name" => @search_profile.middle_name,
+        "last_name" => @search_profile.last_name
       }
       @progress_percentage = 33
     end
   end
 
-  # Edit Step 2: Location Information  
+  # Edit Step 2: Location Information
   def edit_step2
     if request.patch?
       # Handle form submission from edit step 2 (location data)
@@ -166,13 +166,13 @@ class SearchProfilesController < ApplicationController
       redirect_to search_profiles_path(locale: I18n.locale), alert: "Only administrators can run matching processes."
       return
     end
-    
+
     # Start background matching job for better performance
     MatchingJob.perform_later(@search_profile.id)
-    
+
     redirect_to admin_matches_path(locale: I18n.locale), notice: "Matching process started for #{@search_profile.first_name} #{@search_profile.last_name}. Results will be available shortly."
   end
-  
+
 
   private
 
@@ -192,22 +192,22 @@ class SearchProfilesController < ApplicationController
 
   def build_edit_data
     data = {
-      'first_name' => @search_profile.first_name,
-      'middle_name' => @search_profile.middle_name,
-      'last_name' => @search_profile.last_name
+      "first_name" => @search_profile.first_name,
+      "middle_name" => @search_profile.middle_name,
+      "last_name" => @search_profile.last_name
     }
-    
+
     if @search_profile.address
       data.merge!(
-        'country' => @search_profile.address.country,
-        'state' => @search_profile.address.state,
-        'city' => @search_profile.address.city,
-        'neighborhood' => @search_profile.address.neighborhood,
-        'street_address' => @search_profile.address.street_address,
-        'postal_code' => @search_profile.address.postal_code
+        "country" => @search_profile.address.country,
+        "state" => @search_profile.address.state,
+        "city" => @search_profile.address.city,
+        "neighborhood" => @search_profile.address.neighborhood,
+        "street_address" => @search_profile.address.street_address,
+        "postal_code" => @search_profile.address.postal_code
       )
     end
-    
+
     data
   end
 

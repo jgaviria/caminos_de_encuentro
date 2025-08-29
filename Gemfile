@@ -67,7 +67,7 @@ group :development, :test do
   gem "rails-controller-testing"
 
   gem "rails-i18n"
-  
+
   gem "i18n-tasks" # helpful for managing translations
 end
 

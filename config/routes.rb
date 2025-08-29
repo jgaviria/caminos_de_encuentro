@@ -16,22 +16,22 @@ Rails.application.routes.draw do
   get "dashboard", to: "dashboards#show", as: :dashboard
 
 
-  resources :matches, only: [:index, :show, :destroy] do
+  resources :matches, only: [ :index, :show, :destroy ] do
     member do
-      patch 'verify'
+      patch "verify"
     end
   end
-  
+
   namespace :admin do
     resources :matches do
       collection do
-        post 'bulk_verify'
-        post 'bulk_reject'
-        get 'export'
+        post "bulk_verify"
+        post "bulk_reject"
+        get "export"
       end
       member do
-        patch 'verify'
-        delete 'reject'
+        patch "verify"
+        delete "reject"
       end
     end
   end
@@ -41,21 +41,21 @@ Rails.application.routes.draw do
   resource :address, only: [ :new, :create, :edit, :update ]
   resources :search_profiles, only: [ :index, :show, :new, :create, :edit, :update, :destroy ] do
     collection do
-      get 'step1'  # Basic info step
-      post 'step1'
-      get 'step2'  # Location info step  
-      post 'step2'
-      get 'step3'  # Review and create step
-      post 'step3'
+      get "step1"  # Basic info step
+      post "step1"
+      get "step2"  # Location info step
+      post "step2"
+      get "step3"  # Review and create step
+      post "step3"
     end
     member do
       post "match"
-      get 'edit_step1'   # Edit step 1
-      patch 'edit_step1'
-      get 'edit_step2'   # Edit step 2
-      patch 'edit_step2'  
-      get 'edit_step3'   # Edit step 3
-      patch 'edit_step3'
+      get "edit_step1"   # Edit step 1
+      patch "edit_step1"
+      get "edit_step2"   # Edit step 2
+      patch "edit_step2"
+      get "edit_step3"   # Edit step 3
+      patch "edit_step3"
     end
   end
 

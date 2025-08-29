@@ -6,7 +6,10 @@
       "Bash(mv:*)",
       "Bash(rm:*)",
       "Bash(yarn cache:*)",
-      "Bash(yarn build:*)"
+      "Bash(yarn build:*)",
+      "Bash(rails:*)",
+      "Bash(grep:*)",
+      "Bash(bundle exec rubocop:*)"
     ],
     "deny": [],
     "ask": []

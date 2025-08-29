@@ -13,7 +13,7 @@ class SearchProfileTest < ActiveSupport::TestCase
   test "has many matches" do
     match1 = create(:match, search_profile: @search_profile)
     match2 = create(:match, search_profile: @search_profile)
-    
+
     assert_includes @search_profile.matches, match1
     assert_includes @search_profile.matches, match2
   end
@@ -26,10 +26,10 @@ class SearchProfileTest < ActiveSupport::TestCase
   test "validates presence of first_name and last_name" do
     profile = SearchProfile.new(user: @user)
     assert_not profile.valid?
-    
+
     profile.first_name = "John"
     assert_not profile.valid?
-    
+
     profile.last_name = "Doe"
     assert profile.valid?
   end
@@ -37,18 +37,18 @@ class SearchProfileTest < ActiveSupport::TestCase
   test "destroys dependent matches when deleted" do
     match = create(:match, search_profile: @search_profile)
     match_id = match.id
-    
+
     @search_profile.destroy
-    
+
     assert_not Match.exists?(match_id)
   end
 
   test "destroys dependent address when deleted" do
     address = create(:search_profile_address, search_profile: @search_profile)
     address_id = address.id
-    
+
     @search_profile.destroy
-    
+
     assert_not Address.exists?(address_id)
   end
 
@@ -61,7 +61,7 @@ class SearchProfileTest < ActiveSupport::TestCase
     maria_profile = create(:search_profile, :maria)
     assert_equal "Maria", maria_profile.first_name
     assert_equal "Garcia", maria_profile.last_name
-    
+
     carlos_profile = create(:search_profile, :carlos)
     assert_equal "Carlos", carlos_profile.first_name
     assert_equal "Rodriguez", carlos_profile.last_name

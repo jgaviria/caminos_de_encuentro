@@ -31,17 +31,17 @@ class MatchTest < ActiveSupport::TestCase
     @match.similarity_score = 0.85
     assert @match.valid?
     @match.save!
-    
+
     @match.reload
     assert_equal 0.85, @match.similarity_score
   end
 
   test "can be verified" do
     assert_not @match.is_verified
-    
+
     @match.is_verified = true
     @match.save!
-    
+
     @match.reload
     assert @match.is_verified
   end
@@ -59,10 +59,10 @@ class MatchTest < ActiveSupport::TestCase
   test "factory traits work correctly" do
     verified_match = create(:match, :verified)
     assert verified_match.is_verified
-    
+
     high_confidence_match = create(:match, :high_confidence)
     assert_equal 0.95, high_confidence_match.similarity_score
-    
+
     exact_match = create(:match, :exact_match)
     assert_equal 1.0, exact_match.similarity_score
   end

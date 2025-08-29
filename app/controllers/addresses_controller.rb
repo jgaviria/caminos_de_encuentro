@@ -10,7 +10,7 @@ class AddressesController < ApplicationController
   def create
     @address = current_user.build_address(address_params)
     if @address.save
-      redirect_to new_search_profile_path, notice: 'Address saved successfully.'
+      redirect_to new_search_profile_path, notice: "Address saved successfully."
     else
       @progress_percentage = 66
       render :new
@@ -25,7 +25,7 @@ class AddressesController < ApplicationController
   def update
     @address = current_user.address
     if @address.update(address_params)
-      redirect_to dashboard_path, notice: 'Address updated successfully.'
+      redirect_to dashboard_path, notice: "Address updated successfully."
     else
       @progress_percentage = 66
       render :edit

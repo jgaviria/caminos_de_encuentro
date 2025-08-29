@@ -2,7 +2,7 @@ require "test_helper"
 
 class PersonalInfosControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
-  
+
   def setup
     @user = create(:user)
     @personal_info = create(:personal_info, user: @user)
@@ -15,11 +15,11 @@ class PersonalInfosControllerTest < ActionDispatch::IntegrationTest
 
   test "should get create" do
     sign_in @user
-    post personal_info_path(locale: I18n.default_locale), params: { 
-      personal_info: { 
-        first_name: "John", 
-        last_name: "Doe" 
-      } 
+    post personal_info_path(locale: I18n.default_locale), params: {
+      personal_info: {
+        first_name: "John",
+        last_name: "Doe"
+      }
     }
     assert_redirected_to new_address_path(locale: I18n.default_locale)
   end
@@ -32,11 +32,11 @@ class PersonalInfosControllerTest < ActionDispatch::IntegrationTest
 
   test "should get update" do
     sign_in @user
-    patch personal_info_path(locale: I18n.default_locale), params: { 
-      personal_info: { 
-        first_name: "Jane", 
-        last_name: "Smith" 
-      } 
+    patch personal_info_path(locale: I18n.default_locale), params: {
+      personal_info: {
+        first_name: "Jane",
+        last_name: "Smith"
+      }
     }
     assert_redirected_to edit_address_path(locale: I18n.default_locale)
   end

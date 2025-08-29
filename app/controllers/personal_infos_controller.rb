@@ -10,7 +10,7 @@ class PersonalInfosController < ApplicationController
   def create
     @personal_info = current_user.build_personal_info(personal_info_params)
     if @personal_info.save
-      redirect_to new_address_path, notice: 'Personal information saved successfully.'
+      redirect_to new_address_path, notice: "Personal information saved successfully."
     else
       @progress_percentage = 33
       render :new
@@ -25,7 +25,7 @@ class PersonalInfosController < ApplicationController
   def update
     @personal_info = current_user.personal_info
     if @personal_info.update(personal_info_params)
-      redirect_to edit_address_path, notice: 'Personal information updated successfully.'
+      redirect_to edit_address_path, notice: "Personal information updated successfully."
     else
       @progress_percentage = 33
       render :edit

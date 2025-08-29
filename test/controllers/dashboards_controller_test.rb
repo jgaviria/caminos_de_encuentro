@@ -2,7 +2,7 @@ require "test_helper"
 
 class DashboardsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
-  
+
   def setup
     @user = create(:user)
   end

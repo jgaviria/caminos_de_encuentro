@@ -86,15 +86,15 @@ seeker_users.each do |user_data|
     u.password_confirmation = "password123"
     u.admin = false
   end
-  
+
   # Create personal info
   personal_info = user.personal_info || user.build_personal_info
   personal_info.update!(user_data[:personal_info])
-  
+
   # Create address
   address = user.address || user.build_address
   address.update!(user_data[:address])
-  
+
   seekers << user
 end
 
@@ -155,15 +155,15 @@ target_users.each do |user_data|
     u.password_confirmation = "password123"
     u.admin = false
   end
-  
+
   # Create personal info
   personal_info = user.personal_info || user.build_personal_info
   personal_info.update!(user_data[:personal_info])
-  
+
   # Create address
   address = user.address || user.build_address
   address.update!(user_data[:address])
-  
+
   targets << user
 end
 
@@ -224,14 +224,14 @@ search_profiles.each do |profile|
     # Use the MatchingService to create realistic matches
     matching_service = MatchingService.new(profile)
     potential_matches = matching_service.find_matches
-    
+
     potential_matches.each do |match_data|
       match = Match.find_or_create_by!(
         search_profile: profile,
         user: match_data[:user]
       ) do |m|
         m.similarity_score = match_data[:score]
-        m.is_verified = [true, false].sample # Random verification status
+        m.is_verified = [ true, false ].sample # Random verification status
       end
       matches_created += 1
     end
@@ -243,7 +243,7 @@ end
 # Create some manual high-quality matches if the service didn't create enough
 if matches_created == 0
   puts "📝 Creating manual matches..."
-  
+
   # Maria Garcia searching for Juan Garcia -> Juan Garcia (high similarity)
   Match.find_or_create_by!(
     search_profile: search_profiles[0],
@@ -252,7 +252,7 @@ if matches_created == 0
     match.similarity_score = 0.95
     match.is_verified = false
   end
-  
+
   # Carlos Rodriguez searching for Luis Rodriguez -> Luis Rodriguez (high similarity)
   Match.find_or_create_by!(
     search_profile: search_profiles[1],
@@ -261,7 +261,7 @@ if matches_created == 0
     match.similarity_score = 0.88
     match.is_verified = true
   end
-  
+
   # Ana Martinez searching for Sofia Martinez -> Sofia Martinez (high similarity)
   Match.find_or_create_by!(
     search_profile: search_profiles[2],
@@ -270,7 +270,7 @@ if matches_created == 0
     match.similarity_score = 0.92
     match.is_verified = false
   end
-  
+
   matches_created = 3
 end
 

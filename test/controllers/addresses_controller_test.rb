@@ -2,7 +2,7 @@ require "test_helper"
 
 class AddressesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
-  
+
   def setup
     @user = create(:user)
     @address = create(:address, user: @user)
@@ -15,13 +15,13 @@ class AddressesControllerTest < ActionDispatch::IntegrationTest
 
   test "should get create" do
     sign_in @user
-    post address_path(locale: I18n.default_locale), params: { 
-      address: { 
-        street: "123 Main St", 
-        city: "Test City", 
-        state: "Test State", 
-        country: "Test Country" 
-      } 
+    post address_path(locale: I18n.default_locale), params: {
+      address: {
+        street: "123 Main St",
+        city: "Test City",
+        state: "Test State",
+        country: "Test Country"
+      }
     }
     assert_redirected_to new_search_profile_path(locale: I18n.default_locale)
   end
@@ -34,13 +34,13 @@ class AddressesControllerTest < ActionDispatch::IntegrationTest
 
   test "should get update" do
     sign_in @user
-    patch address_path(locale: I18n.default_locale), params: { 
-      address: { 
-        street: "456 Updated St", 
-        city: "Updated City", 
-        state: "Updated State", 
-        country: "Updated Country" 
-      } 
+    patch address_path(locale: I18n.default_locale), params: {
+      address: {
+        street: "456 Updated St",
+        city: "Updated City",
+        state: "Updated State",
+        country: "Updated Country"
+      }
     }
     assert_redirected_to dashboard_path(locale: I18n.default_locale)
   end

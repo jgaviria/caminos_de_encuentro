@@ -11,12 +11,12 @@ module ActiveSupport
 
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     # fixtures :all # Disabled in favor of FactoryBot
-    
+
     # Include FactoryBot methods
     include FactoryBot::Syntax::Methods
 
     # Add more helper methods to be used by all tests here...
-    
+
     # Helper method to sign in a user for controller tests
     def sign_in(user)
       @request.env["devise.mapping"] = Devise.mappings[:user]
